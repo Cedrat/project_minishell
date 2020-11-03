@@ -1,2 +1,2 @@
 # project_minishell
-Is a magnificient duo projet about a mini-bash, wait .. a minishell ! 
+Is a magnificient duo project about a mini-bash, wait .. a minishell ! 
