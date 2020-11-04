@@ -1,0 +1,24 @@
+
+git clone lien "nomdudossier" //permet de cloner le repo
+
+git pull // mettre le repo a jour
+
+git status // checker si le repo est a jour
+
+Les branches permettent d'avoir accès et de faire des modifications du code présent sur la branche master sans
+modifier le code présent sur la branche master.
+
+Par exemple :
+Je suis sur la branche master et je veux modifier une fonction ft_putstr pour que sa valeur de retour soit la taille de str.
+je crée et/ou je me déplace sur une autre branche (commandes ci-dessous). Je modifie ma fonction afin qu'elle fasse sa nouvelle tache.
+Une fois testée et en état, je peux la fusionner avec la branche master add et commit les changements.
+
+git branch "nomdelabranche" 			//	creer une branche
+git branch -d "nomdelabranche" 			//	-d pour supprimer une branche
+git checkout "nomdelabranche" 			//	changer de branche //git checkout -b "nomdelabranche" permet de creer et de se deplacer sur cette branche
+git merge "nomdelabranche" 				//	permet de fusionner la branche actuelle avec la branche "nomdelabranche"
+
+
+a tester : outils en cas de conflits mergetool	
+srcs : 	https://git-scm.com/book/fr/v2/Les-branches-avec-Git-Branches-et-fusions%C2%A0%3A-les-bases
+		https://www.pierre-giraud.com/git-github-apprendre-cours/branche-git/
