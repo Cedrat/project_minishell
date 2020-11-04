@@ -6,11 +6,11 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 17:37:03 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/04 17:13:45 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/04 18:16:16 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./../header/libft.h"
 
 static	void	*ft_freeforall(char **content, size_t x)
 {

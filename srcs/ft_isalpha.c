@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/01 13:48:10 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/04 17:13:39 by lnoaille         ###   ########.fr       */
+/*   Created: 2020/04/27 17:44:51 by lnoaille          #+#    #+#             */
+/*   Updated: 2020/04/27 17:52:13 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_isalpha(int c)
 {
-	char	*subcopy;
-	size_t	count;
-
-	count = 0;
-	if (!(subcopy = malloc(sizeof(char) * (len + 1))))
-		return (0);
-	if (start > ft_strlen(s))
-		len = 0;
-	while (count < len)
-	{
-		subcopy[count] = s[count + start];
-		count++;
-	}
-	subcopy[count] = '\0';
-	return (subcopy);
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))
+		return (1024);
+	return (0);
 }

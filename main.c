@@ -9,15 +9,6 @@ void ft_putstr(char *word)
 	}
 }
 
-int ft_strlen(const char *word)
-{
-	size_t i;
-
-	i = 0;
-	while (word[i])
-		i++;
-	return(i);
-}
 
 int main ()
 {
