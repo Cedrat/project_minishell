@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "header/minishell.h"
 
 void ft_putstr(char *word)
 {
@@ -27,6 +27,8 @@ int main ()
 		buff[i] = '\0';
 		i = 0;
 		args = ft_split(buff, ' ');
+		if (ft_strcmp(args[0], "exit") == 0 && ft_nopipes(args))
+			exit(0);
 		ft_putstr(args[0]);
 		ft_putstr("\n");
 	}
