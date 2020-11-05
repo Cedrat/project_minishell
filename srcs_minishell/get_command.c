@@ -1,6 +1,6 @@
 #include "../header/minishell.h"
 
-void	ft_get_command(char **args)
+void	ft_get_command(char **args, char **argenv)
 {
 	char 	*commands[7] = {
 		"echo",
@@ -12,7 +12,7 @@ void	ft_get_command(char **args)
 		"exit"
 	};
 
-	int		(*function[7])() ={ 
+	int		(*function[7])() ={
 		&ft_echo,
 		&ft_cd,
 		&ft_pwd,
@@ -35,7 +35,7 @@ void	ft_get_command(char **args)
 		while (j < 7 && found == 0)
 		{
 			if (ft_strcmp(args[i], commands[j]) == 0 && ft_nopipes(args))
-				found = function[j]();
+				found = function[j](argenv);
 			j++;
 		}
 		j = 0;

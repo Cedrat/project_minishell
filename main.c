@@ -10,7 +10,7 @@ void ft_putstr(char *word)
 }
 
 
-int main ()
+int main (int argc, char **argv, char **argenv)
 {
 	char buff[256];
 	char cwd[256];
@@ -28,8 +28,7 @@ int main ()
 		i = 0;
 
 		args = ft_split(buff, ' ');
-		ft_get_command(args);
-
+		ft_get_command(args, argenv);
 		ft_putstr(args[0]);
 		ft_putstr("\n");
 	}

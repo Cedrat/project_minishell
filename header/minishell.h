@@ -12,7 +12,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 void 	ft_putstr(char *word);
 
-void	ft_get_command(char **args);
+void	ft_get_command(char **args, char **argenv);
 int		ft_echo();
 int		ft_cd();
 int		ft_pwd();
