@@ -1,5 +1,5 @@
 #include "../header/minishell.h"
-#include <stdio.h>
+
 void	ft_get_command(char **args)
 {
 	char 	*commands[7] = {
@@ -41,7 +41,6 @@ void	ft_get_command(char **args)
 		j = 0;
 		i++;
 	}
-	//ft_putstr("Sortie de boucle");
 	if (found == 0)
 	{
 		ft_putstr("Command not found : ");
