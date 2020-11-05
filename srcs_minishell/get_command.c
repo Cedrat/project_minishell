@@ -42,8 +42,5 @@ void	ft_get_command(char **args)
 		i++;
 	}
 	if (found == 0)
-	{
 		ft_putstr("Command not found : ");
-		return ;
-	}
 }
