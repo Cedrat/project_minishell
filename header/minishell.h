@@ -10,4 +10,15 @@ int		ft_charispresent(const char* str, char lett);
 int 	ft_nopipes(char **args);
 int		ft_strcmp(const char *s1, const char *s2);
 
+void 	ft_putstr(char *word);
+
+void	ft_get_command(char **args);
+int		ft_echo();
+int		ft_cd();
+int		ft_pwd();
+int		ft_export();
+int		ft_unset();
+int		ft_env();
+int		ft_exit();
+
 #endif

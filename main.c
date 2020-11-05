@@ -26,9 +26,10 @@ int main ()
 			i++;
 		buff[i] = '\0';
 		i = 0;
+
 		args = ft_split(buff, ' ');
-		if (ft_strcmp(args[0], "exit") == 0 && ft_nopipes(args))
-			exit(0);
+		ft_get_command(args);
+
 		ft_putstr(args[0]);
 		ft_putstr("\n");
 	}
