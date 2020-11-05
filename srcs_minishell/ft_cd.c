@@ -1,7 +1,9 @@
 #include "../header/minishell.h"
 
-int		ft_cd()
+int		ft_cd(char *path)
 {
-
-	return (1);
+	if (chdir(path) == 0)
+		return (1);
+	else
+		return (-1);
 }

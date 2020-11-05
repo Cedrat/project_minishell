@@ -24,7 +24,7 @@ void	ft_get_command(char **args, char **argenv)
 
 	int i;
 	int j;
-	int	found;
+	int	found; //1 = success, 0 = command not found, -1 = wrong path/file
 
 	i = 0;
 	j = 0;
@@ -35,7 +35,12 @@ void	ft_get_command(char **args, char **argenv)
 		while (j < 7 && found == 0)
 		{
 			if (ft_strcmp(args[i], commands[j]) == 0 && ft_nopipes(args))
-				found = function[j](argenv);
+				{
+					if (j == 1)
+						found = function[j](args[1]);
+					else
+						found = function[j](argenv);
+				}
 			j++;
 		}
 		j = 0;
@@ -43,4 +48,9 @@ void	ft_get_command(char **args, char **argenv)
 	}
 	if (found == 0)
 		ft_putstr("Command not found : ");
+	else if (found == -1)
+	{
+		ft_putstr(args[1]);
+		ft_putstr(" : No file or folder of this type");
+	}
 }

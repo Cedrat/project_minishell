@@ -2,6 +2,6 @@
 
 int		ft_echo()
 {
-
+	
 	return (1);
 }
