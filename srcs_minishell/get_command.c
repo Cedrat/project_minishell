@@ -80,6 +80,8 @@ void	ft_get_command(char **args, char **argenv)
 				{
 					if (j == 1)
 						found = function[j](args, home_path);
+					else if (j == 3)
+						found = function[j](args, argenv);
 					else
 						found = function[j](argenv);
 				}
@@ -91,7 +93,8 @@ void	ft_get_command(char **args, char **argenv)
 	if (found == 0)
 	{
 		ft_putstr("Command not found : ");
-		ft_putstr(args[0]);
+		if (args[0])
+			ft_putstr(args[0]);
 	}
 	else if (found == -1)
 	{
@@ -103,4 +106,9 @@ void	ft_get_command(char **args, char **argenv)
 		ft_putstr(" Too many arguments ");
 	}
 	ft_putstr("\n");
+	// for (int i = 0; args[i]; i++)
+    //     {
+    //         ft_putstr(args[i]);
+    //         ft_putstr("\n");
+    //     }
 }

@@ -30,7 +30,5 @@ int main (int argc, char **argv, char **argenv)
 		args = ft_parser(buff);
 		ft_get_command(args, argenv);
 		free(args);
-		// ft_putstr(args[0]);
-		// ft_putstr("\n");
 	}
 }

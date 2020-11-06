@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/06 18:41:06 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/06 20:00:36 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,23 @@ char **ft_parser(char *str)
 					i++;
 			while (str[i] != '\'' && str[i])
 				i++;
-			i++;
+			if (str[i])
+				i++;
 		}
 		else if (str[i] == '"')
 		{
 					i++;
 			while (str[i] != '"' && str[i])
 				i++;
-			i++;
+				if (str[i])
+					i++;
 		}
 		else
 		{
 					i++;
 			while(str[i] != ' ' && str[i])
-				i++;
+				if (str[i])
+					i++;
 		}
 		ft_strndup(&tab[p], str, j ,i);
 		p++;
@@ -118,8 +121,6 @@ void ft_free_tab_made_by_parser(char **tab)
 		i++;
 	}
 	free(tab);
-
-
 }
 
 // int main()

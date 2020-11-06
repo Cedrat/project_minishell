@@ -4,8 +4,11 @@ int		ft_env(char **argenv)
 {
 	while (*argenv)
 	{
-		ft_putstr(*argenv);
-		ft_putstr("\n");
+		if (*argenv[0] != 0)
+		{
+			ft_putstr(*argenv);
+			ft_putstr("\n");
+		}
 		argenv++;
 	}
 	return (1);
