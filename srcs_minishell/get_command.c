@@ -89,7 +89,10 @@ void	ft_get_command(char **args, char **argenv)
 		i++;
 	}
 	if (found == 0)
+	{
 		ft_putstr("Command not found : ");
+		ft_putstr(args[0]);
+	}
 	else if (found == -1)
 	{
 		ft_putstr(args[1]);
@@ -99,4 +102,5 @@ void	ft_get_command(char **args, char **argenv)
 	{
 		ft_putstr(" Too many arguments ");
 	}
+	ft_putstr("\n");
 }

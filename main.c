@@ -29,7 +29,7 @@ int main (int argc, char **argv, char **argenv)
 
 		args = ft_split(buff, ' ');
 		ft_get_command(args, argenv);
-		ft_putstr(args[0]);
-		ft_putstr("\n");
+		// ft_putstr(args[0]);
+		// ft_putstr("\n");
 	}
 }
