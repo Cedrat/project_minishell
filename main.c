@@ -27,8 +27,9 @@ int main (int argc, char **argv, char **argenv)
 		buff[i] = '\0';
 		i = 0;
 
-		args = ft_split(buff, ' ');
+		args = ft_parser(buff);
 		ft_get_command(args, argenv);
+		free(args);
 		// ft_putstr(args[0]);
 		// ft_putstr("\n");
 	}

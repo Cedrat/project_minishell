@@ -10,9 +10,11 @@ int		ft_export(char **argenv);
 int		ft_charispresent(const char* str, char lett);
 int 	ft_nopipes(char **args);
 int		ft_strcmp(const char *s1, const char *s2);
-void ft_tri_tab_str(char** str);
+void 	ft_tri_tab_str(char** str);
 void 	ft_putstr(char *word);
 
+char 	**ft_parser(char *str);	
+void 	ft_free_tab_made_by_parser(char **tab);
 void	ft_get_command(char **args, char **argenv);
 int		ft_echo();
 int		ft_cd();
