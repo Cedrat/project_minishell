@@ -12,6 +12,8 @@ int		ft_strcmp(const char *s1, const char *s2);
 void 	ft_tri_tab_str(char** str);
 void 	ft_putstr(char *word);
 
+char	*ft_get_var(char **argenv, char *tofind);
+
 int  	ft_export(char **argv, char **argenv);
 char 	**ft_parser(char *str);
 void 	ft_free_tab_made_by_parser(char **tab);

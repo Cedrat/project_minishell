@@ -69,12 +69,35 @@ void	ft_single_qt(t_echo *config, char **args)
 }
 
 
+char	*ft_extract_var_name(char *arg, int *j)
+{
+	int 	i;
+	char	*str;
 
-void	ft_double_qt(t_echo *config, char **args)
+	*j += 1;
+	i = *j;
+	while (!ft_strchr(" \"\\\'\0", arg[i]))
+		i++;
+	str = malloc(sizeof(char) * (i - *j) + 2);
+	i = 0;
+	while (!ft_strchr(" \"\\\'\0", arg[*j]))
+	{
+		str[i] = arg[*j];
+		*j += 1;
+		i++;
+	}
+	str[i] = '=';
+	str[i + 1] = '\0';
+	return (str);
+}
+
+
+void	ft_double_qt(t_echo *config, char **args, char **argenv)
 {
 	int 	i;
 	int		j;
-	char	str[256];
+	char	*str;
+	char	*path;
 
 	i = 1;
 	while (args[i])
@@ -84,10 +107,19 @@ void	ft_double_qt(t_echo *config, char **args)
 		{
 			if (args[i][j] == '|' || args[i][j] == ';')
 				return ;
+			if (args[i][j] == '$' && !ft_strchr(" \"\\\'\0", args[i][j + 1]))
+			{
+				str = ft_extract_var_name(args[i], &j);
+				path = ft_get_var(argenv, str);
+				ft_putstr(path);
+			}
 			if (args[i][j] == '\"')
 				j++;
-			//else if (args[i][j] == '$')
-				//Gestion du remplacement
+			/*else if (args[i][j] == '$' && args[i][j + 1] == '?')
+			{
+				ft_get_signal(); //Doit renvoyer signal emit par derniere commande
+				j += 2;			 //0=reussite, -1 = echec. Et on avance jusqu'à après le '?'
+			}*/
 			else if (args[i][j] == '\\' && args[i][j + 1] == '\\' && args[i][j + 2] != '\\')
 				j++;
 			else if (args[i][j] == '\\' && args[i][j + 1] == '\"')
@@ -131,7 +163,7 @@ int		ft_echo(char **args, char **argenv, int signal)
 		//Parser en enlevant les quotes, sauf si précédées de backslash
 	else if (ft_strcmp(config.token, "db_qt") == 0)
 	{
-		ft_double_qt(&config, args);
+		ft_double_qt(&config, args, argenv);
 	}
 
 	//Gestion sans 
