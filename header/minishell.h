@@ -23,4 +23,14 @@ int		ft_unset();
 int		ft_env();
 int		ft_exit();
 
+typedef	struct	s_echo
+{
+	char	*token; //'none', 'sg_qt', 'db_qt'
+	int		sg_qt;
+	int		db_qt;
+	int		backslash;
+	int		first_token; //0 = none, 1 = single quote, 2 = double quote
+}				t_echo;
+
+
 #endif
