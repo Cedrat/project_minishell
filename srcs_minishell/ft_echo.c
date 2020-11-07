@@ -88,6 +88,7 @@ char	*ft_extract_var_name(char *arg, int *j)
 	}
 	str[i] = '=';
 	str[i + 1] = '\0';
+	*j += 1;
 	return (str);
 }
 
@@ -107,12 +108,6 @@ void	ft_double_qt(t_echo *config, char **args, char **argenv)
 		{
 			if (args[i][j] == '|' || args[i][j] == ';')
 				return ;
-			if (args[i][j] == '$' && !ft_strchr(" \"\\\'\0", args[i][j + 1]))
-			{
-				str = ft_extract_var_name(args[i], &j);
-				path = ft_get_var(argenv, str);
-				ft_putstr(path);
-			}
 			if (args[i][j] == '\"')
 				j++;
 			/*else if (args[i][j] == '$' && args[i][j + 1] == '?')
@@ -120,6 +115,13 @@ void	ft_double_qt(t_echo *config, char **args, char **argenv)
 				ft_get_signal(); //Doit renvoyer signal emit par derniere commande
 				j += 2;			 //0=reussite, -1 = echec. Et on avance jusqu'à après le '?'
 			}*/
+			if (args[i][j] == '$' && !ft_strchr(" \"\\\'\0", args[i][j + 1]))
+			{
+				str = ft_extract_var_name(args[i], &j);
+				path = ft_get_var(argenv, str);
+				if (path)
+					ft_putstr(path);
+			}
 			else if (args[i][j] == '\\' && args[i][j + 1] == '\\' && args[i][j + 2] != '\\')
 				j++;
 			else if (args[i][j] == '\\' && args[i][j + 1] == '\"')

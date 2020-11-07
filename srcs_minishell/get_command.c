@@ -15,7 +15,7 @@ char	*ft_strncpy(char *src, char *dest, int len)
 	return (dest);
 }
 
-char	*ft_home_path(char **argenv)
+char	*ft_get_var(char **argenv, char *tofind)
 {
 	char	*path;
 	int 	i;
@@ -25,18 +25,18 @@ char	*ft_home_path(char **argenv)
 	j = 0;
 	while (argenv[i])
 	{
-		if (ft_strncmp(argenv[i], "HOME=", 5) == 0)
+		if (ft_strncmp(argenv[i], tofind, ft_strlen(tofind)) == 0)
 		{
 			while (argenv[i][j] != '=')
 				j++;
 			j++;
 			path = malloc(sizeof(char) * ft_strlen(argenv[i]) - j);
 			ft_strncpy(&argenv[i][j], path, ft_strlen(argenv[i]) - j);
-			break;
+			return (path);
 		}
 		i++;
 	}
-	return (path);
+	return ("");
 }
 
 
@@ -67,7 +67,8 @@ void	ft_get_command(char **args, char **argenv)
 	int		found; //1 = success, 0 = command not found, -1 = wrong path/file, -2 = trop d'args
 	char	*home_path;
 
-	home_path = ft_home_path(argenv);
+	home_path = ft_get_var(argenv, "HOME=");
+
 	i = 0;
 	j = 0;
 	found = 0;
@@ -77,14 +78,16 @@ void	ft_get_command(char **args, char **argenv)
 		while (j < 7 && found == 0)
 		{
 			if (ft_strcmp(args[i], commands[j]) == 0 && ft_nopipes(args))
-				{
-					if (j == 1)
-						found = function[j](args, home_path);
-					else if (j == 3)
-						found = function[j](args, argenv);
-					else
-						found = function[j](argenv);
-				}
+			{
+				if (j == 0)
+					found = function[j](args, argenv, found);
+				else if (j == 1)
+					found = function[j](args, home_path);
+				else if (j == 3)
+					found = function[j](args, argenv);
+				else
+					found = function[j](argenv);
+			}
 			j++;
 		}
 		j = 0;
@@ -106,9 +109,10 @@ void	ft_get_command(char **args, char **argenv)
 		ft_putstr(" Too many arguments ");
 	}
 	ft_putstr("\n");
-	// for (int i = 0; args[i]; i++)
-    //     {
-    //         ft_putstr(args[i]);
-    //         ft_putstr("\n");
-    //     }
+	
+	/*for (int i = 0; args[i]; i++)
+    {
+            ft_putstr(args[i]);
+            ft_putstr("\n");
+    }*/
 }
