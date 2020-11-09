@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/09 18:26:10 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:36:42 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,15 +162,15 @@ void ft_free_tab_made_by_parser(char **tab)
 	free(tab);
 }
 
-int main()
-{
-	char **tab;
-	size_t i = 0;
-	tab = ft_parser("'test' 'test'");
-	while (tab[i])
-	{
-		printf("%s_\n", tab[i]);
-		i++;
-	}
-	ft_free_tab_made_by_parser(tab);
-}
+// int main()
+// {
+// 	char **tab;
+// 	size_t i = 0;
+// 	tab = ft_parser("'test' 'test'");
+// 	while (tab[i])
+// 	{
+// 		printf("%s_\n", tab[i]);
+// 		i++;
+// 	}
+// 	ft_free_tab_made_by_parser(tab);
+// }
