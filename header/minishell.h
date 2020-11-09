@@ -49,6 +49,7 @@ typedef	struct	s_echo
 typedef	struct	s_shell
 {
 	int		signal;		//Return value of the last built-in used
+	char 	*home_path;
 	
 	t_echo	*echo;
 

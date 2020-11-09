@@ -133,7 +133,7 @@ void	ft_double_qt(t_echo *config, char **args, char **argenv)
 
 
 
-int		ft_echo(char **args, char **argenv, int signal)
+int		ft_echo(char **args, char **argenv)
 {
 	t_echo	config;
 
@@ -154,17 +154,13 @@ int		ft_echo(char **args, char **argenv, int signal)
 	//Gestion avec ''
 		//Parser en enlevant les quotes
 	if (ft_strcmp(config.token, "sg_qt") == 0)
-	{
 		ft_single_qt(&config, args);
-		return (1);
-	}
+
 
 	//Gestion avec ""
 		//Parser en enlevant les quotes, sauf si précédées de backslash
 	else if (ft_strcmp(config.token, "db_qt") == 0)
-	{
 		ft_double_qt(&config, args, argenv);
-	}
 
 	//Gestion sans 
 	else if (ft_strcmp(config.token, "none") == 0)

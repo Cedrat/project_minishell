@@ -42,6 +42,8 @@ char	*ft_get_var(char **argenv, char *tofind)
 
 void	ft_get_command(char **args, char **argenv)
 {
+	t_shell	shell;	//Structure generale  -> Deplacer dans main ?
+
 	char 	*commands[7] = {
 		"echo",
 		"cd",
@@ -65,9 +67,8 @@ void	ft_get_command(char **args, char **argenv)
 	int 	i;
 	int 	j;
 	int		found; //1 = success, 0 = command not found, -1 = wrong path/file, -2 = trop d'args
-	char	*home_path;
 
-	home_path = ft_get_var(argenv, "HOME=");
+	shell.home_path = ft_get_var(argenv, "HOME="); //On recupere le path du home
 
 	i = 0;
 	j = 0;
@@ -80,9 +81,9 @@ void	ft_get_command(char **args, char **argenv)
 			if (ft_strcmp(args[i], commands[j]) == 0 && ft_nopipes(args))
 			{
 				if (j == 0)
-					found = function[j](args, argenv, found);
+					found = function[j](args, argenv);
 				else if (j == 1)
-					found = function[j](args, home_path);
+					found = function[j](args, shell.home_path);
 				else if (j == 3)
 					found = function[j](args, argenv);
 				else
