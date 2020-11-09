@@ -25,6 +25,11 @@ int		ft_unset();
 int		ft_env();
 int		ft_exit();
 
+
+
+/*-----------------------------*/
+/*------Structure fct echo-----*/
+/*-----------------------------*/
 typedef	struct	s_echo
 {
 	char	*token; //'none', 'sg_qt', 'db_qt'
@@ -32,7 +37,25 @@ typedef	struct	s_echo
 	int		db_qt;
 	int		backslash;
 	int		first_token; //0 = none, 1 = single quote, 2 = double quote
+	char 	*var_name;		//HOME=, OLDPWD= etc...  -> Nom de la variable + '=''
+	char 	*var_path;		///home/diane, /bin/...  -> Adresse correspondant au nom de la var
 }				t_echo;
+
+
+
+/*-----------------------------*/
+/*------Structure generale-----*/
+/*-----------------------------*/
+typedef	struct	s_shell
+{
+	int		signal;		//Return value of the last built-in used
+	
+	t_echo	*echo;
+
+
+
+}				t_shell;
+
 
 
 #endif

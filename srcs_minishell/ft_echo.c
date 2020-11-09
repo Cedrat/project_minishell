@@ -97,8 +97,6 @@ void	ft_double_qt(t_echo *config, char **args, char **argenv)
 {
 	int 	i;
 	int		j;
-	char	*str;
-	char	*path;
 
 	i = 1;
 	while (args[i])
@@ -115,12 +113,12 @@ void	ft_double_qt(t_echo *config, char **args, char **argenv)
 				ft_get_signal(); //Doit renvoyer signal emit par derniere commande
 				j += 2;			 //0=reussite, -1 = echec. Et on avance jusqu'à après le '?'
 			}*/
-			if (args[i][j] == '$' && !ft_strchr(" \"\\\'\0", args[i][j + 1]))
+			if (args[i][j] == '$' && !ft_strchr(" \"\\\'\0\n", args[i][j + 1]))
 			{
-				str = ft_extract_var_name(args[i], &j);
-				path = ft_get_var(argenv, str);
-				if (path)
-					ft_putstr(path);
+				config->var_name = ft_extract_var_name(args[i], &j);
+				config->var_path = ft_get_var(argenv, config->var_name);
+				if (config->var_path)
+					ft_putstr(config->var_path);
 			}
 			else if (args[i][j] == '\\' && args[i][j + 1] == '\\' && args[i][j + 2] != '\\')
 				j++;
