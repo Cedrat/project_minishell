@@ -52,11 +52,7 @@ void	ft_single_qt(t_echo *config, char *args)
 
 
 
-<<<<<<< HEAD
 void	ft_double_qt(t_echo *config, char *args, char **argenv, int signal)
-=======
-void	ft_double_qt(t_echo *config, char *args, char **argenv)
->>>>>>> 65d886d1e94c08551b59d230a3bb8b0cb19f106e
 {
 	int 	i;
 
@@ -68,7 +64,6 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv)
 		if (args[i] == '\"')
 			config->db_qt--;
 		if (config->db_qt == 0 && args[i + 1] == '\'')
-<<<<<<< HEAD
 		{
 			ft_single_qt(config, &args[i + 1]);
 			return ;
@@ -78,17 +73,6 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv)
 			ft_putnbr_fd(signal, 1); //Doit renvoyer signal emit par derniere commande
 			i += 2;			 //0=reussite, -1 = echec. Et on avance jusqu'à après le '?'
 		}
-=======
-		{
-			ft_single_qt(config, &args[i + 1]);
-			return ;
-		}
-		/*else if (args[i][j] == '$' && args[i][j + 1] == '?')
-		{
-			ft_get_signal(); //Doit renvoyer signal emit par derniere commande
-			j += 2;			 //0=reussite, -1 = echec. Et on avance jusqu'à après le '?'
-		}*/
->>>>>>> 65d886d1e94c08551b59d230a3bb8b0cb19f106e
 		if (args[i] == '$' && !ft_strchr(" \"\\\'\0\n", args[i + 1]))
 		{
 			config->var_name = ft_extract_var_name(args, &i);
@@ -130,39 +114,19 @@ int		ft_echo(t_shell *shell)
 			ft_putstr("Wrong number of quotes :");
 			return (-2);
 		}
-<<<<<<< HEAD
 		if (config.token == 1)  //Gestion avec ''
 			ft_single_qt(&config, shell->args[i]);
 		else if (config.token == 2)  //Gestion avec ""
 			ft_double_qt(&config, shell->args[i], shell->argenv, shell->signal);
 		else if (config.token == 0)  //Gestion sans quotes
-=======
-
-		//Gestion avec ''
-		if (config.token == 1)
-			ft_single_qt(&config, shell->args[i]);
-		//Gestion avec ""
-		else if (config.token == 2)
-			ft_double_qt(&config, shell->args[i], shell->argenv);
-		//Gestion sans quotes
-		else if (config.token == 0)
->>>>>>> 65d886d1e94c08551b59d230a3bb8b0cb19f106e
 		{
 		//A gerer : else if (args[i][j] == '~')
 					//ft_putstr(getcwd(str, 256));
 		}
 		else
-<<<<<<< HEAD
 			return (shell->signal = -1); //Pas de token = erreur
 		ft_putstr(" ");
 		i++;
 	}
 	return (shell->signal = 1);
-=======
-			return (-1); //Pas de token = erreur
-		ft_putstr(" ");
-		i++;
-	}
-	return (1);
->>>>>>> 65d886d1e94c08551b59d230a3bb8b0cb19f106e
 }
