@@ -12,10 +12,11 @@ void ft_putstr(char *word)
 
 int main (int argc, char **argv, char **argenv)
 {
+	t_shell	shell;	//Structure generale
 	char buff[256];
 	char cwd[256];
-	char **args;
 	size_t i = 0;
+
 	while(1)
 	{
 		ft_putstr("~");
@@ -27,8 +28,9 @@ int main (int argc, char **argv, char **argenv)
 		buff[i] = '\0';
 		i = 0;
 
-		args = ft_parser(buff);
-		ft_get_command(args, argenv);
-		free(args);
+		shell.args = ft_parser(buff);
+		shell.argenv = argenv;
+		ft_get_command(&shell);
+		free(shell.args);
 	}
 }

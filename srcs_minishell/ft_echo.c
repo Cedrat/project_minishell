@@ -1,5 +1,4 @@
 #include "../header/minishell.h"
-#include <stdio.h>
 
 void	ft_echo_config(t_echo *config, char **args)
 {
@@ -69,29 +68,6 @@ void	ft_single_qt(t_echo *config, char **args)
 }
 
 
-char	*ft_extract_var_name(char *arg, int *j)
-{
-	int 	i;
-	char	*str;
-
-	*j += 1;
-	i = *j;
-	while (!ft_strchr(" \"\\\'\0", arg[i]))
-		i++;
-	str = malloc(sizeof(char) * (i - *j) + 2);
-	i = 0;
-	while (!ft_strchr(" \"\\\'\0", arg[*j]))
-	{
-		str[i] = arg[*j];
-		*j += 1;
-		i++;
-	}
-	str[i] = '=';
-	str[i + 1] = '\0';
-	*j += 1;
-	return (str);
-}
-
 
 void	ft_double_qt(t_echo *config, char **args, char **argenv)
 {
@@ -132,12 +108,18 @@ void	ft_double_qt(t_echo *config, char **args, char **argenv)
 }
 
 
+void	ft_no_qt(t_echo *config, char **args, char **argenv)
+{
 
-int		ft_echo(char **args, char **argenv)
+}
+
+
+
+int		ft_echo(t_shell *shell)
 {
 	t_echo	config;
 
-	ft_echo_config(&config, args);
+	ft_echo_config(&config, shell->args);
 	//Gestion d'erreurs
 	if ((ft_strcmp(config.token, "sg_qt") == 0 && (config.sg_qt % 2 != 0)) 
 		|| (ft_strcmp(config.token, "db_qt") == 0 && (config.db_qt % 2 != 0))) //Nombre impair de quotes
@@ -154,13 +136,13 @@ int		ft_echo(char **args, char **argenv)
 	//Gestion avec ''
 		//Parser en enlevant les quotes
 	if (ft_strcmp(config.token, "sg_qt") == 0)
-		ft_single_qt(&config, args);
+		ft_single_qt(&config, shell->args);
 
 
 	//Gestion avec ""
 		//Parser en enlevant les quotes, sauf si précédées de backslash
 	else if (ft_strcmp(config.token, "db_qt") == 0)
-		ft_double_qt(&config, args, argenv);
+		ft_double_qt(&config, shell->args, shell->argenv);
 
 	//Gestion sans 
 	else if (ft_strcmp(config.token, "none") == 0)

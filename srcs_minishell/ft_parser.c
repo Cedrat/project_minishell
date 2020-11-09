@@ -85,7 +85,7 @@ char **ft_parser(char *str)
 		if (str[i] == '\'')
 		{
 					i++;
-			while (str[i] != '\'' && str[i])
+			 while (str[i] && (str[i] != '\'') || (str[i + 1] == '\''))
 				i++;
 			if (str[i])
 				i++;
