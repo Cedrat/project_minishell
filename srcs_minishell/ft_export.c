@@ -56,5 +56,5 @@ int		ft_export(t_shell *shell)
 		if (shell->argenv[i])
 			ft_putstr("\n");
 	}
-	return (1);
+	return (shell->signal = 1);
 }

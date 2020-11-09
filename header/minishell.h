@@ -12,7 +12,11 @@
 /*-----------------------------*/
 typedef	struct	s_echo
 {
+<<<<<<< HEAD
+	int		token; //'none', 'sg_qt', 'db_qt'
+=======
 	int		token; //0 = none, 1 = single quote, 2 = double quote
+>>>>>>> 65d886d1e94c08551b59d230a3bb8b0cb19f106e
 	int		sg_qt;
 	int		db_qt;
 	int		backslash;

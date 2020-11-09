@@ -1,6 +1,7 @@
 #include "../header/minishell.h"
 
-int		ft_unset()
+int		ft_unset(t_shell *shell)
 {
-	return (1);
+	
+	return (shell->signal = 1);
 }

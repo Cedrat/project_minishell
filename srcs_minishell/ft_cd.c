@@ -8,14 +8,14 @@ int		ft_cd(t_shell *shell)
 	while (shell->args[i])
 		i++;
 	if (i == 2 && chdir(shell->args[1]) == 0)
-		return (1);
+		return (shell->signal = 1);
 	else if (i == 1)
 	{
-		chdir(shell->home_path);
-		return (1);
+		shell->signal=chdir(shell->home_path);
+		return (shell->signal = 1);
 	}
 	else if (i > 2)
-		return (-2);
+		return (shell->signal = -2);
 	else
-		return (-1);
+		return (shell->signal = -1);
 }

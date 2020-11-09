@@ -11,5 +11,5 @@ int		ft_env(t_shell *shell)
 		}
 		shell->argenv++;
 	}
-	return (1);
+	return (shell->signal = 1);
 }
