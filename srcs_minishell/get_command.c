@@ -30,7 +30,7 @@ char	*ft_home_path(char **argenv)
 			while (argenv[i][j] != '=')
 				j++;
 			j++;
-			path = malloc(sizeof(char) * ft_strlen(argenv[i]) - j);
+			path = malloc(sizeof(char) * ft_strlen(argenv[i]) - j + 1);
 			ft_strncpy(&argenv[i][j], path, ft_strlen(argenv[i]) - j);
 			break;
 		}
