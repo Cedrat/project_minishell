@@ -1,104 +1,63 @@
 #include "../header/minishell.h"
 
-char	*ft_strncpy(char *src, char *dest, int len)
+void	ft_init_commands(t_shell *shell)
 {
-	int i;
-
-	i = 0;
-	while (src[i] != '\0' && len > 0)
-	{
-		dest[i] = src[i];
-		i++;
-		len--;
-	}
-	dest[i] = '\0';
-	return (dest);
+	shell->commands[0] = ft_strdup("echo");
+	shell->commands[1] = ft_strdup("cd");
+	shell->commands[2] = ft_strdup("pwd");
+	shell->commands[3] = ft_strdup("export");
+	shell->commands[4] = ft_strdup("unset");
+	shell->commands[5] = ft_strdup("env");
+	shell->commands[6] = ft_strdup("exit");
 }
 
-char	*ft_home_path(char **argenv)
+void	ft_init_functions(t_shell *shell)
 {
-	char	*path;
-	int 	i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	while (argenv[i])
-	{
-		if (ft_strncmp(argenv[i], "HOME=", 5) == 0)
-		{
-			while (argenv[i][j] != '=')
-				j++;
-			j++;
-			path = malloc(sizeof(char) * ft_strlen(argenv[i]) - j + 1);
-			ft_strncpy(&argenv[i][j], path, ft_strlen(argenv[i]) - j);
-			break;
-		}
-		i++;
-	}
-	return (path);
+	shell->function[0] = &ft_echo;
+	shell->function[1] = &ft_cd;
+	shell->function[2] = &ft_pwd;
+	shell->function[3] = &ft_export;
+	shell->function[4] = &ft_unset;
+	shell->function[5] = &ft_env;
+	shell->function[6] = &ft_exit;
 }
 
-
-void	ft_get_command(char **args, char **argenv)
+void	ft_get_command(t_shell *shell)
 {
-	char 	*commands[7] = {
-		"echo",
-		"cd",
-		"pwd",
-		"export",
-		"unset",
-		"env",
-		"exit"
-	};
-
-	int		(*function[7])() ={
-		&ft_echo,
-		&ft_cd,
-		&ft_pwd,
-		&ft_export,
-		&ft_unset,
-		&ft_env,
-		&ft_exit
-	};
+	ft_init_commands(shell);
+	ft_init_functions(shell);
 
 	int 	i;
 	int 	j;
 	int		found; //1 = success, 0 = command not found, -1 = wrong path/file, -2 = trop d'args
-	char	*home_path;
 
-	home_path = ft_home_path(argenv);
+	shell->home_path = ft_get_var(shell->argenv, "HOME="); //On recupere le path du home
+
 	i = 0;
-	j = 0;
 	found = 0;
 
-	while (args[i] && found == 0)
+	while (shell->args[i] && found == 0)
 	{
+		j = 0;
 		while (j < 7 && found == 0)
 		{
-			if (ft_strcmp(args[i], commands[j]) == 0 && ft_nopipes(args))
-				{
-					if (j == 1)
-						found = function[j](args, home_path);
-					else if (j == 3)
-						found = function[j](args, argenv);
-					else
-						found = function[j](argenv);
-				}
+			if (ft_strcmp(shell->args[i], shell->commands[j]) == 0 && ft_nopipes(shell->args))
+				found = shell->function[j](shell);
 			j++;
 		}
-		j = 0;
 		i++;
 	}
+
+	//Gestion des erreurs (a mettre dans une autre fonction qui reprendra errno ?)
 	if (found == 0)
 	{
 		ft_putstr("Command not found : ");
-		if (args[0])
-			ft_putstr(args[0]);
+		if (shell->args[0])
+			ft_putstr(shell->args[0]);
 	}
 	else if (found == -1)
 	{
-		ft_putstr(args[1]);
+		ft_putstr(shell->args[1]);
 		ft_putstr(" : No file or folder of this type ");
 	}
 	else if (found == -2)
@@ -106,9 +65,4 @@ void	ft_get_command(char **args, char **argenv)
 		ft_putstr(" Too many arguments ");
 	}
 	ft_putstr("\n");
-	// for (int i = 0; args[i]; i++)
-    //     {
-    //         ft_putstr(args[i]);
-    //         ft_putstr("\n");
-    //     }
 }

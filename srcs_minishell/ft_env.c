@@ -1,15 +1,15 @@
 #include "../header/minishell.h"
 
-int		ft_env(char **argenv)
+int		ft_env(t_shell *shell)
 {
-	while (*argenv)
+	while (*shell->argenv)
 	{
-		if (*argenv[0] != 0)
+		if (*shell->argenv[0] != 0)
 		{
-			ft_putstr(*argenv);
+			ft_putstr(*shell->argenv);
 			ft_putstr("\n");
 		}
-		argenv++;
+		shell->argenv++;
 	}
 	return (1);
 }
