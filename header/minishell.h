@@ -12,11 +12,10 @@
 /*-----------------------------*/
 typedef	struct	s_echo
 {
-	char	*token; //'none', 'sg_qt', 'db_qt'
+	int		token; //0 = none, 1 = single quote, 2 = double quote
 	int		sg_qt;
 	int		db_qt;
 	int		backslash;
-	int		first_token; //0 = none, 1 = single quote, 2 = double quote
 	char 	*var_name;		//HOME=, OLDPWD= etc...  -> Nom de la variable + '=''
 	char 	*var_path;		///home/diane, /bin/...  -> Adresse correspondant au nom de la var
 }				t_echo;

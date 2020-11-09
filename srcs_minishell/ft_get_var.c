@@ -46,7 +46,6 @@ char	*ft_extract_var_name(char *arg, int *j)
 	}
 	str[i] = '=';
 	str[i + 1] = '\0';
-	*j += 1;
 	return (str);
 }
 
