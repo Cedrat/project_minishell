@@ -18,6 +18,7 @@ typedef	struct	s_echo
 	int		backslash;
 	char 	*var_name;		//HOME=, OLDPWD= etc...  -> Nom de la variable + '=''
 	char 	*var_path;		///home/diane, /bin/...  -> Adresse correspondant au nom de la var
+	int		signal;
 }				t_echo;
 
 
@@ -69,6 +70,11 @@ int		ft_exit();
 char	*ft_extract_var_name(char *arg, int *j);
 char	*ft_get_var(char **argenv, char *tofind);
 
+
+
+void	ft_no_qt(t_echo *config, char *args, char **argenv);
+void	ft_double_qt(t_echo *config, char *args, char **argenv);
+void	ft_single_qt(t_echo *config, char *args, char **argenv);
 
 
 
