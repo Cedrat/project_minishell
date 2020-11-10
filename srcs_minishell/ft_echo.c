@@ -1,14 +1,67 @@
 #include "../header/minishell.h"
 
+void	ft_init_echo(t_echo *config)
+{
+	config->token = 0;
+	config->sg_qt = 0;
+	config->db_qt = 0;
+	config->backslash = 0;
+}
+
+
+
+
+
+int		ft_config_single_qt(t_echo *config, char *arg, int i)
+{
+	while (arg[i] != '\0')
+	{
+		if (arg[i] == '\'')
+		{
+			if (config->sg_qt == 0 && config->db_qt == 0)
+				config->token = 1;
+			config->sg_qt++;
+		}
+		if (config->sg_qt % 2 == 0)
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+int		ft_config_double_qt(t_echo *config, char *arg, int i)
+{
+	while (arg[i] != '\0')
+	{
+		if ((arg[i] == '\"' && arg[i - 1] != '\\')
+			|| (arg[i] == '\"' && arg[i - 1] == '\\' && config->backslash % 2 == 0))
+		{
+			if (config->sg_qt == 0 && config->db_qt == 0)
+				config->token = 2;
+			config->db_qt++;
+		}
+		if (config->db_qt % 2 == 0)
+			return (i);
+		i++;
+	}
+	return (i);
+}
+//Recursif ?
+
+//Config a revoir
+//Cas d'erreur : "test'"  - 'test"'  - 
+
+
+
+
+
+
 void	ft_echo_config(t_echo *config, char **args)
 {
 	int		i;
 	int 	j;
 
-	config->token = 0;
-	config->sg_qt = 0;
-	config->db_qt = 0;
-	config->backslash = 0;
+	ft_init_echo(config);
 	i = 1;
 	while (args[i])
 	{
@@ -17,29 +70,19 @@ void	ft_echo_config(t_echo *config, char **args)
 		{
 			if (args[i][j] == '\\')
 				config->backslash++;
-			if (args[i][j] == '\'' && config->db_qt % 2 == 0)
-			{
-				if (config->sg_qt == 0 && config->db_qt == 0)
-					config->token = 1;
-				config->sg_qt++;
-			}
-			else if ((args[i][j] == '\"' && args[i][j - 1] != '\\')
-			|| (args[i][j] == '\"' && args[i][j - 1] == '\\' && config->backslash % 2 == 0) && config->sg_qt % 2 == 0)
-			{
-				if (config->sg_qt == 0 && config->db_qt == 0)
-					config->token = 2;
-				config->db_qt++;
-			}
+			if (args[i][j] == '\'')
+				j = ft_config_single_qt(config, args[i], j);
+			else if (args[i][j] == '\"')
+				j = ft_config_double_qt(config, args[i], j);
 			j++;
 		}
 		i++;
 	}
 //Test des variables
-//printf("%d %d %d %s\n", config->sg_qt, config->db_qt, config->first_token, config->token);
+//printf("%d %d %d\n", config->sg_qt, config->db_qt, config->token);
 }
 
-//Config a revoir
-//Cas d'erreur : 
+
 
 void	ft_dollar_sign(char *args, char **argenv, t_echo *config, int *i)
 {
@@ -152,8 +195,7 @@ int		ft_echo(t_shell *shell)
 	config.signal = shell->signal;
 	//Gestion d'erreurs
 	ft_echo_config(&config, shell->args);
-	if ((config.token == 1 && (config.sg_qt % 2 != 0)) 
-		|| (config.token == 2 && (config.db_qt % 2 != 0))) //Nombre impair de quotes
+	if (config.sg_qt % 2 != 0 || config.db_qt % 2 != 0) //Nombre impair de quotes
 	{
 		ft_putstr("Wrong number of quotes :");
 		return (-2);
@@ -161,9 +203,9 @@ int		ft_echo(t_shell *shell)
 	//Gestion affichage
 	while (shell->args[i])
 	{
-		if (config.token == 1 && shell->args[i][0] == '\'')  //Gestion avec ''
+		if (config.token == 1 && shell->args[i][0] == '\'')  		//Gestion avec ''
 			ft_single_qt(&config, shell->args[i], shell->argenv);
-		else if (config.token == 2 && shell->args[i][0] == '\"')  //Gestion avec ""
+		else if (config.token == 2 && shell->args[i][0] == '\"')  	//Gestion avec ""
 			ft_double_qt(&config, shell->args[i], shell->argenv);
 		else 
 			ft_no_qt(&config, shell->args[i], shell->argenv);
