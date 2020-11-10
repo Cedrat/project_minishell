@@ -62,7 +62,7 @@ void	ft_get_command(t_shell *shell)
 	}
 	else if (found == -2)
 	{
-		ft_putstr(" Too many arguments ");
+		ft_putstr(" Too many/few arguments ");
 	}
 	ft_putstr("\n");
 }

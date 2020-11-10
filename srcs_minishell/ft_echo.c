@@ -9,7 +9,7 @@ void	ft_echo_config(t_echo *config, char **args)
 	config->sg_qt = 0;
 	config->db_qt = 0;
 	config->backslash = 0;
-	i = 0;
+	i = 1;
 	while (args[i])
 	{
 		j = 0;
@@ -17,14 +17,14 @@ void	ft_echo_config(t_echo *config, char **args)
 		{
 			if (args[i][j] == '\\')
 				config->backslash++;
-			if (args[i][j] == '\'')
+			if (args[i][j] == '\'' && config->db_qt % 2 == 0)
 			{
 				if (config->sg_qt == 0 && config->db_qt == 0)
 					config->token = 1;
 				config->sg_qt++;
 			}
 			else if ((args[i][j] == '\"' && args[i][j - 1] != '\\')
-			|| (args[i][j] == '\"' && args[i][j - 1] == '\\' && config->backslash % 2 == 0))
+			|| (args[i][j] == '\"' && args[i][j - 1] == '\\' && config->backslash % 2 == 0) && config->sg_qt % 2 == 0)
 			{
 				if (config->sg_qt == 0 && config->db_qt == 0)
 					config->token = 2;
@@ -37,6 +37,9 @@ void	ft_echo_config(t_echo *config, char **args)
 //Test des variables
 //printf("%d %d %d %s\n", config->sg_qt, config->db_qt, config->first_token, config->token);
 }
+
+//Config a revoir
+//Cas d'erreur : 
 
 void	ft_dollar_sign(char *args, char **argenv, t_echo *config, int *i)
 {
@@ -64,15 +67,13 @@ void	ft_single_qt(t_echo *config, char *args, char **argenv)
 	{
 		if (args[i] == '\'')
 			config->sg_qt--;
-		if (config->sg_qt % 2 == 0 && args[i + 1] == '\"')
+		if (config->sg_qt % 2 == 0)
 		{
-			ft_double_qt(config, &args[i + 1], argenv);
-				return ;
-		}
-		else if (config->sg_qt % 2 == 0 && args[i + 1] != '\0')
-		{
-			ft_no_qt(config, &args[i + 1], argenv);
-				return ;
+			if (args[i + 1] == '\"')
+				ft_double_qt(config, &args[i + 1], argenv);
+			else if (args[i + 1] != '\0')
+				ft_no_qt(config, &args[i + 1], argenv);
+			return ;
 		}
 		if (args[i] != '\'')
 			ft_putchar_fd(args[i], 1);
@@ -91,14 +92,12 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv)
 			ft_dollar_sign(args, argenv, config, &i);
 		if (args[i] == '\"')
 			config->db_qt--;
-		if (config->db_qt % 2 == 0 && args[i + 1] == '\'')
+		if (config->db_qt % 2 == 0)
 		{
-			ft_single_qt(config, &args[i + 1], argenv);
-			return ;
-		}
-		else if (config->db_qt == 0 && args[i + 1] != '\0')
-		{
-			ft_no_qt(config, &args[i + 1], argenv);
+			if (args[i + 1] == '\'')
+				ft_single_qt(config, &args[i + 1], argenv);
+			else if (args[i + 1] != '\0')
+				ft_no_qt(config, &args[i + 1], argenv);
 			return ;
 		}
 		else if ((args[i] == '\\' && args[i + 1] == '\\') 
@@ -120,22 +119,20 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv)
 	while (args[i] != '\0')
 	{
 		if (args[i] == '|' || args[i] == ';') 	//Gestion future
-			break ;						//Gestion future
+			break ;								//Gestion future
 		if (args[i] == '$')
 			ft_dollar_sign(args, argenv, config, &i);
-		else if (args[i] == '~' && args[i + 1] == '\0' && !args[i - 1])
+		else if (args[i] == '~' && !args[i + 1] && !args[i - 1])
 		{
 			ft_putstr(getcwd(str, 256));
 			i++;
 		}
-		if (args[i] == '\'')
+		else if (args[i] == '\'' || args[i] == '\"')
 		{
-			ft_single_qt(config, &args[i], argenv);
-			return ;
-		}
-		else if (args[i] == '\"')
-		{
-			ft_double_qt(config, &args[i], argenv);
+			if (args[i] == '\'')
+				ft_single_qt(config, &args[i], argenv);
+			else if (args[i] == '\"')
+				ft_double_qt(config, &args[i], argenv);
 			return ;
 		}
 		else if ((args[i] == '\\' && args[i + 1] == '\\') 
@@ -161,13 +158,14 @@ int		ft_echo(t_shell *shell)
 		ft_putstr("Wrong number of quotes :");
 		return (-2);
 	}
+	//Gestion affichage
 	while (shell->args[i])
 	{
 		if (config.token == 1 && shell->args[i][0] == '\'')  //Gestion avec ''
 			ft_single_qt(&config, shell->args[i], shell->argenv);
 		else if (config.token == 2 && shell->args[i][0] == '\"')  //Gestion avec ""
 			ft_double_qt(&config, shell->args[i], shell->argenv);
-		else  //Gestion sans quotes
+		else 
 			ft_no_qt(&config, shell->args[i], shell->argenv);
 		ft_putstr(" ");
 		i++;
