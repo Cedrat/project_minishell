@@ -70,8 +70,8 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, int signal)
 		}
 		else if (args[i] == '$' && args[i + 1] == '?')
 		{
-			ft_putnbr_fd(signal, 1); //Doit renvoyer signal emit par derniere commande
-			i += 2;			 //0=reussite, -1 = echec. Et on avance jusqu'à après le '?'
+			ft_putnbr_fd(signal, 1);
+			i += 2;
 		}
 		if (args[i] == '$' && !ft_strchr(" \"\\\'\0\n", args[i + 1]))
 		{
@@ -90,12 +90,58 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, int signal)
 	}
 }
 
+//------------------------
+//Ajouter fonction pour compter nb de quotes et renvoyer vers autre focntion
+//si nb de quote == au nb total
+//ex : test"test"test == none->db_qt->none
+//------------------------
 
-void	ft_no_qt(t_echo *config, char *args, char **argenv)
+void	ft_no_qt(t_echo *config, char *args, char **argenv, int signal)
 {
+	int 	i;
+	char	str[256];
 
+	i = 0;
+	while (args[i] != '\0')
+	{
+		if (args[i] == '|' || args[i] == ';') //Gestion future
+			return ;
+		if (args[i] == '\'')
+		{
+			ft_single_qt(config, &args[i]);
+			return ;  //A enlever quand gestion nb de quotes pour renvoyer bonne fonction
+		}
+		else if (args[i] == '\"')
+		{
+			ft_double_qt(config, &args[i], argenv, signal);
+			return ;  //A enlever quand gestion nb de quotes pour renvoyer bonne fonction
+		}
+		if (args[i] == '$' && args[i + 1] == '?')
+		{
+			ft_putnbr_fd(signal, 1);
+			i += 2;
+		}
+		if (args[i] == '$' && !ft_strchr(" \"\\\'\0\n", args[i + 1]))
+		{
+			config->var_name = ft_extract_var_name(args, &i);
+			config->var_path = ft_get_var(argenv, config->var_name);
+			if (config->var_path)
+				ft_putstr(config->var_path);
+		}
+		else if (args[i] == '~' && args[i + 1] == '\0')
+		{
+			ft_putstr(getcwd(str, 256));
+			i++;
+		}
+		else if ((args[i] == '\\' && args[i + 1] != '\\') || (args[i] == '\\' && args[i + 1] == '\"')
+				|| (args[i] == '\\' && args[i + 1] == '\''))
+			i++;
+		ft_putchar_fd(args[i], 1);
+		i++;
+	}
 }
 
+//Gestion backslash à revoir (\\ = \, \\\ = 1, \\\\ = 2)
 
 
 int		ft_echo(t_shell *shell)
@@ -114,17 +160,14 @@ int		ft_echo(t_shell *shell)
 			ft_putstr("Wrong number of quotes :");
 			return (-2);
 		}
-		if (config.token == 1)  //Gestion avec ''
+		if (config.token == 1 && shell->args[i][0] == '\'')  //Gestion avec ''
 			ft_single_qt(&config, shell->args[i]);
-		else if (config.token == 2)  //Gestion avec ""
+		else if (config.token == 2 && shell->args[i][0] == '\"')  //Gestion avec ""
 			ft_double_qt(&config, shell->args[i], shell->argenv, shell->signal);
-		else if (config.token == 0)  //Gestion sans quotes
-		{
-		//A gerer : else if (args[i][j] == '~')
-					//ft_putstr(getcwd(str, 256));
-		}
-		else
-			return (shell->signal = -1); //Pas de token = erreur
+		else  //Gestion sans quotes
+			ft_no_qt(&config, shell->args[i], shell->argenv, shell->signal);
+		//else
+		//	return (shell->signal = -1); //Pas de token = erreur
 		ft_putstr(" ");
 		i++;
 	}
