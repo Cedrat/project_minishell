@@ -24,13 +24,13 @@ void	ft_init_functions(t_shell *shell)
 
 void	ft_get_command(t_shell *shell)
 {
-	ft_init_commands(shell);
-	ft_init_functions(shell);
-
 	int 	i;
 	int 	j;
 	int		found; //1 = success, 0 = command not found, -1 = wrong path/file, -2 = trop d'args
 
+	shell->echo = malloc(sizeof(t_echo));
+	ft_init_commands(shell);
+	ft_init_functions(shell);
 	shell->home_path = ft_get_var(shell->argenv, "HOME="); //On recupere le path du home
 
 	i = 0;
@@ -64,5 +64,6 @@ void	ft_get_command(t_shell *shell)
 	{
 		ft_putstr(" Too many/few arguments ");
 	}
-	ft_putstr("\n");
+	if (shell->echo->option_n == 0)
+		ft_putstr("\n");
 }
