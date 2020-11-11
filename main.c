@@ -10,6 +10,25 @@ void ft_putstr(char *word)
 }
 
 
+t_list *ft_convert_2dchar_chainedlist(char **str)
+{
+	size_t i;
+	t_list *char_list;
+	t_list *new;
+
+
+	i = 0;
+	char_list = ft_lstnew(str[i]);
+	i++;
+	while (str[i])
+	{
+		new = ft_lstnew(str[i]);
+		ft_lstadd_back(&char_list, new);
+		i++;
+	}
+	return (char_list);
+}
+
 int main (int argc, char **argv, char **argenv)
 {
 	t_shell	shell;	//Structure generale
@@ -17,6 +36,7 @@ int main (int argc, char **argv, char **argenv)
 	char cwd[256];
 	size_t i = 0;
 
+	shell.argenvs = ft_convert_2dchar_chainedlist(argenv);
 	while(1)
 	{
 		ft_putstr("~");

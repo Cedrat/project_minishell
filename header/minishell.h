@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "libft.h"
+#include <stddef.h>
+
+
 
 
 /*-----------------------------*/
@@ -29,19 +32,19 @@ typedef	struct	s_shell
 {
 	char 	**args;
 	char 	**argenv;
+	t_list 	* 	argenvs;
 
 	char 	*commands[7];
 	int		(*function[7])();
 
 	int		signal;		//Return value of the last built-in used
 	char 	*home_path;
-	
+
 	t_echo	*echo;		//A voir si on la garde dedans ou si on laisse séparé ?
 
 
 
 }				t_shell;
-
 
 
 /*-----------------------------*/
@@ -68,7 +71,7 @@ int		ft_exit();
 
 char	*ft_extract_var_name(char *arg, int *j);
 char	*ft_get_var(char **argenv, char *tofind);
-
+void 	export_env(t_list **shell, char *arg);
 
 
 
