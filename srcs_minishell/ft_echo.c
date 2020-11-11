@@ -8,10 +8,6 @@ void	ft_init_echo(t_echo *config)
 	config->backslash = 0;
 }
 
-
-
-
-
 int		ft_config_single_qt(t_echo *config, char *arg, int i)
 {
 	while (arg[i] != '\0')
@@ -47,12 +43,6 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 	return (i);
 }
 //Recursif ?
-
-//Config a revoir
-//Cas d'erreur : "test'"  - 'test"'  - 
-
-
-
 
 
 
@@ -143,10 +133,10 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv)
 				ft_no_qt(config, &args[i + 1], argenv);
 			return ;
 		}
-		else if ((args[i] == '\\' && args[i + 1] == '\\') 
+		else if ((args[i] == '\\' && args[i + 1] == '\\')
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
-		if ((args[i] != '\"') 
+		if ((args[i] != '\"')
 			|| (args[i] == '\"' && args[i - 1] == '\\' && args[i - 2] != '\\'))
 			ft_putchar_fd(args[i], 1);
 		i++;
@@ -178,7 +168,7 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv)
 				ft_double_qt(config, &args[i], argenv);
 			return ;
 		}
-		else if ((args[i] == '\\' && args[i + 1] == '\\') 
+		else if ((args[i] == '\\' && args[i + 1] == '\\')
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
 		ft_putchar_fd(args[i], 1);
@@ -207,7 +197,7 @@ int		ft_echo(t_shell *shell)
 			ft_single_qt(&config, shell->args[i], shell->argenv);
 		else if (config.token == 2 && shell->args[i][0] == '\"')  	//Gestion avec ""
 			ft_double_qt(&config, shell->args[i], shell->argenv);
-		else 
+		else
 			ft_no_qt(&config, shell->args[i], shell->argenv);
 		ft_putstr(" ");
 		i++;
