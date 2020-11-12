@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include "libft.h"
 #include <stddef.h>
-
-
+#include <signal.h>
+#include <errno.h>
 
 
 /*-----------------------------*/
@@ -21,7 +21,8 @@ typedef	struct	s_echo
 	int		backslash;
 	char 	*var_name;		//HOME=, OLDPWD= etc...  -> Nom de la variable + '=''
 	char 	*var_path;		///home/diane, /bin/...  -> Adresse correspondant au nom de la var
-	int		signal;
+	int 	option_n;
+	int 	signal;
 }				t_echo;
 
 

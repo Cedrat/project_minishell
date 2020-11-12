@@ -2,10 +2,23 @@
 
 int		ft_pwd(t_shell *shell)
 {
-	char	str[255];
+	char 	*path;
+	size_t	path_size;
 
-	//Inclure une fonction pour gérer automatiquement la longueur de la string ?
-	//Avec du malloc, et on rajoute de la memoire si la string est trop grande ?
-	ft_putstr(getcwd(str, 256));
+	path_size = 255;
+	while (!path)
+	{
+		path = malloc(sizeof(char) * path_size + 1);
+		if (!getcwd(path, path_size))
+		{
+			free(path);
+			path = NULL;
+			if (errno = ERANGE)
+				path_size *= 2;
+			else
+				return (shell->signal = -1);
+		}
+	}
+	ft_putstr(path);
 	return (shell->signal = 1);
 }
