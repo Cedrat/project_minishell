@@ -29,7 +29,7 @@ void	ft_get_command(t_shell *shell)
 {
 	int 	i;
 	int 	j;
-	int		found; //1 = success, 0 = command not found, -1 = wrong path/file, -2 = trop d'args
+	int		found; //0 = success, -1 = command not found, -2 = wrong path/file, -3 = trop d'args
 
 	ft_init_commands(shell);
 	ft_init_functions(shell);
@@ -51,18 +51,18 @@ void	ft_get_command(t_shell *shell)
 	}
 
 	//Gestion des erreurs (a mettre dans une autre fonction qui reprendra errno ?)
-	if (found == 0)
+	if (found == -1)
 	{
 		ft_putstr("Command not found : ");
 		if (shell->args[0])
 			ft_putstr(shell->args[0]);
 	}
-	else if (found == -1)
+	else if (found == -2)
 	{
 		ft_putstr(shell->args[1]);
 		ft_putstr(" : No file or folder of this type ");
 	}
-	else if (found == -2)
+	else if (found == -3)
 	{
 		ft_putstr(" Too many/few arguments ");
 	}

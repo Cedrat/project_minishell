@@ -16,5 +16,5 @@ int		ft_env(t_shell *shell)
 		}
 		i++;
 	}
-	return (shell->signal = 1);
+	return (shell->signal = 0);
 }

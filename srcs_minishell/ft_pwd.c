@@ -17,9 +17,9 @@ int		ft_pwd(t_shell *shell)
 			if (errno = ERANGE)
 				path_size *= 2;
 			else
-				return (shell->signal = -1);
+				return (shell->signal = -2);
 		}
 	}
 	ft_putstr(path);
-	return (shell->signal = 1);
+	return (shell->signal = 0);
 }

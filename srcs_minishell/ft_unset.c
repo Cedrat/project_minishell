@@ -55,5 +55,5 @@ int		ft_unset(t_shell *shell)
 		}
 		o++;
 	}
-	return (shell->signal = 1);
+	return (shell->signal = 0);
 }

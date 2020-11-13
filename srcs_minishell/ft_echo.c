@@ -188,7 +188,7 @@ int		ft_echo(t_shell *shell)
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0) //Nombre impair de quotes
 	{
 		ft_putstr("Wrong number of quotes :");
-		return (-2);
+		return (-3);
 	}
 
 	if (shell->echo->option_n == 1)
@@ -209,5 +209,5 @@ int		ft_echo(t_shell *shell)
 			ft_putstr(" ");
 		i++;
 	}
-	return (shell->signal = 1);
+	return (shell->signal = 0);
 }
