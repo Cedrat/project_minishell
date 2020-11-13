@@ -155,5 +155,5 @@ int		ft_export(t_shell *shell)
 	}
 	if (shell->args[1] == 0)
 		display_export(shell->argenv);
-	return (shell->signal = 1);
+	return (shell->signal = 0);
 }
