@@ -10,7 +10,7 @@ int		ft_env(t_shell *shell)
 		{
 			if (ft_charispresent(shell->argenv[i], '='))
 			{
-				ft_putstr(shell->argenv[i]);
+				ft_beautifull_export(shell->argenv[i], 0);
 				ft_putstr("\n");
 			}
 		}

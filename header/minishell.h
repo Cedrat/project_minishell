@@ -86,6 +86,9 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv);
 void	ft_double_qt(t_echo *config, char *args, char **argenv);
 void	ft_single_qt(t_echo *config, char *args, char **argenv);
 
+void ft_beautifull_export(char *str, int is_export);
+char *ft_str_treatement(char *str);
+
 
 
 
