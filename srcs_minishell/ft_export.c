@@ -23,8 +23,10 @@ void display_export(char **char_list)
 			ft_putchar_fd(*str, 1);
 			str++;
 			ft_putstr("\"");
-			while (*str)
+			while(*str)
 			{
+				if (*str == '"')
+					ft_putchar_fd('\\', 1);
 				ft_putchar_fd(*str, 1);
 				str++;
 			}
@@ -113,7 +115,7 @@ void modify_env(char **argenv, char *str)
 	while(argenv[p])
 	{
 		i = 0;
-		while (str[i] != '=' && str[i])
+		while (argenv[p][i] != '=' && argenv[p][i])
 			i++;
 		if (!(ft_strncmp(str, argenv[p], i)))
 		{
@@ -135,11 +137,12 @@ void export_env(t_shell *shell, char *arg)
 
 int		ft_export(t_shell *shell)
 {
-	// ft_tri_tab_str(shell->argenv);
 	int i = 0;
+	char *str;
 	while (shell->args[i+ 1])
 	{
-		if (!(ft_is_varenv(shell->args[i + 1])))
+		str = ft_str_treatement(shell->args[i+ 1]);
+		if (!(ft_is_varenv(str)))
 		{
 			ft_putstr("minishell: export: « ");
 			ft_putstr(shell->args[i + 1]);
@@ -149,7 +152,7 @@ int		ft_export(t_shell *shell)
 		}
 		else
 		{
-			export_env(shell, shell->args[i + 1]);
+			export_env(shell, str);
 		}
 		i++;
 	}
