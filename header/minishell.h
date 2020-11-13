@@ -44,7 +44,7 @@ typedef	struct	s_shell
 
 	t_echo	*echo;		//A voir si on la garde dedans ou si on laisse séparé ?
 
-
+	int		newline;
 
 }				t_shell;
 

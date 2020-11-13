@@ -76,8 +76,6 @@ void	ft_echo_config(t_echo *config, char **args)
 //printf("%d %d %d\n", config->sg_qt, config->db_qt, config->token);
 }
 
-
-
 void	ft_dollar_sign(char *args, char **argenv, t_echo *config, int *i)
 {
 	if (args[*i] == '$' && args[*i + 1] == '?')
@@ -184,8 +182,8 @@ int		ft_echo(t_shell *shell)
 {
 	int 	i;
 
-	//shell->echo.signal = shell->signal;
 	//Gestion d'erreurs
+	shell->echo->signal = shell->signal;
 	ft_echo_config(shell->echo, shell->args);
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0) //Nombre impair de quotes
 	{
