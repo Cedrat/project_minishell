@@ -12,6 +12,7 @@ void	ft_init_commands(t_shell *shell)
 	shell->commands[6] = ft_strdup("exit");
 	shell->newline = 0;
 	shell->signal= 0;
+	shell->echo->option_n = 1;
 }
 
 void	ft_init_functions(t_shell *shell)

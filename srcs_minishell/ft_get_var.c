@@ -64,8 +64,8 @@ char	*ft_get_var(char **argenv, char *tofind)
 			while (argenv[i][j] != '=')
 				j++;
 			j++;
-			path = malloc(sizeof(char) * ft_strlen(argenv[i]) - j);
-			ft_strncpy(&argenv[i][j], path, ft_strlen(argenv[i]) - j);
+			path = malloc(sizeof(char) * (ft_strlen(argenv[i]) - j + 1));
+			ft_strncpy(&argenv[i][j], path, (ft_strlen(argenv[i]) - j + 1));
 			return (path);
 		}
 		i++;
