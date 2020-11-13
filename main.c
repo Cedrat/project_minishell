@@ -16,7 +16,6 @@ t_list *ft_convert_2dchar_chainedlist(char **str)
 	t_list *char_list;
 	t_list *new;
 
-
 	i = 0;
 	char_list = ft_lstnew(str[i]);
 	i++;
@@ -29,6 +28,25 @@ t_list *ft_convert_2dchar_chainedlist(char **str)
 	return (char_list);
 }
 
+char **ft_dup_arg(char **arg)
+{
+	size_t i = 0;
+	char **new_tab;
+
+	while (arg[i])
+		i++;
+	new_tab = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+
+	while (arg[i])
+	{
+		new_tab[i] = ft_strdup(arg[i]);
+		i++;
+	}
+	new_tab[i] = 0;
+	return (new_tab);
+}
+
 int main (int argc, char **argv, char **argenv)
 {
 	t_shell	shell;	//Structure generale
@@ -36,7 +54,7 @@ int main (int argc, char **argv, char **argenv)
 	char cwd[256];
 	size_t i = 0;
 
-	shell.argenvs = ft_convert_2dchar_chainedlist(argenv);
+	shell.argenv = ft_dup_arg(argenv);
 	while(1)
 	{
 		ft_putstr("~");
@@ -49,7 +67,6 @@ int main (int argc, char **argv, char **argenv)
 		i = 0;
 
 		shell.args = ft_parser(buff);
-		shell.argenv = argenv;
 		ft_get_command(&shell);
 		free(shell.args);
 	}

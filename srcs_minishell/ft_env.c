@@ -2,14 +2,19 @@
 
 int		ft_env(t_shell *shell)
 {
-	while (*shell->argenv)
+	size_t i = 0;
+
+	while (shell->argenv[i])
 	{
-		if (*shell->argenv[0] != 0)
+		if (shell->argenv[0] != 0)
 		{
-			ft_putstr(*shell->argenv);
-			ft_putstr("\n");
+			if (ft_charispresent(shell->argenv[i], '='))
+			{
+				ft_putstr(shell->argenv[i]);
+				ft_putstr("\n");
+			}
 		}
-		shell->argenv++;
+		i++;
 	}
 	return (shell->signal = 1);
 }

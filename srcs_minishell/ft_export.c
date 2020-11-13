@@ -1,14 +1,18 @@
 #include "../header/minishell.h"
 
-void display_export(t_list *char_list)
+void display_export(char **char_list)
 {
-
+	char **temp_tab_char;
 	char *str;
+	size_t i;
 
-	while (char_list)
+	i = 0;
+	temp_tab_char = ft_dup_arg(char_list);
+	ft_tri_tab_str(temp_tab_char);
+	while (temp_tab_char[i])
 	{
 		ft_putstr("declare -x ");
-		str = char_list->content;
+		str = temp_tab_char[i];
 		while (*str != '=' && *str)
 		{
 			ft_putchar_fd(*str, 1);
@@ -26,9 +30,10 @@ void display_export(t_list *char_list)
 			}
 			ft_putstr("\"");
 		}
-		char_list = char_list->next;
 		ft_putstr("\n");
+		i++;
 	}
+	ft_free_tab(temp_tab_char);
 }
 
 size_t sizeofenv(char **argenv)
@@ -41,74 +46,100 @@ size_t sizeofenv(char **argenv)
 	return (i);
 }
 
-int env_exist(t_list *env, char *arg)
+int ft_is_varenv(char *env)
+{
+	size_t i = 0;
+
+	if (!ft_isalpha(env[i]) && env[i] != '_')
+		return (0);
+	i++;
+	while (env[i] != '=' && env[i])
+	{
+		if (!(ft_isalnum(env[i])))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int env_exist(char **env, char *arg)
 {
 	size_t i;
+	char *str;
 
 	i = 0;
 	while (arg[i] != '=' && arg[i])
 		i++;
 
-	while(env)
+	while(*env)
 	{
 		i = 0;
-		while (arg[i] != '=' && arg[i])
+		str = *env;
+		while (str[i] != '=' && str[i])
 			i++;
-		if (!(ft_strncmp(arg, env->content, i)))
+		if (!(ft_strncmp(arg, str, i)))
 			return (1);
-		env = env->next;
+		env++;
 	}
 	return (0);
 }
 
-void ft_modify_list(t_list **envs, char *str)
+
+char **add_env(char **arg, char *str)
 {
-	t_list *new;
-	t_list *temp;
-	t_list *save;
-	size_t i;
-	void *head;
+	char **new_tab;
 
-	temp = *envs;
-	head = temp;
+	size_t i = 0;
+	while (arg[i])
+		i++;
+	new_tab = malloc(sizeof(char *) * (i + 2));
+	i = 0;
+	while (arg[i])
+	{
+		new_tab[i] = ft_strdup(arg[i]);
+		i++;
+	}
+	new_tab[i] = str;
+	new_tab[i + 1] = 0;
+	ft_free_tab(arg);
+	return (new_tab);
+}
 
-	while(temp)
+void modify_env(char **argenv, char *str)
+{
+	size_t i = 0;
+	size_t p = 0;
+
+	while(argenv[p])
 	{
 		i = 0;
 		while (str[i] != '=' && str[i])
 			i++;
-		if (!(ft_strncmp(str, temp->content, i)))
+		if (!(ft_strncmp(str, argenv[p], i)))
 		{
-			new = ft_lstnew(str);
-			break;
+			argenv[p] = str;          // free l'ancien curseur ?
 		}
-		save = temp;
-		temp = temp->next;
+		p++;
 	}
-	save->next = temp->next;
-	ft_lstadd_back(envs, new);
-	free(temp);
 }
 
-void export_env(t_list **envs, char *arg)
+void export_env(t_shell *shell, char *arg)
 {
-	t_list *new;
-	if (!(env_exist(*envs, arg)))
-	{
-		new = ft_lstnew(arg);
-		ft_lstadd_back(envs, new);
-	}
-	else if (ft_charispresent(arg, '='))
-		ft_modify_list(envs, arg);
+	if (env_exist(shell->argenv, arg) && ft_charispresent(arg, '='))
+		modify_env(shell->argenv, arg);
+	else if (env_exist(shell->argenv, arg))
+		return ;
+	else
+		shell->argenv = add_env(shell->argenv, arg);
 }
 
 int		ft_export(t_shell *shell)
 {
-	ft_tri_tab_str(shell->argenv);
+	// ft_tri_tab_str(shell->argenv);
 	int i = 0;
 	while (shell->args[i+ 1])
 	{
-		if (!(ft_isalpha(shell->args[i + 1][0])))
+		if (!(ft_is_varenv(shell->args[i + 1])))
 		{
 			ft_putstr("minishell: export: « ");
 			ft_putstr(shell->args[i + 1]);
@@ -118,11 +149,11 @@ int		ft_export(t_shell *shell)
 		}
 		else
 		{
-			export_env(&shell->argenvs, shell->args[i + 1]);
+			export_env(shell, shell->args[i + 1]);
 		}
 		i++;
 	}
 	if (shell->args[1] == 0)
-		display_export(shell->argenvs);
+		display_export(shell->argenv);
 	return (shell->signal = 1);
 }

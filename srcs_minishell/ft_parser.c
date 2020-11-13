@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/09 18:36:42 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/12 20:11:12 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ char **ft_parser(char *str)
 	return (tab);
 }
 
-void ft_free_tab_made_by_parser(char **tab)
+void ft_free_tab(char **tab)
 {
 	size_t i = 0;
 	while (tab[i])
