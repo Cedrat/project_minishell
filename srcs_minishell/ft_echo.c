@@ -6,6 +6,7 @@ void	ft_init_echo(t_echo *config)
 	config->sg_qt = 0;
 	config->db_qt = 0;
 	config->backslash = 0;
+	config->option_n = 0;
 }
 
 int		ft_config_single_qt(t_echo *config, char *arg, int i)
@@ -42,9 +43,6 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 	}
 	return (i);
 }
-//Recursif ?
-
-
 
 void	ft_echo_config(t_echo *config, char **args)
 {
@@ -52,7 +50,13 @@ void	ft_echo_config(t_echo *config, char **args)
 	int 	j;
 
 	ft_init_echo(config);
-	i = 1;
+	if (ft_strcmp(args[1], "-n") == 0)
+	{
+		i = 2;
+		config->option_n = 1;
+	}
+	else
+		i = 1;
 	while (args[i])
 	{
 		j = 0;
@@ -71,8 +75,6 @@ void	ft_echo_config(t_echo *config, char **args)
 //Test des variables
 //printf("%d %d %d\n", config->sg_qt, config->db_qt, config->token);
 }
-
-
 
 void	ft_dollar_sign(char *args, char **argenv, t_echo *config, int *i)
 {
@@ -178,28 +180,33 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv)
 
 int		ft_echo(t_shell *shell)
 {
-	t_echo	config;
 	int 	i;
 
-	i = 1;
-	config.signal = shell->signal;
 	//Gestion d'erreurs
-	ft_echo_config(&config, shell->args);
-	if (config.sg_qt % 2 != 0 || config.db_qt % 2 != 0) //Nombre impair de quotes
+	shell->echo->signal = shell->signal;
+	ft_echo_config(shell->echo, shell->args);
+	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0) //Nombre impair de quotes
 	{
 		ft_putstr("Wrong number of quotes :");
 		return (-2);
 	}
+
+	if (shell->echo->option_n == 1)
+		i = 2;
+	else
+		i = 1;
+
 	//Gestion affichage
 	while (shell->args[i])
 	{
-		if (config.token == 1 && shell->args[i][0] == '\'')  		//Gestion avec ''
-			ft_single_qt(&config, shell->args[i], shell->argenv);
-		else if (config.token == 2 && shell->args[i][0] == '\"')  	//Gestion avec ""
-			ft_double_qt(&config, shell->args[i], shell->argenv);
+		if (shell->echo->token == 1 && shell->args[i][0] == '\'')  		//Gestion avec ''
+			ft_single_qt(shell->echo, shell->args[i], shell->argenv);
+		else if (shell->echo->token == 2 && shell->args[i][0] == '\"')  	//Gestion avec ""
+			ft_double_qt(shell->echo, shell->args[i], shell->argenv);
 		else
-			ft_no_qt(&config, shell->args[i], shell->argenv);
-		ft_putstr(" ");
+			ft_no_qt(shell->echo, shell->args[i], shell->argenv);
+		if (shell->args[i + 1])
+			ft_putstr(" ");
 		i++;
 	}
 	return (shell->signal = 1);

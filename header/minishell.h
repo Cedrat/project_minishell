@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include "libft.h"
 #include <stddef.h>
-
-
+#include <signal.h>
+#include <errno.h>
 
 
 /*-----------------------------*/
@@ -21,7 +21,8 @@ typedef	struct	s_echo
 	int		backslash;
 	char 	*var_name;		//HOME=, OLDPWD= etc...  -> Nom de la variable + '=''
 	char 	*var_path;		///home/diane, /bin/...  -> Adresse correspondant au nom de la var
-	int		signal;
+	int 	option_n;
+	int 	signal;
 }				t_echo;
 
 
@@ -42,7 +43,7 @@ typedef	struct	s_shell
 
 	t_echo	*echo;		//A voir si on la garde dedans ou si on laisse séparé ?
 
-
+	int		newline;
 
 }				t_shell;
 
@@ -75,6 +76,11 @@ void 	export_env(t_shell *env, char *arg);
 
 
 char **ft_dup_arg(char **arg);
+
+void	ft_no_qt(t_echo *config, char *args, char **argenv);
+void	ft_double_qt(t_echo *config, char *args, char **argenv);
+void	ft_single_qt(t_echo *config, char *args, char **argenv);
+
 
 void	ft_no_qt(t_echo *config, char *args, char **argenv);
 void	ft_double_qt(t_echo *config, char *args, char **argenv);
