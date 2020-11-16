@@ -37,12 +37,12 @@ void	ft_get_command(t_shell *shell)
 	shell->home_path = ft_get_var(shell->argenv, "HOME="); //On recupere le path du home
 
 	i = 0;
-	found = 0;
+	found = -1;
 
-	while (shell->args[i] && found == 0)
+	while (shell->args[i] && found == -1)
 	{
 		j = 0;
-		while (j < 7 && found == 0)
+		while (j < 7 && found == -1)
 		{
 			if (ft_strcmp(shell->args[i], shell->commands[j]) == 0 && ft_nopipes(shell->args))
 				found = shell->function[j](shell);
@@ -57,6 +57,7 @@ void	ft_get_command(t_shell *shell)
 		ft_putstr("Command not found : ");
 		if (shell->args[0])
 			ft_putstr(shell->args[0]);
+		ft_putstr("\n");
 	}
 	else if (found == -2)
 	{

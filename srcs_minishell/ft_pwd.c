@@ -21,6 +21,7 @@ int		ft_pwd(t_shell *shell)
 		}
 	}
 	ft_putstr(path);
+	ft_putstr("\n");
 	free(path);
 	return (shell->signal = 0);
 }

@@ -30,7 +30,7 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 {
 	while (arg[i] != '\0')
 	{
-		if ((arg[i] == '\"' && arg[i - 1] != '\\')
+		if ((i == 0 && arg[i] == '\"') || (arg[i] == '\"' && arg[i - 1] != '\\')
 			|| (arg[i] == '\"' && arg[i - 1] == '\\' && config->backslash % 2 == 0))
 		{
 			if (config->sg_qt == 0 && config->db_qt == 0)
@@ -89,6 +89,7 @@ void	ft_dollar_sign(char *args, char **argenv, t_echo *config, int *i)
 		config->var_path = ft_get_var(argenv, config->var_name);
 		if (config->var_path)
 			ft_putstr(config->var_path);
+		free(config->var_path);
 	}
 }
 
@@ -183,6 +184,8 @@ int		ft_echo(t_shell *shell)
 	int 	i;
 
 	//Gestion d'erreurs
+	if (!shell->args[1])
+		return (0);
 	shell->echo->signal = shell->signal;
 	ft_echo_config(shell->echo, shell->args);
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0) //Nombre impair de quotes
