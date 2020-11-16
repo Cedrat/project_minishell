@@ -53,6 +53,7 @@ int main (int argc, char **argv, char **argenv)
 	char buff[256];
 	char cwd[256];
 	size_t i = 0;
+	char **args;
 
 	shell.argenv = ft_dup_arg(argenv);
 	while(1)
@@ -65,9 +66,14 @@ int main (int argc, char **argv, char **argenv)
 			i++;
 		buff[i] = '\0';
 		i = 0;
-
-		shell.args = ft_parser(buff);
-		ft_get_command(&shell);
-		free(shell.args);
+		args = ft_args(buff);
+		while (args[i])
+		{
+			shell.args = ft_parser(args[i]);
+			ft_get_command(&shell);
+			free(shell.args);
+			i++;
+		}
+		free(args);
 	}
 }

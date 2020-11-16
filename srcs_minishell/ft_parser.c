@@ -6,19 +6,17 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/12 20:11:12 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/16 18:47:20 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
 
 void ft_strndup(char **dest, char *src, size_t start, size_t end)
 {
 	char *str;
 	size_t i;
 	i = 0;
-
 
 	str = malloc(sizeof(char) * (end - start + 1));
 	while (start < end && src[start])

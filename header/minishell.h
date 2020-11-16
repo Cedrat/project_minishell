@@ -90,7 +90,9 @@ void ft_beautifull_export(char *str, int is_export);
 char *ft_str_treatement(char *str);
 
 int ft_str_is_number(char *str);
-
+void ft_strndup(char **dest, char *src, size_t start, size_t end);
+char **ft_args(char *str);
+int ft_semi_colon(char *str);
 
 
 
