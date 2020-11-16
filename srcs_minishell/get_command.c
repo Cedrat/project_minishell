@@ -62,11 +62,11 @@ void	ft_get_command(t_shell *shell)
 	else if (found == -2)
 	{
 		ft_putstr(shell->args[1]);
-		ft_putstr(" : No file or folder of this type ");
+		ft_putstr(" : No file or folder of this type \n");
 	}
 	else if (found == -3)
 	{
-		ft_putstr(" Too many/few arguments ");
+		ft_putstr(" Too many/few arguments \n");
 	}
 	if (shell->echo->option_n == 0 && shell->newline == 0)
 		ft_putstr("\n");

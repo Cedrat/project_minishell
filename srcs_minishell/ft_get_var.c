@@ -70,5 +70,5 @@ char	*ft_get_var(char **argenv, char *tofind)
 		}
 		i++;
 	}
-	return ("");
+	return (ft_strdup(""));
 }
