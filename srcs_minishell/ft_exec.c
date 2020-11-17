@@ -17,7 +17,6 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 	pid_t	pid;
 	int		i;
 	char	*bin;
-	int 	status;
 
 	i = 0;
 	pid = fork();
@@ -29,10 +28,8 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 			if (execve(bin, shell->args, shell->argenv) == 0)
 				exit(0);
 			else
-			{
 				free(bin);
-				i++;
-			}
+			i++;
 		}
 		ft_putstr(arg);
 		ft_putstr(": No file or folder of this type \n");
@@ -42,8 +39,7 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		waitpid(pid, &shell->signal, WUNTRACED);
 	else
 	{
-		ft_putstr("Error with the child Processus\n");
-		shell->signal = -1;
+		ft_putstr("Error with the child processus\n");
 		exit(-1);
 	}
 }
@@ -52,7 +48,6 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 void	ft_path(char *arg, t_shell *shell)
 {
 	pid_t	pid;
-	int 	status;
 
 	pid = fork();
 
@@ -70,8 +65,7 @@ void	ft_path(char *arg, t_shell *shell)
 		waitpid(pid, &shell->signal, WUNTRACED);
 	else
 	{
-		ft_putstr("Error with the child Processus\n");
-		shell->signal = -1;
+		ft_putstr("Error with the child processus\n");
 		exit(-1);
 	}
 }
@@ -87,13 +81,10 @@ int	ft_exec(t_shell *shell, char *arg)
 	i = 0;
 	found_path = 0;
 	//1. Recuperer ligne PATH
-	path_line = ft_get_var(shell->argenv, "PATH=");
-	
+	path_line = ft_get_var(shell->argenv, "PATH=");	
 	//2.Parser PATH
 	paths = ft_split(path_line, ':');
 	free(path_line);
-
-
 	//3. Check si il y a un path dans l'arg (comparer)
 	while (paths[i] && found_path == 0)
 	{
@@ -106,13 +97,16 @@ int	ft_exec(t_shell *shell, char *arg)
 	}
 	//4. Si pas de path -> aller tester les chemins de PATH dans argenv
 	if (found_path == 0)
+	{
+		if (arg[0] != '/')
+		{
+			path_line = arg;
+			arg = ft_strjoin("/", arg);
+			free(path_line);
+		}
 		ft_no_path(arg, paths, shell);
-
+	}
 	if (shell->signal > 0)
 		shell->signal = -1;
-
-	//execve(const char *fichier, char *const argv[], char *const envp[])
-	//execve(path, shell->args, shell->argenv);
-
 	return (0);
 }
