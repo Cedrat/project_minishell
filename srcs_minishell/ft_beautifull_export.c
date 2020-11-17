@@ -6,13 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:54:02 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/13 19:48:44 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/17 17:49:26 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void ft_beautifull_export(char *str, int is_export)
+void ft_beautifull_export(char *str, int is_export, int fd)
 {
 	char letter;
 	size_t i = 0;
@@ -32,10 +32,10 @@ void ft_beautifull_export(char *str, int is_export)
 		{
 			if (is_export)
 				write(1, "\\", 1);
-			write(1, &str[i], 1);
+			write(fd, &str[i], 1);
 		}
 		else
-			write(1, &str[i], 1);
+			write(fd, &str[i], 1);
 		i++;
 	}
 }

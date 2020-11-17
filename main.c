@@ -70,7 +70,10 @@ int main (int argc, char **argv, char **argenv)
 		while (args[i])
 		{
 			shell.args = ft_parser(args[i]);
+			ft_choose_fd(&shell);
 			ft_get_command(&shell);
+			if (shell.fd != 1)
+				close(shell.fd);
 			free(shell.args);
 			i++;
 		}

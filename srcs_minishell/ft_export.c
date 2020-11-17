@@ -1,6 +1,6 @@
 #include "../header/minishell.h"
 
-void display_export(char **char_list)
+void display_export(char **char_list, int fd)
 {
 	char **temp_tab_char;
 	char *str;
@@ -11,28 +11,28 @@ void display_export(char **char_list)
 	ft_tri_tab_str(temp_tab_char);
 	while (temp_tab_char[i])
 	{
-		ft_putstr("declare -x ");
+		ft_putstr_fd("declare -x ", fd);
 		str = temp_tab_char[i];
 		while (*str != '=' && *str)
 		{
-			ft_putchar_fd(*str, 1);
+			ft_putchar_fd(*str, fd);
 			str++;
 		}
 		if (*str == '=')
 		{
-			ft_putchar_fd(*str, 1);
+			ft_putchar_fd(*str, fd);
 			str++;
-			ft_putstr("\"");
+			ft_putstr_fd("\"", fd);
 			while(*str)
 			{
 				if (*str == '"')
-					ft_putchar_fd('\\', 1);
-				ft_putchar_fd(*str, 1);
+					ft_putchar_fd('\\', fd);
+				ft_putchar_fd(*str, fd);
 				str++;
 			}
-			ft_putstr("\"");
+			ft_putstr_fd("\"", fd);
 		}
-		ft_putstr("\n");
+		ft_putchar_fd('\n', fd);
 		i++;
 	}
 	ft_free_tab(temp_tab_char);
@@ -157,6 +157,6 @@ int		ft_export(t_shell *shell)
 		i++;
 	}
 	if (shell->args[1] == 0)
-		display_export(shell->argenv);
+		display_export(shell->argenv, shell->fd);
 	return (shell->signal = 0);
 }
