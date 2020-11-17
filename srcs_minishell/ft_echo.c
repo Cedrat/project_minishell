@@ -76,24 +76,24 @@ void	ft_echo_config(t_echo *config, char **args)
 //printf("%d %d %d\n", config->sg_qt, config->db_qt, config->token);
 }
 
-void	ft_dollar_sign(char *args, char **argenv, t_echo *config, int *i)
+void	ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 {
 	if (args[*i] == '$' && args[*i + 1] == '?')
 	{
-		ft_putnbr_fd(config->signal, 1);
+		ft_putnbr_fd(shell->echo->signal, fd);
 		*i += 2;
 	}
 	if (args[*i] == '$' && !ft_strchr(" \"\\\'\0\n", args[*i + 1]))
 	{
-		config->var_name = ft_extract_var_name(args, i);
-		config->var_path = ft_get_var(argenv, config->var_name);
-		if (config->var_path)
-			ft_putstr(config->var_path);
-		free(config->var_path);
+		shell->echo->var_name = ft_extract_var_name(args, i);
+		shell->echo->var_path = ft_get_var(shell->argenv, shell->echo->var_name);
+		if (shell->echo->var_path)
+			ft_putstr(shell->echo->var_path);
+		free(shell->echo->var_path);
 	}
 }
 
-void	ft_single_qt(t_echo *config, char *args, char **argenv)
+void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
 	int 	i;
 	int		j;
@@ -106,18 +106,18 @@ void	ft_single_qt(t_echo *config, char *args, char **argenv)
 		if (config->sg_qt % 2 == 0)
 		{
 			if (args[i + 1] == '\"')
-				ft_double_qt(config, &args[i + 1], argenv);
+				ft_double_qt(config, &args[i + 1], argenv, shell);
 			else if (args[i + 1] != '\0')
-				ft_no_qt(config, &args[i + 1], argenv);
+				ft_no_qt(config, &args[i + 1], argenv, shell);
 			return ;
 		}
 		if (args[i] != '\'')
-			ft_putchar_fd(args[i], 1);
+			ft_putchar_fd(args[i], shell->fd);
 		i++;
 	}
 }
 
-void	ft_double_qt(t_echo *config, char *args, char **argenv)
+void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
 	int 	i;
 
@@ -125,15 +125,15 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv)
 	while (args[i] != '\0')
 	{
 		if (args[i] == '$')
-			ft_dollar_sign(args, argenv, config, &i);
+			ft_dollar_sign(args, shell, &i, shell->fd);
 		if (args[i] == '\"')
 			config->db_qt--;
 		if (config->db_qt % 2 == 0)
 		{
 			if (args[i + 1] == '\'')
-				ft_single_qt(config, &args[i + 1], argenv);
+				ft_single_qt(config, &args[i + 1], argenv, shell);
 			else if (args[i + 1] != '\0')
-				ft_no_qt(config, &args[i + 1], argenv);
+				ft_no_qt(config, &args[i + 1], argenv, shell);
 			return ;
 		}
 		else if ((args[i] == '\\' && args[i + 1] == '\\')
@@ -141,12 +141,12 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv)
 			i++;
 		if ((args[i] != '\"')
 			|| (args[i] == '\"' && args[i - 1] == '\\' && args[i - 2] != '\\'))
-			ft_putchar_fd(args[i], 1);
+			ft_putchar_fd(args[i], shell->fd);
 		i++;
 	}
 }
 
-void	ft_no_qt(t_echo *config, char *args, char **argenv)
+void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
 	int 	i;
 	char	str[256];
@@ -157,24 +157,24 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv)
 		if (args[i] == '|' || args[i] == ';') 	//Gestion future
 			break ;								//Gestion future
 		if (args[i] == '$')
-			ft_dollar_sign(args, argenv, config, &i);
+			ft_dollar_sign(args, shell, &i, shell->fd);
 		else if (args[i] == '~' && !args[i + 1] && !args[i - 1])
 		{
-			ft_putstr(getcwd(str, 256));
+			ft_putstr_fd(getcwd(str, 256), shell->fd);
 			i++;
 		}
 		else if (args[i] == '\'' || args[i] == '\"')
 		{
 			if (args[i] == '\'')
-				ft_single_qt(config, &args[i], argenv);
+				ft_single_qt(config, &args[i], argenv, shell);
 			else if (args[i] == '\"')
-				ft_double_qt(config, &args[i], argenv);
+				ft_double_qt(config, &args[i], argenv, shell);
 			return ;
 		}
 		else if ((args[i] == '\\' && args[i + 1] == '\\')
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
-		ft_putchar_fd(args[i], 1);
+		ft_putchar_fd(args[i], shell->fd);
 		i++;
 	}
 }
@@ -203,13 +203,13 @@ int		ft_echo(t_shell *shell)
 	while (shell->args[i])
 	{
 		if (shell->echo->token == 1 && shell->args[i][0] == '\'')  		//Gestion avec ''
-			ft_single_qt(shell->echo, shell->args[i], shell->argenv);
+			ft_single_qt(shell->echo, shell->args[i], shell->argenv, shell);
 		else if (shell->echo->token == 2 && shell->args[i][0] == '\"')  	//Gestion avec ""
-			ft_double_qt(shell->echo, shell->args[i], shell->argenv);
+			ft_double_qt(shell->echo, shell->args[i], shell->argenv, shell);
 		else
-			ft_no_qt(shell->echo, shell->args[i], shell->argenv);
+			ft_no_qt(shell->echo, shell->args[i], shell->argenv, shell);
 		if (shell->args[i + 1])
-			ft_putstr(" ");
+			ft_putstr_fd(" ", shell->fd);
 		i++;
 	}
 	return (shell->signal = 0);

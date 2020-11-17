@@ -8,7 +8,11 @@
 #include <stddef.h>
 #include <signal.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <sys/wait.h>
+
 
 
 /*-----------------------------*/
@@ -41,6 +45,7 @@ typedef	struct	s_shell
 
 	int		signal;		//Return value of the last built-in used
 	char 	*home_path;
+	int 	fd;
 
 	t_echo	*echo;		//A voir si on la garde dedans ou si on laisse séparé ?
 
@@ -79,22 +84,20 @@ void 	export_env(t_shell *env, char *arg);
 
 char **ft_dup_arg(char **arg);
 
-void	ft_no_qt(t_echo *config, char *args, char **argenv);
-void	ft_double_qt(t_echo *config, char *args, char **argenv);
-void	ft_single_qt(t_echo *config, char *args, char **argenv);
+void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell);
+void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell);
+void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell);
 
 
-void	ft_no_qt(t_echo *config, char *args, char **argenv);
-void	ft_double_qt(t_echo *config, char *args, char **argenv);
-void	ft_single_qt(t_echo *config, char *args, char **argenv);
-
-void ft_beautifull_export(char *str, int is_export);
+void ft_beautifull_export(char *str, int is_export, int fd);
 char *ft_str_treatement(char *str);
 
+void ft_choose_fd(t_shell *shell);
 int ft_str_is_number(char *str);
 void ft_strndup(char **dest, char *src, size_t start, size_t end);
 char **ft_args(char *str);
 int ft_semi_colon(char *str);
+char **ft_remove_in_tab(char **tab, char* str);
 
 
 

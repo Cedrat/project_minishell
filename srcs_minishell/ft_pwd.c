@@ -20,8 +20,8 @@ int		ft_pwd(t_shell *shell)
 				return (shell->signal = -2);
 		}
 	}
-	ft_putstr(path);
-	ft_putstr("\n");
+	ft_putstr_fd(path, shell->fd);
+	ft_putstr_fd("\n", shell->fd);
 	free(path);
 	return (shell->signal = 0);
 }

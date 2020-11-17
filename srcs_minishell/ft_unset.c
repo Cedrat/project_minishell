@@ -1,6 +1,6 @@
 #include "../header/minishell.h"
 
-char **ft_remove_in_tab(t_shell *shell, char* str)
+char **ft_remove_in_tab(char **tab, char* str)
 {
 	size_t i = 0;
 	size_t p;
@@ -8,22 +8,22 @@ char **ft_remove_in_tab(t_shell *shell, char* str)
 	size_t found;
 
 	found = 0;
-	while (shell->argenv[i])
+	while (tab[i])
 	{
 		i++;
 	}
 	new_tab = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (shell->argenv[i + found])
+	while (tab[i + found])
 	{
 		p = 0;
 		while (str[p] != '=' && str[p])
 			p++;
-		if (!(ft_strncmp(shell->argenv[i + found], str, p)))
+		if (!(ft_strncmp(tab[i + found], str, p)))
 			found++;
 		else
 		{
-			new_tab[i] = shell->argenv[i + found];
+			new_tab[i] = tab[i + found];
 			i++;
 		}
 	}
@@ -50,7 +50,7 @@ int		ft_unset(t_shell *shell)
 			while (str[p] != '=' && str[p])
 				p++;
 			if (!(ft_strncmp(shell->args[o], str, p)))
-				  shell->argenv = ft_remove_in_tab(shell, shell->args[o]);
+				  shell->argenv = ft_remove_in_tab(shell->argenv, shell->args[o]);
 			i++;
 		}
 		o++;
