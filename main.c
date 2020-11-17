@@ -56,6 +56,7 @@ int main (int argc, char **argv, char **argenv)
 	char **args;
 
 	shell.argenv = ft_dup_arg(argenv);
+	shell.signal= 0;
 	while(1)
 	{
 		ft_putstr("~");

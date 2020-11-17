@@ -11,7 +11,6 @@ void	ft_init_commands(t_shell *shell)
 	shell->commands[5] = ft_strdup("env");
 	shell->commands[6] = ft_strdup("exit");
 	shell->newline = 0;
-	shell->signal= 0;
 	shell->echo->option_n = 1;
 }
 
@@ -48,9 +47,10 @@ void	ft_get_command(t_shell *shell)
 				found = shell->function[j](shell);
 			j++;
 		}
+		if (found == -1)
+			found = ft_exec(shell, shell->args[i]);
 		i++;
 	}
-
 	//Gestion des erreurs (a mettre dans une autre fonction qui reprendra errno ?)
 	if (found == -1)
 	{

@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <signal.h>
 #include <errno.h>
+#include <sys/wait.h>
 
 
 /*-----------------------------*/
@@ -69,6 +70,7 @@ int  	ft_export();
 int		ft_unset();
 int		ft_env();
 int		ft_exit();
+int		ft_exec(t_shell *shell, char *arg);
 
 char	*ft_extract_var_name(char *arg, int *j);
 char	*ft_get_var(char **argenv, char *tofind);

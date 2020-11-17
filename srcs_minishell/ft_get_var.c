@@ -12,19 +12,20 @@
 
 #include "../header/minishell.h"
 
-char	*ft_strncpy(char *src, char *dest, int len)
+char	*ft_strndupl(const char *s, int len)
 {
-	int i;
+	char	*copy;
+	size_t	count;
 
-	i = 0;
-	while (src[i] != '\0' && len > 0)
+	count = 0;
+	if (!(copy = malloc(sizeof(char) * (len + 1))))
+		return (0);
+	while (count <= len)
 	{
-		dest[i] = src[i];
-		i++;
-		len--;
+		copy[count] = s[count];
+		count++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (copy);
 }
 
 char	*ft_extract_var_name(char *arg, int *j)
@@ -64,8 +65,7 @@ char	*ft_get_var(char **argenv, char *tofind)
 			while (argenv[i][j] != '=')
 				j++;
 			j++;
-			path = malloc(sizeof(char) * (ft_strlen(argenv[i]) - j + 1));
-			ft_strncpy(&argenv[i][j], path, (ft_strlen(argenv[i]) - j + 1));
+			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j + 1));
 			return (path);
 		}
 		i++;
