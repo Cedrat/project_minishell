@@ -13,8 +13,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-
-
+pid_t pid;
 /*-----------------------------*/
 /*------Structure fct echo-----*/
 /*-----------------------------*/
@@ -45,12 +44,13 @@ typedef	struct	s_shell
 
 	int		signal;		//Return value of the last built-in used
 	char 	*home_path;
-	int 	fd;
+	int		fd;
 
 	t_echo	*echo;		//A voir si on la garde dedans ou si on laisse séparé ?
 
 	int		newline;
-
+	pid_t	pid;
+	
 }				t_shell;
 
 

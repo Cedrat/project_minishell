@@ -14,7 +14,6 @@
 
 void	ft_no_path(char *arg, char **paths, t_shell *shell)
 {
-	pid_t	pid;
 	int		i;
 	char	*bin;
 
@@ -47,8 +46,6 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 
 void	ft_path(char *arg, t_shell *shell)
 {
-	pid_t	pid;
-
 	pid = fork();
 
 	if (pid == 0)  //Processus enfant
@@ -80,6 +77,8 @@ int	ft_exec(t_shell *shell, char *arg)
 
 	i = 0;
 	found_path = 0;
+	if (!arg || arg[0] == '\n')
+		return (0);
 	//1. Recuperer ligne PATH
 	path_line = ft_get_var(shell->argenv, "PATH=");	
 	//2.Parser PATH

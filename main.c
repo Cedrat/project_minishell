@@ -63,7 +63,7 @@ int main (int argc, char **argv, char **argenv)
 		ft_putstr(getcwd(cwd, 256));
 		ft_putstr("$ ");
 		read(1, buff, 256);
-		while (buff[i] != '\n')
+		while (buff[i] != '\n' && buff[i])
 			i++;
 		buff[i] = '\0';
 		i = 0;
