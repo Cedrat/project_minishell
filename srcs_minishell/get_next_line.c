@@ -50,16 +50,21 @@ int		read_buffer(char *buffer, char **line)
 			*line = gnl_strndup(buffer, i);
 			return (1);
 		}
+		else if (buffer[i] == '\0')
+		{
+			*line = gnl_strndup("", 0);
+			return (-2);
+		}
 		else
 		{
 			*line = gnl_strndup(buffer, ft_strlen(buffer));
-			return (0);
+			return (0);			
 		}
 	}
 	else
 	{
 		*line = gnl_strndup("", 0);
-		return (0);
+		return (-1);
 	}
 }
 
@@ -95,13 +100,13 @@ int		get_next_line(int fd, char **line)
 	if (nb_letters < 0)
 		return (-1);
 	ret = read_buffer(buffer, line);
-	if (ret > 0)
-		buffer = stock_buffer(buffer);
-	else
-	{
+	//if (ret > 0)
+	//	buffer = stock_buffer(buffer);
+	//else
+	//{
 		free(buffer);
 		buffer = NULL;
-		return (0);
-	}
-	return (1);
+		return (ret);
+	//}		
+	//return (1);
 }

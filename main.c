@@ -81,21 +81,25 @@ int main (int argc, char **argv, char **argenv)
 
 	shell.argenv = ft_dup_arg(argenv);
 	shell.signal= 0;
+
+
 	while(1)
 	{
 		ft_put_prompt();
-		get_next_line(0, &buff);
-		while (buff[i]) //buff[i] != '\n' plus nécessaire avec gnl ?
+
+
+		i = get_next_line(0, &buff);
+		if (i == -1)
 		{
-			if (buff[i] == EOF) //Ne fonctionne toujours pas :(
-			{
-				ft_putstr("\n");
-				exit(0);  //A remplacer par un kill avec le pid
-			}
-			else
-				i++;
+			ft_putstr("\n");
+			exit(0);  //A remplacer par un kill avec le pid
 		}
-		//buff[i] == '\0'; //Plus nécessaire avec gnl ?
+		//else if (i == -2)
+			//ft_putstr(" \b");
+
+
+		while (buff[i])
+			i++;
 		i = 0;
 		args = ft_args(buff);
 		while (args[i])
