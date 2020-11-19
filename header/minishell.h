@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "libft.h"
+#include "get_next_line.h"
 #include <stddef.h>
 #include <signal.h>
 #include <errno.h>
@@ -13,7 +14,8 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-pid_t pid;
+pid_t 	pid; //variable globale pid
+
 /*-----------------------------*/
 /*------Structure fct echo-----*/
 /*-----------------------------*/

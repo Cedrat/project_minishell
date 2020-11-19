@@ -99,9 +99,9 @@ int	ft_exec(t_shell *shell, char *arg)
 	{
 		if (arg[0] != '/')
 		{
-			path_line = arg;
+			//path_line = arg;
 			arg = ft_strjoin("/", arg);
-			free(path_line);
+			//free(path_line);  //Error on valgrind with this line 
 		}
 		ft_no_path(arg, paths, shell);
 	}

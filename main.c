@@ -47,11 +47,35 @@ char **ft_dup_arg(char **arg)
 	return (new_tab);
 }
 
+void 	ft_put_prompt()
+{
+	char 	*cwd;
+	size_t	cwd_size;
+
+	cwd = 0;
+	cwd_size = 255;
+	while (!cwd)
+	{
+		cwd = malloc(sizeof(char) * cwd_size + 1);
+		if (getcwd(cwd, cwd_size) < 0)
+		{
+			free(cwd);
+			cwd = NULL;
+			if (errno = ERANGE)
+				cwd_size *= 2;
+			else
+				return ;
+		}
+	}
+	ft_putstr("~");
+	ft_putstr(cwd);
+	ft_putstr("$ ");
+}
+
 int main (int argc, char **argv, char **argenv)
 {
 	t_shell	shell;	//Structure generale
-	char buff[256];
-	char cwd[256];
+	char *buff;
 	size_t i = 0;
 	char **args;
 
@@ -59,13 +83,19 @@ int main (int argc, char **argv, char **argenv)
 	shell.signal= 0;
 	while(1)
 	{
-		ft_putstr("~");
-		ft_putstr(getcwd(cwd, 256));
-		ft_putstr("$ ");
-		read(1, buff, 256);
-		while (buff[i] != '\n' && buff[i])
-			i++;
-		buff[i] = '\0';
+		ft_put_prompt();
+		get_next_line(0, &buff);
+		while (buff[i]) //buff[i] != '\n' plus nécessaire avec gnl ?
+		{
+			if (buff[i] == EOF) //Ne fonctionne toujours pas :(
+			{
+				ft_putstr("\n");
+				exit(0);  //A remplacer par un kill avec le pid
+			}
+			else
+				i++;
+		}
+		//buff[i] == '\0'; //Plus nécessaire avec gnl ?
 		i = 0;
 		args = ft_args(buff);
 		while (args[i])
