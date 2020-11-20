@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/20 17:38:02 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/20 19:07:25 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int ft_give_to_pipe(t_shell *shell)
   int fd;
   int next_fd = 0;
   int ret;
-	size_t i = 0;
+  size_t i = 0;
   char **args_pipes;
 args_pipes = ft_divide_to_pipe(shell->args);
 while(args_pipes[i] != NULL)
