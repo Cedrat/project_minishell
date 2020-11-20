@@ -74,23 +74,25 @@ void 	ft_put_prompt()
 
 void    sig_handler(int signum)
 {
-	char	cwd[256];
-
 	if (signum == SIGINT) //ctrl-c = interrupt
 	{
-		if (WIFEXITED(status) || pid == 0)
+		if (pid == 0)
 		{
 			kill(pid, SIGTERM);
 			ft_putstr("\n");
 			return ;
 		}
-		ft_putstr("\n");
-		ft_put_prompt();
-		return ;
+		else
+		{
+			ft_putstr("\n");
+			//ft_put_prompt();
+			return ;
+		}
+
 	}
 	else if (signum == SIGQUIT) 
 	{
-		if (WIFEXITED(status) || pid == 0)
+		if (pid == 0)
 		{
 			kill(pid, SIGTERM);
 			ft_putstr("\n");
@@ -104,6 +106,11 @@ void    sig_handler(int signum)
 	}
 }
 
+/*
+Effacer ^C 
+write(1, "\b\b", 2); // move cursor behind of ^C
+write(1, "  ", 2); // remove ^C by printing spaces.
+write(1, "\b\b", 2); // reset cursor pos*/
 
 int main (int argc, char **argv, char **argenv)
 {
@@ -115,6 +122,7 @@ int main (int argc, char **argv, char **argenv)
 	shell.argenv = ft_dup_arg(argenv);
 	shell.signal= 0;
 	pid = 1;
+
 	if ((signal(SIGINT, sig_handler) == SIG_ERR)
    		|| (signal(SIGQUIT, sig_handler) == SIG_ERR))
 		ft_putstr("Error catching signal\n");
@@ -122,7 +130,6 @@ int main (int argc, char **argv, char **argenv)
 	while(1)
 	{
 		ft_put_prompt();
-
 
 		i = get_next_line(0, &buff);
 		if (i == -1)
@@ -132,7 +139,6 @@ int main (int argc, char **argv, char **argenv)
 		}
 		else if (i == -2)
 			ft_putstr("\n");
-
 
 
 		i = 0;

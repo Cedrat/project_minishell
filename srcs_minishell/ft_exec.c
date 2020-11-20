@@ -19,6 +19,7 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 
 	i = 0;
 	pid = fork();
+
 	if (pid == 0)  //Processus enfant
 	{
 		while (paths[i])
@@ -35,7 +36,7 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		exit(-1);
 	}
 	else if (pid > 0)  //Processus parent
-		waitpid(pid, &status, WUNTRACED);
+		waitpid(pid, &shell->signal, WUNTRACED);
 	else
 	{
 		ft_putstr("Error with the child processus\n");
@@ -59,7 +60,7 @@ void	ft_path(char *arg, t_shell *shell)
 		exit(0);
 	}
 	else if (pid > 0)  //Processus parent
-		waitpid(pid, &status, WUNTRACED);
+		waitpid(pid, &shell->signal, WUNTRACED);
 	else
 	{
 		ft_putstr("Error with the child processus\n");
@@ -105,7 +106,7 @@ int	ft_exec(t_shell *shell, char *arg)
 		}
 		ft_no_path(arg, paths, shell);
 	}
-	if (status > 0)
-		status = -1;
+	if (shell->signal > 0)
+		shell->signal = -1;
 	return (0);
 }

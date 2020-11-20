@@ -15,7 +15,6 @@
 #include <sys/wait.h>
 
 pid_t 	pid; //variable globale pid
-int 	status;
 
 /*-----------------------------*/
 /*------Structure fct echo-----*/
@@ -102,6 +101,7 @@ char **ft_args(char *str);
 int ft_semi_colon(char *str);
 char **ft_remove_in_tab(char **tab, char* str);
 
+void    sig_handler(int signum);
 
 
 
