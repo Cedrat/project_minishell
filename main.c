@@ -72,6 +72,8 @@ void 	ft_put_prompt()
 	ft_putstr("$ ");
 }
 
+
+
 int main (int argc, char **argv, char **argenv)
 {
 	t_shell	shell;	//Structure generale
@@ -94,12 +96,10 @@ int main (int argc, char **argv, char **argenv)
 			ft_putstr("\n");
 			exit(0);  //A remplacer par un kill avec le pid
 		}
-		//else if (i == -2)
-			//ft_putstr(" \b");
+		else if (i == -2)
+			ft_putstr("\n");
 
 
-		while (buff[i])
-			i++;
 		i = 0;
 		args = ft_args(buff);
 		while (args[i])

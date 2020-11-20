@@ -100,13 +100,7 @@ int		get_next_line(int fd, char **line)
 	if (nb_letters < 0)
 		return (-1);
 	ret = read_buffer(buffer, line);
-	//if (ret > 0)
-	//	buffer = stock_buffer(buffer);
-	//else
-	//{
-		free(buffer);
-		buffer = NULL;
-		return (ret);
-	//}		
-	//return (1);
+	free(buffer);
+	buffer = NULL;
+	return (ret);
 }
