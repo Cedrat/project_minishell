@@ -72,6 +72,37 @@ void 	ft_put_prompt()
 	ft_putstr("$ ");
 }
 
+void    sig_handler(int signum)
+{
+	char	cwd[256];
+
+	if (signum == SIGINT) //ctrl-c = interrupt
+	{
+		if (WIFEXITED(status) || pid == 0)
+		{
+			kill(pid, SIGTERM);
+			ft_putstr("\n");
+			return ;
+		}
+		ft_putstr("\n");
+		ft_put_prompt();
+		return ;
+	}
+	else if (signum == SIGQUIT) 
+	{
+		if (WIFEXITED(status) || pid == 0)
+		{
+			kill(pid, SIGTERM);
+			ft_putstr("\n");
+			return ;
+		}
+		else
+		{
+			ft_putstr("\n");
+			exit(0);
+		}
+	}
+}
 
 
 int main (int argc, char **argv, char **argenv)
@@ -83,7 +114,10 @@ int main (int argc, char **argv, char **argenv)
 
 	shell.argenv = ft_dup_arg(argenv);
 	shell.signal= 0;
-
+	pid = 1;
+	if ((signal(SIGINT, sig_handler) == SIG_ERR)
+   		|| (signal(SIGQUIT, sig_handler) == SIG_ERR))
+		ft_putstr("Error catching signal\n");
 
 	while(1)
 	{
@@ -98,6 +132,7 @@ int main (int argc, char **argv, char **argenv)
 		}
 		else if (i == -2)
 			ft_putstr("\n");
+
 
 
 		i = 0;

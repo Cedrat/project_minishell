@@ -24,10 +24,10 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		while (paths[i])
 		{
 			bin = ft_strjoin(paths[i], arg);
-			if (execve(bin, shell->args, shell->argenv) == 0)
-				exit(0);
-			else
+			if (execve(bin, shell->args, shell->argenv) == -1)
 				free(bin);
+			else
+				exit(0);
 			i++;
 		}
 		ft_putstr(arg);
@@ -35,7 +35,7 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		exit(-1);
 	}
 	else if (pid > 0)  //Processus parent
-		waitpid(pid, &shell->signal, WUNTRACED);
+		waitpid(pid, &status, WUNTRACED);
 	else
 	{
 		ft_putstr("Error with the child processus\n");
@@ -59,7 +59,7 @@ void	ft_path(char *arg, t_shell *shell)
 		exit(0);
 	}
 	else if (pid > 0)  //Processus parent
-		waitpid(pid, &shell->signal, WUNTRACED);
+		waitpid(pid, &status, WUNTRACED);
 	else
 	{
 		ft_putstr("Error with the child processus\n");
@@ -105,7 +105,7 @@ int	ft_exec(t_shell *shell, char *arg)
 		}
 		ft_no_path(arg, paths, shell);
 	}
-	if (shell->signal > 0)
-		shell->signal = -1;
+	if (status > 0)
+		status = -1;
 	return (0);
 }
