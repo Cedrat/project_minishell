@@ -107,7 +107,7 @@ int ft_give_to_pipe(t_shell *shell);
 char ***ft_args_pipe(char **args);
 
 void    sig_handler(int signum);
-
+char **ft_divide_to_pipe(char **split);
 
 
 #endif
