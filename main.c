@@ -72,6 +72,43 @@ void 	ft_put_prompt()
 	ft_putstr("$ ");
 }
 
+void    sig_handler(int signum)
+{
+	if (signum == SIGINT) //ctrl-c = interrupt
+	{
+		if (pid == 0)
+		{
+			kill(pid, SIGTERM);
+			ft_putstr("\n");
+			return ;
+		}
+		else
+		{
+			ft_putstr("\n");
+			ft_put_prompt();
+			prompt = 0;
+			return ;
+		}
+
+	}
+	else if (signum == SIGQUIT) //ctrl-\ =quit
+	{
+		if (pid == 0)
+		{
+			kill(pid, SIGTERM);
+			ft_putstr("\n");
+			return ;
+		}
+		else
+		{
+			write(1, "\b\b", 2); // Erase ctrl-backslash
+			write(1, "  ", 2);
+			write(1, "\b\b", 2);
+			return ;
+		}
+	}
+}
+
 int main (int argc, char **argv, char **argenv)
 {
 	t_shell	shell;	//Structure generale
@@ -81,23 +118,30 @@ int main (int argc, char **argv, char **argenv)
 
 	shell.argenv = ft_dup_arg(argenv);
 	shell.signal= 0;
+	pid = 1;
+	prompt = 1;
+
+	if ((signal(SIGINT, sig_handler) == SIG_ERR)
+   		|| (signal(SIGQUIT, sig_handler) == SIG_ERR))
+		ft_putstr("Error catching signal\n");
+
 	while(1)
 	{
-		ft_put_prompt();
-		get_next_line(0, &buff);
-		while (buff[i]) //buff[i] != '\n' plus nécessaire avec gnl ?
+		if (prompt)
+			ft_put_prompt();
+
+		i = get_next_line(0, &buff);
+		if (i == -1)
 		{
-			if (buff[i] == EOF) //Ne fonctionne toujours pas :(
-			{
-				ft_putstr("\n");
-				exit(0);  //A remplacer par un kill avec le pid
-			}
-			else
-				i++;
+			ft_putstr("\n");
+			exit(0);
 		}
-		//buff[i] == '\0'; //Plus nécessaire avec gnl ?
+		else if (i == -2)
+			ft_putstr("\n");
+
 		i = 0;
 		args = ft_args(buff);
+		prompt = 1;
 		while (args[i])
 		{
 			shell.args = ft_parser(args[i]);

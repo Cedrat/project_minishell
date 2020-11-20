@@ -19,15 +19,16 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 
 	i = 0;
 	pid = fork();
+
 	if (pid == 0)  //Processus enfant
 	{
 		while (paths[i])
 		{
 			bin = ft_strjoin(paths[i], arg);
-			if (execve(bin, shell->args, shell->argenv) == 0)
-				exit(0);
-			else
+			if (execve(bin, shell->args, shell->argenv) == -1)
 				free(bin);
+			else
+				exit(0);
 			i++;
 		}
 		ft_putstr(arg);

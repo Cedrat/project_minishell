@@ -16,6 +16,7 @@
 
 
 pid_t 	pid; //variable globale pid
+int 	prompt;
 
 /*-----------------------------*/
 /*------Structure fct echo-----*/
@@ -105,7 +106,7 @@ char **ft_remove_in_tab(char **tab, char* str);
 int ft_give_to_pipe(t_shell *shell);
 char ***ft_args_pipe(char **args);
 
-
+void    sig_handler(int signum);
 
 
 
