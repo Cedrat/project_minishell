@@ -15,6 +15,7 @@
 #include <sys/wait.h>
 
 pid_t 	pid; //variable globale pid
+int 	prompt;
 
 /*-----------------------------*/
 /*------Structure fct echo-----*/
