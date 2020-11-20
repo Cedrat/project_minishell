@@ -102,7 +102,10 @@ int main (int argc, char **argv, char **argenv)
 		{
 			shell.args = ft_parser(args[i]);
 			ft_choose_fd(&shell);
-			ft_get_command(&shell);
+			if (ft_charispresent(args[i], '|'))
+				ft_give_to_pipe(&shell);
+			else
+				ft_get_command(&shell);
 			if (shell.fd != 1)
 				close(shell.fd);
 			free(shell.args);

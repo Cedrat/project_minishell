@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+
 pid_t 	pid; //variable globale pid
 
 /*-----------------------------*/
@@ -40,6 +41,7 @@ typedef	struct	s_shell
 {
 	char 	**args;
 	char 	**argenv;
+	char	***args_pipe;
 
 	char 	*commands[7];
 	int		(*function[7])();
@@ -52,7 +54,7 @@ typedef	struct	s_shell
 
 	int		newline;
 	pid_t	pid;
-	
+
 }				t_shell;
 
 
@@ -100,6 +102,8 @@ void ft_strndup(char **dest, char *src, size_t start, size_t end);
 char **ft_args(char *str);
 int ft_semi_colon(char *str);
 char **ft_remove_in_tab(char **tab, char* str);
+int ft_give_to_pipe(t_shell *shell);
+char ***ft_args_pipe(char **args);
 
 
 
