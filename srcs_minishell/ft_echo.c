@@ -149,18 +149,16 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
 	int 	i;
-	char	str[256];
 
 	i = 0;
 	while (args[i] != '\0')
 	{
-		if (args[i] == '|' || args[i] == ';') 	//Gestion future
-			break ;								//Gestion future
 		if (args[i] == '$')
 			ft_dollar_sign(args, shell, &i, shell->fd);
 		else if (args[i] == '~' && !args[i + 1] && !args[i - 1])
 		{
-			ft_putstr_fd(getcwd(str, 256), shell->fd);
+			ft_pwd(shell);
+			shell->newline = 1;
 			i++;
 		}
 		else if (args[i] == '\'' || args[i] == '\"')

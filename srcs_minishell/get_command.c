@@ -69,5 +69,5 @@ void	ft_get_command(t_shell *shell)
 	}
 	ft_errors(found, shell);
 	if (shell->echo->option_n == 0 && shell->newline == 0)
-		ft_putstr("\n");
+		ft_putstr_fd("\n", shell->fd);
 }
