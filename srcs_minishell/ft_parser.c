@@ -102,7 +102,24 @@ size_t count_tokens(char *str)
 	return (p);
 }
 
-char **ft_parser(char *str)
+void	ft_dollar(char **tab, t_shell *shell)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if ((i == 0 && ft_strcmp(tab[i], "$?") == 0)
+			|| (ft_strcmp(tab[i], "$?") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
+			tab[i] = ft_itoa(shell->signal);
+		else if ((i == 0 && ft_strcmp(tab[i], "\"$?\"") == 0)
+			|| (ft_strcmp(tab[i], "\"$?\"") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
+			tab[i] = ft_itoa(shell->signal);
+		i++;
+	}
+}
+
+char **ft_parser(char *str, t_shell *shell)
 {
 	char **tab;
 	size_t i = 0;
@@ -146,6 +163,7 @@ char **ft_parser(char *str)
 			i++;
 	}
 	tab[p] = NULL;
+	ft_dollar(tab, shell);
 	return (tab);
 }
 
@@ -159,16 +177,3 @@ void ft_free_tab(char **tab)
 	}
 	free(tab);
 }
-
-// int main()
-// {
-// 	char **tab;
-// 	size_t i = 0;
-// 	tab = ft_parser("'test' 'test'");
-// 	while (tab[i])
-// 	{
-// 		printf("%s_\n", tab[i]);
-// 		i++;
-// 	}
-// 	ft_free_tab_made_by_parser(tab);
-// }
