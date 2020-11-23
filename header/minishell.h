@@ -69,7 +69,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void 	ft_tri_tab_str(char** str);
 void 	ft_putstr(char *word);
 
-char 	**ft_parser(char *str);
+char 	**ft_parser(char *str, t_shell *shell);
 void 	ft_free_tab(char **tab);
 
 void	ft_get_command(t_shell *shell);

@@ -13,7 +13,7 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 32
+# define BUFFER_SIZE 1
 
 int		get_next_line(int fd, char **line);
 int		find_n(char *buffer, char c);

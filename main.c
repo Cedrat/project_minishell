@@ -27,37 +27,23 @@ void 	ft_put_prompt()
 
 void    sig_handler(int signum)
 {
+	if (pid == 0)
+	{
+		kill(pid, SIGTERM);
+		ft_putstr("\n");
+		return ;
+	}
 	if (signum == SIGINT) //ctrl-c = interrupt
 	{
-		if (pid == 0)
-		{
-			kill(pid, SIGTERM);
-			ft_putstr("\n");
-			return ;
-		}
-		else
-		{
-			ft_putstr("\n");
-			ft_put_prompt();
-			prompt = 0;
-			return ;
-		}
+		ft_putstr("\n");
+		ft_put_prompt();
+		prompt = 0;
+		return ;
 	}
 	else if (signum == SIGQUIT) //ctrl-\ =quit
 	{
-		if (pid == 0)
-		{
-			kill(pid, SIGTERM);
-			ft_putstr("\n");
-			return ;
-		}
-		else
-		{
-			write(1, "\b\b", 2); // Erase ctrl-backslash
-			write(1, "  ", 2);
-			write(1, "\b\b", 2);
-			return ;
-		}
+		write(1, "\b\b  \b\b", 6); // Erase ctrl-backslash
+		return ;
 	}
 }
 
@@ -104,7 +90,7 @@ int main (int argc, char **argv, char **argenv)
 		prompt = 1;
 		while (args[i])
 		{
-			shell.args = ft_parser(args[i]);
+			shell.args = ft_parser(args[i], &shell);
 			if (ft_charispresent(args[i], '|'))
 				ft_give_to_pipe(&shell);
 			else

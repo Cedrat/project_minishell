@@ -32,6 +32,11 @@ char	*read_file(char *buffer, int fd, int *nb_letters)
 		}
 		if (find_n(buffer, '\n'))
 			n = 1;
+		if (ft_strlen(buffer) > 2048) //Protection a check
+		{
+			*nb_letters = -1;
+			n = 1;
+		}
 	}
 	return (buffer);
 }
@@ -55,11 +60,8 @@ int		read_buffer(char *buffer, char **line)
 			*line = gnl_strndup("", 0);
 			return (-2);
 		}
-		else
-		{
-			*line = gnl_strndup(buffer, ft_strlen(buffer));
-			return (0);			
-		}
+		*line = gnl_strndup(buffer, ft_strlen(buffer));
+		return (0);			
 	}
 	else
 	{
