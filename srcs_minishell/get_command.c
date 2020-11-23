@@ -1,5 +1,23 @@
 #include "../header/minishell.h"
 
+void	ft_errors(int error, t_shell *shell)
+{
+	if (error == -1)
+	{
+		ft_putstr("Command not found : ");
+		if (shell->args[0])
+			ft_putstr(shell->args[0]);
+		ft_putstr("\n");
+	}
+	else if (error == -2)
+	{
+		ft_putstr(shell->args[1]);
+		ft_putstr(" : No file or folder of this type \n");
+	}
+	else if (error == -3)
+		ft_putstr(" Too many/few arguments ");
+}
+
 void	ft_init_commands(t_shell *shell)
 {
 	shell->echo = malloc(sizeof(t_echo));
@@ -34,10 +52,8 @@ void	ft_get_command(t_shell *shell)
 	ft_init_commands(shell);
 	ft_init_functions(shell);
 	shell->home_path = ft_get_var(shell->argenv, "HOME="); //On recupere le path du home
-
 	i = 0;
 	found = -1;
-
 	while (shell->args[i] && found == -1)
 	{
 		j = 0;
@@ -51,23 +67,7 @@ void	ft_get_command(t_shell *shell)
 			found = ft_exec(shell, shell->args[i]);
 		i++;
 	}
-	//Gestion des erreurs (a mettre dans une autre fonction qui reprendra errno ?)
-	if (found == -1)
-	{
-		ft_putstr("Command not found : ");
-		if (shell->args[0])
-			ft_putstr(shell->args[0]);
-		ft_putstr("\n");
-	}
-	else if (found == -2)
-	{
-		ft_putstr(shell->args[1]);
-		ft_putstr(" : No file or folder of this type \n");
-	}
-	else if (found == -3)
-	{
-		ft_putstr(" Too many/few arguments \n");
-	}
+	ft_errors(found, shell);
 	if (shell->echo->option_n == 0 && shell->newline == 0)
 		ft_putstr("\n");
 }

@@ -65,7 +65,7 @@ char	*ft_get_var(char **argenv, char *tofind)
 			while (argenv[i][j] != '=')
 				j++;
 			j++;
-			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j + 1));
+			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j));
 			return (path);
 		}
 		i++;

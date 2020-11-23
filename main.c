@@ -1,52 +1,5 @@
 #include "header/minishell.h"
 
-void ft_putstr(char *word)
-{
-	while(*word)
-	{
-		write(1, word, 1);
-		word++;
-	}
-}
-
-
-t_list *ft_convert_2dchar_chainedlist(char **str)
-{
-	size_t i;
-	t_list *char_list;
-	t_list *new;
-
-	i = 0;
-	char_list = ft_lstnew(str[i]);
-	i++;
-	while (str[i])
-	{
-		new = ft_lstnew(str[i]);
-		ft_lstadd_back(&char_list, new);
-		i++;
-	}
-	return (char_list);
-}
-
-char **ft_dup_arg(char **arg)
-{
-	size_t i = 0;
-	char **new_tab;
-
-	while (arg[i])
-		i++;
-	new_tab = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-
-	while (arg[i])
-	{
-		new_tab[i] = ft_strdup(arg[i]);
-		i++;
-	}
-	new_tab[i] = 0;
-	return (new_tab);
-}
-
 void 	ft_put_prompt()
 {
 	char 	*cwd;
@@ -89,7 +42,6 @@ void    sig_handler(int signum)
 			prompt = 0;
 			return ;
 		}
-
 	}
 	else if (signum == SIGQUIT) //ctrl-\ =quit
 	{
@@ -109,38 +61,46 @@ void    sig_handler(int signum)
 	}
 }
 
-int main (int argc, char **argv, char **argenv)
+void 	ft_init_main(t_shell *shell, char **argenv)
 {
-	t_shell	shell;	//Structure generale
-	char *buff;
-	size_t i = 0;
-	char **args;
-
-	shell.argenv = ft_dup_arg(argenv);
-	shell.signal= 0;
 	pid = 1;
 	prompt = 1;
+	shell->argenv = ft_dup_arg(argenv);
+	shell->signal = 0;
+}
 
+void	ft_get_line(char **buff)
+{
+	int i;
+
+	i = get_next_line(0, buff);
+	if (i == -1)
+	{
+		ft_putstr("\n");
+		exit(0);
+	}
+	else if (i == -2)
+		ft_putstr("\n");
+}
+
+int main (int argc, char **argv, char **argenv)
+{
+	t_shell	shell;
+	char	*buff;
+	size_t	i;
+	char	**args;
+
+	ft_init_main(&shell, argenv);
 	if ((signal(SIGINT, sig_handler) == SIG_ERR)
-   		|| (signal(SIGQUIT, sig_handler) == SIG_ERR))
+		|| (signal(SIGQUIT, sig_handler) == SIG_ERR))
 		ft_putstr("Error catching signal\n");
-
 	while(1)
 	{
 		if (prompt)
 			ft_put_prompt();
-
-		i = get_next_line(0, &buff);
-		if (i == -1)
-		{
-			ft_putstr("\n");
-			exit(0);
-		}
-		else if (i == -2)
-			ft_putstr("\n");
-
-		i = 0;
+		ft_get_line(&buff);
 		args = ft_args(buff);
+		i = 0;
 		prompt = 1;
 		while (args[i])
 		{
