@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/16 17:39:26 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/11/23 15:58:20 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 {
 	int		i;
 	char	*bin;
+	int 	pipefd;
+
 
 	i = 0;
+
 	pid = fork();
 
 	if (pid == 0)  //Processus enfant
 	{
+		dup2(shell->fd,1);
 		while (paths[i])
 		{
 			bin = ft_strjoin(paths[i], arg);
@@ -51,6 +55,7 @@ void	ft_path(char *arg, t_shell *shell)
 
 	if (pid == 0)  //Processus enfant
 	{
+		dup2(shell->fd,1);
 		if (execve(arg, shell->args, shell->argenv) == -1)
 		{
 			ft_putstr(arg);
@@ -81,7 +86,7 @@ int	ft_exec(t_shell *shell, char *arg)
 	if (!arg || arg[0] == '\n')
 		return (0);
 	//1. Recuperer ligne PATH
-	path_line = ft_get_var(shell->argenv, "PATH=");	
+	path_line = ft_get_var(shell->argenv, "PATH=");
 	//2.Parser PATH
 	paths = ft_split(path_line, ':');
 	free(path_line);
@@ -89,7 +94,7 @@ int	ft_exec(t_shell *shell, char *arg)
 	while (paths[i] && found_path == 0)
 	{
 		if (ft_strncmp(paths[i], arg, ft_strlen(paths[i])) == 0)
-		{	
+		{
 			ft_path(arg, shell);
 			found_path = 1;
 		}
@@ -102,7 +107,7 @@ int	ft_exec(t_shell *shell, char *arg)
 		{
 			//path_line = arg;
 			arg = ft_strjoin("/", arg);
-			//free(path_line);  //Error on valgrind with this line 
+			//free(path_line);  //Error on valgrind with this line
 		}
 		ft_no_path(arg, paths, shell);
 	}
