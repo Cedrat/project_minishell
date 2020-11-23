@@ -19,7 +19,7 @@ char **ft_remove_in_tab(char **tab, char* str)
 		p = 0;
 		while (str[p] != '=' && str[p])
 			p++;
-		if (!(ft_strncmp(tab[i + found], str, p)))
+		if ((!(ft_strncmp(tab[i + found], str, p))) && found != 1)
 			found++;
 		else
 		{
