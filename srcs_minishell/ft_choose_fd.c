@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/17 17:41:43 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/23 17:01:11 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ void ft_choose_fd(t_shell *shell)
 				ft_putstr("Error, no fd\n");
 				return ;
 			}
+			if (shell->fd != 1)
+				close(shell->fd);
 			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_TRUNC|O_APPEND, 0644);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i + 1]);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
+			i = 0;
 		}
 		else if (!(ft_strcmp(shell->args[i], ">>")))
 		{
@@ -38,9 +41,12 @@ void ft_choose_fd(t_shell *shell)
 				ft_putstr("Error, no fd\n");
 				return ;
 			}
+			if (shell->fd != 1)
+				close(shell->fd);
 			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_APPEND, 0644);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i + 1]);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
+			i = 0;
 		}
 		else
 			i++;
