@@ -20,13 +20,17 @@ char **ft_remove_in_tab(char **tab, char* str)
 		while (str[p] != '=' && str[p])
 			p++;
 		if ((!(ft_strncmp(tab[i + found], str, p))) && found != 1)
+		{
+			free(tab[i]);
 			found++;
+		}
 		else
 		{
 			new_tab[i] = tab[i + found];
 			i++;
 		}
 	}
+	free(tab);
 	new_tab[i] = 0;
 	return (new_tab);
 }
@@ -47,11 +51,15 @@ int		ft_unset(t_shell *shell)
 		{
 			p = 0;
 			str = shell->argenv[i];
-			while (str[p] != '=' && str[p])
+			while (str[p] && str[p] != '=')
 				p++;
 			if (!(ft_strncmp(shell->args[o], str, p)))
+			{
 				  shell->argenv = ft_remove_in_tab(shell->argenv, shell->args[o]);
-			i++;
+				  break;
+			  }
+			else
+				i++;
 		}
 		o++;
 	}

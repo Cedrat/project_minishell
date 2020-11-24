@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/23 15:58:20 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/24 18:40:31 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ int	ft_exec(t_shell *shell, char *arg)
 			//free(path_line);  //Error on valgrind with this line
 		}
 		ft_no_path(arg, paths, shell);
+		free(arg);
 	}
+	ft_free_tab(paths);     //possible cause de bug
 	if (shell->signal > 0)
 		shell->signal = -1;
 	return (0);

@@ -112,5 +112,10 @@ char **add_env(char **arg, char *str);
 void    sig_handler(int signum);
 char **ft_divide_to_pipe(char **split);
 
+char	*ft_strjoin_freeone(char const *s1, char const *s2);
+char	*ft_strjoin_freetwo(char const *s1, char const *s2);
+char	*ft_strjoin_freeall(char const *s1, char const *s2);
+
+void 	free_shell_commands(t_shell *shell);
 
 #endif

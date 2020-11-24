@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 16:27:35 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/20 17:22:36 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:39:06 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char **ft_divide_to_pipe(char **split)
 	{
 		if (ft_strcmp(split[i], "|") != 0)
 		{
-			new_tab[p] = ft_strjoin(new_tab[p], split[i]);
-			new_tab[p] = ft_strjoin(new_tab[p], " ");
+			new_tab[p] = ft_strjoin_freeone(new_tab[p], split[i]);
+			new_tab[p] = ft_strjoin_freeone(new_tab[p], " ");
 		}
 		else
 		{
@@ -45,5 +45,6 @@ char **ft_divide_to_pipe(char **split)
 		i++;
 	}
 	new_tab[p + 1] = NULL;
+	ft_free_tab(split);
 	return (new_tab);
 }
