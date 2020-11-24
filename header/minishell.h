@@ -68,6 +68,7 @@ int 	ft_nopipes(char **args);
 int		ft_strcmp(const char *s1, const char *s2);
 void 	ft_tri_tab_str(char** str);
 void 	ft_putstr(char *word);
+int ft_str_is_present(char **tab, char *str);
 
 char 	**ft_parser(char *str, t_shell *shell);
 void 	ft_free_tab(char **tab);
@@ -105,6 +106,8 @@ int ft_semi_colon(char *str);
 char **ft_remove_in_tab(char **tab, char* str);
 int ft_give_to_pipe(t_shell *shell);
 char ***ft_args_pipe(char **args);
+char *ft_file_to_str(char *path);
+char **add_env(char **arg, char *str);
 
 void    sig_handler(int signum);
 char **ft_divide_to_pipe(char **split);
