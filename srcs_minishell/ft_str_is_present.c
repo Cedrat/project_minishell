@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_str_is_present.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/13 12:20:56 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/23 18:36:01 by lnoaille         ###   ########.fr       */
+/*   Created: 2020/11/24 16:44:58 by lnoaille          #+#    #+#             */
+/*   Updated: 2020/11/24 16:47:30 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../header/minishell.h"
 
-# define BUFFER_SIZE 32
+int ft_str_is_present(char **tab, char *str)
+{
+	size_t i;
 
-int		get_next_line(int fd, char **line);
-int		find_n(char *buffer, char c);
-char	*gnl_strndup(char *str, int len);
-char	*copy_after_n(char *str, int len);
-
-#endif
+	i = 0;
+	while(tab[i])
+	{
+		if (ft_strcmp(tab[i], str) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
