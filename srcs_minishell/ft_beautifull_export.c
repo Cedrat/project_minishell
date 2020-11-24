@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:54:02 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/17 17:49:26 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:25:22 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char *ft_str_treatement(char *str)
 	size_t i = 0;
 	size_t p = 0;
 
-	newstr = malloc(sizeof(char) * ft_strlen(str));
+
 	letter = ' ';
 	while(str[i])
 	{
@@ -67,6 +67,7 @@ char *ft_str_treatement(char *str)
 			str[p++] = str[i];
 		i++;
 	}
-	str[p] = 0;
-	return (str);
+	str[p] = '\0';
+	newstr = ft_strdup(str);
+	return (newstr);
 }

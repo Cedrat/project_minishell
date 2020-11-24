@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 16:54:09 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/20 16:54:10 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/11/25 00:13:27 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ char **ft_dup_arg(char **arg)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-
 	while (arg[i])
 	{
 		new_tab[i] = ft_strdup(arg[i]);
 		i++;
 	}
-	new_tab[i] = 0;
+	new_tab[i] = NULL;
 	return (new_tab);
 }

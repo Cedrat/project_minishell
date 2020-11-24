@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:19:21 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/09 16:19:24 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/11/24 20:36:11 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_get_var(char **argenv, char *tofind)
 	{
 		if (ft_strncmp(argenv[i], tofind, ft_strlen(tofind)) == 0)
 		{
-			while (argenv[i][j] != '=')
+			while (argenv[i][j] && argenv[i][j] != '=')
 				j++;
 			j++;
 			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j));

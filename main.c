@@ -22,6 +22,7 @@ void 	ft_put_prompt()
 	}
 	ft_putstr("~");
 	ft_putstr(cwd);
+	free(cwd);
 	ft_putstr("$ ");
 }
 
@@ -86,23 +87,28 @@ int main (int argc, char **argv, char **argenv)
 			ft_put_prompt();
 		ft_get_line(&buff);
 		args = ft_args(buff);
+		free(buff);
 		i = 0;
 		prompt = 1;
 		while (args[i])
 		{
 			shell.args = ft_parser(args[i], &shell);
 			if (ft_charispresent(args[i], '|'))
+			{
 				ft_give_to_pipe(&shell);
+			}
 			else
 			{
 				ft_choose_fd(&shell);
 				ft_get_command(&shell);
 				if (shell.fd != 1)
 					close(shell.fd);
-				free(shell.args);
+				free(shell.echo);
+				free_shell_commands(&shell);
+				ft_free_tab(shell.args);
 			}
 			i++;
 		}
-		free(args);
+		ft_free_tab(args);
 	}
 }
