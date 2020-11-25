@@ -18,7 +18,6 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 	char	*bin;
 	int 	pipefd;
 
-
 	i = 0;
 
 	pid = fork();
@@ -108,10 +107,12 @@ int	ft_exec(t_shell *shell, char *arg)
 			//free(path_line);  //Error on valgrind with this line
 		}
 		ft_no_path(arg, paths, shell);
-		free(arg); //Double free si on garde ft_free_tab
+		//free(arg); //Double free si on garde ft_free_tab
 	}
 	ft_free_tab(paths);     //possible cause de bug
-	if (shell->signal > 0)
-		shell->signal = -1;
+	if (shell->signal == 256)
+		shell->signal = 130;	//cat + fichier inexistant
+	else if (shell->signal > 0)
+		shell->signal = 127;	//binaire inexistant
 	return (0);
 }

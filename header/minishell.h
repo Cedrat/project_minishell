@@ -48,6 +48,7 @@ typedef	struct	s_shell
 	int		(*function[7])();
 
 	int		signal;		//Return value of the last built-in used
+	int 	nb_error;
 	char 	*home_path;
 	int		fd;
 

@@ -54,9 +54,10 @@ void 	ft_init_main(t_shell *shell, char **argenv)
 	prompt = 1;
 	shell->argenv = ft_dup_arg(argenv);
 	shell->signal = 0;
+	shell->nb_error = 0;
 }
 
-void	ft_get_line(char **buff)
+void	ft_get_line(char **buff, t_shell *shell)
 {
 	int i;
 
@@ -85,7 +86,7 @@ int main (int argc, char **argv, char **argenv)
 	{
 		if (prompt)
 			ft_put_prompt();
-		ft_get_line(&buff);
+		ft_get_line(&buff, &shell);
 		shell.args_line = ft_args(buff);
 		free(buff);
 		i = 0;
@@ -107,7 +108,6 @@ int main (int argc, char **argv, char **argenv)
 			}
 			i++;
 		}
-		
 		ft_free_tab(shell.args_line);
 	}
 }

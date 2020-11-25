@@ -190,7 +190,7 @@ int		ft_echo(t_shell *shell)
 	shell->echo->signal = shell->signal;
 	ft_echo_config(shell->echo, shell->args);
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0) //Nombre impair de quotes
-		return (-3);
+		return (shell->signal = -3);
 	if (shell->echo->option_n == 1)
 		i = 2;
 	else
