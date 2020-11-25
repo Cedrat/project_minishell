@@ -35,15 +35,14 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 				exit(0);
 			i++;
 		}
-		ft_putstr(arg);
-		ft_putstr(": No file or folder of this type \n");
+		ft_errors(-1, shell);
 		exit(-1);
 	}
 	else if (pid > 0)  //Processus parent
 		waitpid(pid, &shell->signal, WUNTRACED);
 	else
 	{
-		ft_putstr("Error with the child processus\n");
+		ft_errors(-7, shell);
 		exit(-1);
 	}
 }
@@ -58,8 +57,7 @@ void	ft_path(char *arg, t_shell *shell)
 		dup2(shell->fd,1);
 		if (execve(arg, shell->args, shell->argenv) == -1)
 		{
-			ft_putstr(arg);
-			ft_putstr(": No file or folder of this type \n");
+			ft_errors(-6, shell);
 			exit(-1);
 		}
 		exit(0);
@@ -68,7 +66,7 @@ void	ft_path(char *arg, t_shell *shell)
 		waitpid(pid, &shell->signal, WUNTRACED);
 	else
 	{
-		ft_putstr("Error with the child processus\n");
+		ft_errors(-7, shell);
 		exit(-1);
 	}
 }
@@ -110,7 +108,7 @@ int	ft_exec(t_shell *shell, char *arg)
 			//free(path_line);  //Error on valgrind with this line
 		}
 		ft_no_path(arg, paths, shell);
-		free(arg);
+		//free(arg); //Double free si on garde ft_free_tab
 	}
 	ft_free_tab(paths);     //possible cause de bug
 	if (shell->signal > 0)

@@ -19,7 +19,7 @@ int		ft_cd(t_shell *shell)
 		return (shell->signal);
 	}
 	else if (i > 2)
-		return (shell->signal = -3);
+		return (shell->signal = -5);
 	else
 		return (shell->signal = -2);
 }

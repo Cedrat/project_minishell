@@ -23,10 +23,7 @@ void ft_choose_fd(t_shell *shell)
 		if (!(ft_strcmp(shell->args[i], ">")))
 		{
 			if (!(shell->args[i + 1]))
-			{
-				ft_putstr("Error, no fd\n");
-				return ;
-			}
+				return (ft_errors(-4, shell));
 			if (shell->fd != 1)
 				close(shell->fd);
 			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_TRUNC|O_APPEND, 0644);
@@ -36,10 +33,7 @@ void ft_choose_fd(t_shell *shell)
 		else if (!(ft_strcmp(shell->args[i], ">>")))
 		{
 			if (!(shell->args[i + 1]))
-			{
-				ft_putstr("Error, no fd\n");
-				return ;
-			}
+				return (ft_errors(-4, shell));
 			if (shell->fd != 1)
 				close(shell->fd);
 			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_APPEND, 0644);
@@ -49,10 +43,7 @@ void ft_choose_fd(t_shell *shell)
 		else if (!(ft_strcmp(shell->args[i], "<")))
 		{
 			if (!(shell->args[i + 1]))
-			{
-				ft_putstr("Error, no fd\n");
-				return ;
-			}
+				return (ft_errors(-4, shell));
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 			if (ft_str_is_present(shell->args, "<"))
 				shell->args = ft_remove_in_tab(shell->args, shell->args[i]);

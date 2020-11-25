@@ -151,7 +151,7 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 	int 	i;
 
 	i = 0;
-	while (args[i] != '\0')
+	while (args[i] != '\0')  //'i < ft_strlen(args)' Regle le probleme de $?
 	{
 		if (args[i] == '$')
 			ft_dollar_sign(args, shell, &i, shell->fd);
@@ -172,8 +172,8 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 		else if ((args[i] == '\\' && args[i + 1] == '\\')
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
-		ft_putchar_fd(args[i], shell->fd);
-		i++;
+		ft_putchar_fd(args[i], shell->fd); //Erreur avec $? si utilise + d'1 fois
+		i++;								//$? Affiche des trash values
 	}
 }
 
@@ -181,23 +181,16 @@ int		ft_echo(t_shell *shell)
 {
 	int 	i;
 
-	//Gestion d'erreurs
 	if (!shell->args[1])
 		return (0);
 	shell->echo->signal = shell->signal;
 	ft_echo_config(shell->echo, shell->args);
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0) //Nombre impair de quotes
-	{
-		ft_putstr("Wrong number of quotes :");
 		return (-3);
-	}
-
 	if (shell->echo->option_n == 1)
 		i = 2;
 	else
 		i = 1;
-
-	//Gestion affichage
 	while (shell->args[i])
 	{
 		if (shell->echo->token == 1 && shell->args[i][0] == '\'')  		//Gestion avec ''

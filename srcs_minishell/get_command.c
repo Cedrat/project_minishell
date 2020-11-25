@@ -1,6 +1,6 @@
 #include "../header/minishell.h"
 
-void	ft_errors(int error, t_shell *shell)
+void		ft_errors(int error, t_shell *shell)
 {
 	if (error == -1)
 	{
@@ -15,7 +15,19 @@ void	ft_errors(int error, t_shell *shell)
 		ft_putstr(" : No file or folder of this type \n");
 	}
 	else if (error == -3)
-		ft_putstr(" Too many/few arguments ");
+		ft_putstr("Too many/few quotes");
+	else if (error == -4)
+		ft_putstr("Error, no fd\n");
+	else if (error == -5)
+		ft_putstr("Error : Too many/few arguments");
+	else if (error == -6)
+	{
+		ft_putstr(shell->args[0]);
+		ft_putstr(" : No file or folder of this type \n");
+	}
+	else if (error == -7)
+		ft_putstr("Error with the child processus\n");
+	shell->signal = error;
 }
 
 void	ft_init_commands(t_shell *shell)

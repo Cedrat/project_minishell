@@ -25,7 +25,7 @@ int ft_give_to_pipe(t_shell *shell)
 	ft_free_tab(shell->args);
 	while(args_pipes[i] != NULL)
 	{
-		shell->args = ft_parser(args_pipes[i]);
+		shell->args = ft_parser(args_pipes[i], shell);
 		ft_choose_fd(shell);
 		pipe(pipefd);
 		pid = fork();

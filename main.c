@@ -94,11 +94,9 @@ int main (int argc, char **argv, char **argenv)
 		{
 			shell.args = ft_parser(args[i], &shell);
 			if (ft_charispresent(args[i], '|'))
-			{
 				ft_give_to_pipe(&shell);
-			}
 			else
-			{
+			{			//Faire un ft_launch qui regroupe tout ce bloc ?
 				ft_choose_fd(&shell);
 				ft_get_command(&shell);
 				if (shell.fd != 1)
