@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/25 00:44:09 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/25 18:21:22 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int ft_give_to_pipe(t_shell *shell)
 				else if (args_pipes[i+1] == NULL)
 					dup2(shell->fd, 1);
 				close(pipefd[0]);
-
 				ft_get_command(shell); //sort du fils :(
 				exit(0);
 			  }
@@ -45,10 +44,10 @@ int ft_give_to_pipe(t_shell *shell)
 			  {
 				wait(&pid);
 				close(pipefd[1]);
-				next_fd = pipefd[0]; //on recupere next_fd , les arguments sont sur pipefd[0]
-				ft_free_tab(shell->args);
+				next_fd = pipefd[0];
 				i++;
 			  }
+			  ft_free_tab(shell->args);
 		}
 		ft_free_tab(args_pipes);
 }

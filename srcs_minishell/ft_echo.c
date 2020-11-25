@@ -76,21 +76,25 @@ void	ft_echo_config(t_echo *config, char **args)
 //printf("%d %d %d\n", config->sg_qt, config->db_qt, config->token);
 }
 
-void	ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
+int	ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 {
-	if (args[*i] == '$' && args[*i + 1] == '?')
+	if (args[*i] == '$' &&  args[*i + 1] && args[*i + 1] == '?')
 	{
 		ft_putnbr_fd(shell->echo->signal, fd);
-		*i += 2;
+		*i = *i + 2;
+		return (1);
 	}
-	if (args[*i] == '$' && !ft_strchr(" \"\\\'\0\n", args[*i + 1]))
+	else if (args[*i] == '$' &&  args[*i + 1] && !ft_strchr(" \"\\\'\0\n", args[*i + 1]))
 	{
 		shell->echo->var_name = ft_extract_var_name(args, i);
 		shell->echo->var_path = ft_get_var(shell->argenv, shell->echo->var_name);
 		if (shell->echo->var_path)
 			ft_putstr(shell->echo->var_path);
 		free(shell->echo->var_path);
+		free(shell->echo->var_name);
+		return (1);
 	}
+	return (0);
 }
 
 void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
@@ -140,7 +144,7 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
 		if ((args[i] != '\"')
-			|| (args[i] == '\"' && args[i - 1] == '\\' && args[i - 2] != '\\'))
+			|| (args[i] == '\"' && i >= 2 && args[i - 1] == '\\' && args[i - 2] != '\\'))
 			ft_putchar_fd(args[i], shell->fd);
 		i++;
 	}
@@ -153,8 +157,8 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 	i = 0;
 	while (args[i] != '\0')  //'i < ft_strlen(args)' Regle le probleme de $?
 	{
-		if (args[i] == '$')
-			ft_dollar_sign(args, shell, &i, shell->fd);
+		if (args[i] == '$' && (ft_dollar_sign(args, shell, &i, shell->fd)))
+				break;
 		else if (args[i] == '~' && !args[i + 1] && !args[i - 1])
 		{
 			ft_pwd(shell);

@@ -41,8 +41,8 @@ typedef	struct	s_echo
 typedef	struct	s_shell
 {
 	char 	**args;
+	char 	**args_line;
 	char 	**argenv;
-	char	***args_pipe;
 
 	char 	*commands[7];
 	int		(*function[7])();

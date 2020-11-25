@@ -86,14 +86,14 @@ int main (int argc, char **argv, char **argenv)
 		if (prompt)
 			ft_put_prompt();
 		ft_get_line(&buff);
-		args = ft_args(buff);
+		shell.args_line = ft_args(buff);
 		free(buff);
 		i = 0;
 		prompt = 1;
-		while (args[i])
+		while (shell.args_line[i])
 		{
-			shell.args = ft_parser(args[i], &shell);
-			if (ft_charispresent(args[i], '|'))
+			shell.args = ft_parser(shell.args_line[i], &shell);
+			if (ft_charispresent(shell.args_line[i], '|'))
 				ft_give_to_pipe(&shell);
 			else
 			{			//Faire un ft_launch qui regroupe tout ce bloc ?
@@ -107,6 +107,7 @@ int main (int argc, char **argv, char **argenv)
 			}
 			i++;
 		}
-		ft_free_tab(args);
+		
+		ft_free_tab(shell.args_line);
 	}
 }

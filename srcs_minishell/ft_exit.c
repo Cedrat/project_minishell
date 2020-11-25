@@ -12,6 +12,10 @@ void	ft_free_all(t_shell *shell)
 	}
 	free(shell->echo);
 	free(shell->home_path);
+	ft_free_tab(shell->args);
+	ft_free_tab(shell->args_line);
+	ft_free_tab(shell->argenv);
+
 }
 
 int		ft_exit(t_shell *shell)

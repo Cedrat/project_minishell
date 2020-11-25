@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 16:27:35 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/25 00:39:06 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/25 18:25:56 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ char **ft_divide_to_pipe(char **split)
 		i++;
 	}
 	new_tab[p + 1] = NULL;
-	ft_free_tab(split);
+	// ft_free_tab(split);
 	return (new_tab);
 }
