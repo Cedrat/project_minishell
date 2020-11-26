@@ -20,7 +20,8 @@ void	ft_strcat(char *str, char *str1, char *str2)
 	int		j;
 
 	len = ft_strlen(str) + ft_strlen(str1) + ft_strlen(str2);
-	res = malloc(sizeof(char) * len);
+	if (!(res = malloc(sizeof(char) * len + 1)))
+		return ;
 	i = 0;
 	j = 0;
 	while (str[j])

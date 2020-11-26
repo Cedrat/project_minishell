@@ -19,9 +19,7 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 	int 	pipefd;
 
 	i = 0;
-
 	pid = fork();
-
 	if (pid == 0)  //Processus enfant
 	{
 		dup2(shell->fd,1);
@@ -35,6 +33,7 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 			i++;
 		}
 		ft_errors(-1, shell);
+		ft_free_all(shell);
 		exit(-1);
 	}
 	else if (pid > 0)  //Processus parent
@@ -57,6 +56,7 @@ void	ft_path(char *arg, t_shell *shell)
 		if (execve(arg, shell->args, shell->argenv) == -1)
 		{
 			ft_errors(-6, shell);
+			ft_free_all(shell);
 			exit(-1);
 		}
 		exit(0);
@@ -107,7 +107,7 @@ int	ft_exec(t_shell *shell, char *arg)
 			//free(path_line);  //Error on valgrind with this line
 		}
 		ft_no_path(arg, paths, shell);
-		//free(arg); //Double free si on garde ft_free_tab
+		free(arg); //Double free si on garde ft_free_tab
 	}
 	ft_free_tab(paths);     //possible cause de bug
 	if (shell->signal == 256)

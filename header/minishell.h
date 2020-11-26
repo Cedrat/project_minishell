@@ -120,5 +120,5 @@ char	*ft_strjoin_freeall(char const *s1, char const *s2);
 void 	free_shell_commands(t_shell *shell);
 
 void	ft_errors(int error, t_shell *shell);
-
+void	ft_free_all(t_shell *shell);
 #endif

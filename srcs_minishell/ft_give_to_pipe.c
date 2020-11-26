@@ -37,7 +37,10 @@ int ft_give_to_pipe(t_shell *shell)
 				else if (args_pipes[i+1] == NULL)
 					dup2(shell->fd, 1);
 				close(pipefd[0]);
+
 				ft_get_command(shell); //sort du fils :(
+				ft_free_all(shell);
+				ft_free_tab(args_pipes);
 				exit(0);
 			  }
 			  else
