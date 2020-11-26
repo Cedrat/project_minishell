@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/26 17:37:20 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/26 19:23:33 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 
 			i++;
 		}
-		free(arg);
 		ft_errors(-1, shell);
+		free(arg);
 		ft_free_all(shell);
 		ft_free_tab(paths);
 		exit(-1);

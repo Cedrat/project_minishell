@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/25 00:45:31 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/26 19:28:35 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,16 @@ void	ft_dollar(char **tab, t_shell *shell)
 	{
 		if ((i == 0 && ft_strcmp(tab[i], "$?") == 0)
 			|| (ft_strcmp(tab[i], "$?") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
+			{
+			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
+		}
 		else if ((i == 0 && ft_strcmp(tab[i], "\"$?\"") == 0)
 			|| (ft_strcmp(tab[i], "\"$?\"") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
-			tab[i] = ft_itoa(shell->signal);
+			{
+				free(tab[i]);
+				tab[i] = ft_itoa(shell->signal);
+			}
 		i++;
 	}
 }

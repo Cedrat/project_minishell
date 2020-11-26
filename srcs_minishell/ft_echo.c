@@ -92,6 +92,7 @@ int	ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 			ft_putstr(shell->echo->var_path);
 		free(shell->echo->var_path);
 		free(shell->echo->var_name);
+
 		return (1);
 	}
 	return (0);
