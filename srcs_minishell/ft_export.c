@@ -146,14 +146,15 @@ int		ft_export(t_shell *shell)
 		{
 			ft_putstr("minishell: export: « ");
 			ft_putstr(shell->args[i + 1]);
-			ft_putstr(" » : bad variable name");
-			if (shell->args[i + 2])
-				ft_putstr("\n");
+			ft_putstr(" » : bad variable name\n");
+			// if (shell->args[i + 2])
+			// 	ft_putstr("\n");
 		}
 		else
 		{
 			export_env(shell, str);
 		}
+		free(str);
 		i++;
 	}
 	if (shell->args[1] == 0)

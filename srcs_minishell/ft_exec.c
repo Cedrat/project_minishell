@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/25 17:07:54 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/26 17:37:20 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,30 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		{
 			bin = ft_strjoin(paths[i], arg);
 			if (execve(bin, shell->args, shell->argenv) == -1)
+			{
 				free(bin);
+			}
 			else
+			{
 				exit(0);
+			}
+
 			i++;
 		}
+		free(arg);
 		ft_errors(-1, shell);
 		ft_free_all(shell);
+		ft_free_tab(paths);
 		exit(-1);
 	}
 	else if (pid > 0)  //Processus parent
+	{
 		waitpid(pid, &shell->signal, WUNTRACED);
+
+	}
 	else
 	{
+
 		ft_errors(-7, shell);
 		exit(-1);
 	}
@@ -56,7 +67,7 @@ void	ft_path(char *arg, t_shell *shell)
 		if (execve(arg, shell->args, shell->argenv) == -1)
 		{
 			ft_errors(-6, shell);
-			ft_free_all(shell);
+			// ft_free_all(shell);
 			exit(-1);
 		}
 		exit(0);
@@ -87,7 +98,7 @@ int	ft_exec(t_shell *shell, char *arg)
 	//2.Parser PATH
 	paths = ft_split(path_line, ':');
 	free(path_line);
-	//3. Check si il y a un path dans l'arg (comparer)
+	// 3. Check si il y a un path dans l'arg (comparer)
 	while (paths[i] && found_path == 0)
 	{
 		if (ft_strncmp(paths[i], arg, ft_strlen(paths[i])) == 0)

@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/24 16:44:11 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/26 18:01:55 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_choose_fd(t_shell *shell)
 
 	shell->fd = 1;
 	i = 0;
-	while(shell->args[i] != 0)
+	while(shell->args[i] != NULL)
 	{
 		if (!(ft_strcmp(shell->args[i], ">")))
 		{

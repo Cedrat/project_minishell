@@ -17,20 +17,19 @@ char **ft_remove_in_tab(char **tab, char* str)
 	while (tab[i + found])
 	{
 		p = 0;
-		while (str[p] != '=' && str[p])
+		while (str[p] && str[p] != '=' )
 			p++;
-		if ((!(ft_strncmp(tab[i + found], str, p))) && found != 1)
+		if (found != 1 &&(!(ft_strncmp(tab[i + found], str, p))) )
 		{
-			free(tab[i]);
 			found++;
 		}
 		else
 		{
-			new_tab[i] = tab[i + found];
+			new_tab[i] = ft_strdup(tab[i + found]);
 			i++;
 		}
 	}
-	free(tab);
+	ft_free_tab(tab);
 	new_tab[i] = 0;
 	return (new_tab);
 }
