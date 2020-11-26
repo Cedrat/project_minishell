@@ -68,7 +68,8 @@ void	ft_echo_config(t_echo *config, char **args)
 				j = ft_config_single_qt(config, args[i], j);
 			else if (args[i][j] == '\"')
 				j = ft_config_double_qt(config, args[i], j);
-			j++;
+			if (args[i][j])
+				j++;
 		}
 		i++;
 	}
@@ -178,7 +179,8 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
 		ft_putchar_fd(args[i], shell->fd); //Erreur avec $? si utilise + d'1 fois
-		i++;								//$? Affiche des trash values
+		if (args[i])
+			i++;								//$? Affiche des trash values
 	}
 }
 
