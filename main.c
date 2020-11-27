@@ -65,7 +65,8 @@ void	ft_get_line(char **buff, t_shell *shell)
 	if (i == -1)
 	{
 		ft_putstr("\n");
-		//ft_exit(); //A gérer
+		free(*buff);
+		ft_free_tab(shell->argenv);
 		exit(0);
 	}
 	else if (i == -2)
