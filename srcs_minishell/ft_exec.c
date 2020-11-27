@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/27 00:08:58 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/27 15:43:09 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 			}
 			else
 			{
+				// free(arg);
 				exit(0);
 			}
-
 			i++;
 		}
-		ft_errors(-1, shell);
 		free(arg);
+		ft_errors(-1, shell);
 		ft_free_all(shell);
 		ft_free_tab(paths);
 		exit(-1);
@@ -46,11 +46,12 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 	else if (pid > 0)  //Processus parent
 	{
 		waitpid(pid, &shell->signal, WUNTRACED);
+		// free(arg);
 
 	}
 	else
 	{
-
+		// free(arg);
 		ft_errors(-7, shell);
 		exit(-1);
 	}
@@ -88,6 +89,7 @@ int	ft_exec(t_shell *shell, char *arg)
 	char	**paths;
 	int 	i;
 	int		found_path;
+	char 	*temp;
 
 	i = 0;
 	found_path = 0;
@@ -111,18 +113,37 @@ int	ft_exec(t_shell *shell, char *arg)
 	//4. Si pas de path -> aller tester les chemins de PATH dans argenv
 	if (found_path == 0)
 	{
-		if (arg[0] != '/')
+		// if (arg[0] != '"')
+		// 	temp = ft_str_treatement(arg);
+		if (arg[0] != '/' && arg[0] != '"')
 		{
+			if (arg[0] != '"')
+			{
+				temp = ft_str_treatement(arg);
+				temp = ft_strjoin_freetwo("/", temp);
+				ft_no_path(temp, paths, shell);
+				// free(arg);
+				free(temp);
+			}
 			//path_line = arg;
-			arg = ft_strjoin("/", arg);
-			ft_no_path(arg, paths, shell);
-			free(arg);
+			// ft_strjoin("/", arg);
+			else
+			{
+				temp = ft_strjoin("/", arg);
+				ft_no_path(temp, paths, shell);
+				free(temp);
+			}
 			//free(path_line);  //Error on valgrind with this line
 		}
 		else
-			ft_no_path(arg, paths, shell);
+		{
+			temp = ft_strdup(arg);
+			ft_no_path(temp, paths, shell);
+			free(temp);
+		}
 
 	}
+	// free(arg);
 	ft_free_tab(paths);     //possible cause de bug
 	if (shell->signal == 256)
 		shell->signal = 130;	//cat + fichier inexistant
