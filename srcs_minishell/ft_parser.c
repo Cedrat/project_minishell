@@ -102,9 +102,29 @@ size_t count_tokens(char *str)
 	return (p);
 }
 
+char	*ft_cut_replace(char *str, t_shell *shell, int j)
+{
+	char *pt1;
+	char *pt2;
+	char *pt3;
+	int	 len;
+
+	pt1 = ft_substr(str, 0, j);
+	pt2 = ft_itoa(shell->signal);
+	if (str[j + 2] && (ft_strlen(str) > j + 2))
+		pt3 = ft_substr(str, j + 2, ft_strlen(str));
+	else
+		pt3 = ft_strdup("");
+	free(str);
+	str = ft_strjoin_freeall(pt1, pt2);
+	str = ft_strjoin_freeall(str, pt3);
+	return (str);
+}
+
 void	ft_dollar(char **tab, t_shell *shell)
 {
 	int i;
+	int j;
 
 	i = 0;
 	while (tab[i])
@@ -115,12 +135,19 @@ void	ft_dollar(char **tab, t_shell *shell)
 			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
 		}
-		else if ((i == 0 && ft_strcmp(tab[i], "\"$?\"") == 0)
-			|| (ft_strcmp(tab[i], "\"$?\"") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
+		else 
+		{
+			if (tab[i][0] == '\'')
+				return ;
+			j = 0;
+			while (tab[i][j])
 			{
-				free(tab[i]);
-				tab[i] = ft_itoa(shell->signal);
+				if ((i == 0 && tab[i][j + 1] && tab[i][j] == '$' && tab[i][j + 1] == '?') 
+					|| (tab[i][j + 1] && tab[i][j] == '$' && tab[i][j + 1] == '?' && ft_strcmp(tab[i - 1], "echo") != 0))
+						tab[i] = ft_cut_replace(tab[i], shell, j);
+				j++;
 			}
+		}
 		i++;
 	}
 }
