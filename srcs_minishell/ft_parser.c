@@ -112,7 +112,7 @@ char	*ft_cut_replace(char *str, t_shell *shell, int j)
 	pt1 = ft_substr(str, 0, j);
 	pt2 = ft_itoa(shell->signal);
 	if (str[j + 2] && (ft_strlen(str) > j + 2))
-		pt3 = ft_substr(str, j + 2, ft_strlen(str));
+		pt3 = ft_substr(str, j + 2, ft_strlen(str) - (j+2));
 	else
 		pt3 = ft_strdup("");
 	free(str);
