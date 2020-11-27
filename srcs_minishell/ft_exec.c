@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/27 15:43:09 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/27 16:01:36 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,24 +115,24 @@ int	ft_exec(t_shell *shell, char *arg)
 	{
 		// if (arg[0] != '"')
 		// 	temp = ft_str_treatement(arg);
-		if (arg[0] != '/' && arg[0] != '"')
+		if (arg[0] != '/') // && arg[0] != '"')
 		{
-			if (arg[0] != '"')
-			{
+			// if (arg[0] != '"')
+			// {
 				temp = ft_str_treatement(arg);
 				temp = ft_strjoin_freetwo("/", temp);
 				ft_no_path(temp, paths, shell);
 				// free(arg);
 				free(temp);
-			}
-			//path_line = arg;
-			// ft_strjoin("/", arg);
-			else
-			{
-				temp = ft_strjoin("/", arg);
-				ft_no_path(temp, paths, shell);
-				free(temp);
-			}
+			// }
+			// //path_line = arg;
+			// // ft_strjoin("/", arg);
+			// else
+			// {
+			// 	temp = ft_strjoin("/", arg);
+			// 	ft_no_path(temp, paths, shell);
+			// 	free(temp);
+			// }
 			//free(path_line);  //Error on valgrind with this line
 		}
 		else

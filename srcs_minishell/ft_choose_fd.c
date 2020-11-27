@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/26 18:01:55 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/27 18:18:05 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void ft_choose_fd(t_shell *shell)
 				return (ft_errors(-4, shell));
 			if (shell->fd != 1)
 				close(shell->fd);
-			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_TRUNC|O_APPEND, 0644);
+			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_TRUNC|O_APPEND|O_NONBLOCK, 0644);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i + 1]);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 		}
@@ -36,7 +36,7 @@ void ft_choose_fd(t_shell *shell)
 				return (ft_errors(-4, shell));
 			if (shell->fd != 1)
 				close(shell->fd);
-			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_APPEND, 0644);
+			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_APPEND|O_NONBLOCK, 0644);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i + 1]);
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 		}

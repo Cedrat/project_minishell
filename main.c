@@ -1,4 +1,4 @@
-#include "header/minishell.h"
+#include "header/minishell.h" // |
 
 void 	ft_put_prompt()
 {
@@ -79,6 +79,7 @@ int main (int argc, char **argv, char **argenv)
 	char	*buff;
 	size_t	i;
 	char	**args;
+
 
 	ft_init_main(&shell, argenv);
 	if ((signal(SIGINT, sig_handler) == SIG_ERR)

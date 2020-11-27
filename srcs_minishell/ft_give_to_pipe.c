@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/25 18:21:22 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/11/27 18:57:03 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int ft_give_to_pipe(t_shell *shell)
 	  int ret;
 	  size_t i = 0;
 	  char **args_pipes;
+	  int result;
 	args_pipes = ft_divide_to_pipe(shell->args);
 	ft_free_tab(shell->args);
 	while(args_pipes[i] != NULL)
@@ -45,8 +46,16 @@ int ft_give_to_pipe(t_shell *shell)
 			  }
 			  else
 			  {
-				wait(&pid);
+				  // wait (&pid);
+				waitpid(-1 , &pid, 0);
+				// printf("||%d ||", WIFEXITED(pid));
+				// {
+				// 	ft_putstr("warning error not definitive : binary file ?\n");
+				// 	break;
+				// }
+				// waitpid(-1 , &pid, 0);
 				close(pipefd[1]);
+
 				next_fd = pipefd[0];
 				i++;
 			  }
