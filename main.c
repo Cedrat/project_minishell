@@ -50,6 +50,13 @@ void    sig_handler(int signum)
 
 void 	ft_init_main(t_shell *shell, char **argenv)
 {
+	shell->function[0] = &ft_echo;
+	shell->function[1] = &ft_cd;
+	shell->function[2] = &ft_pwd;
+	shell->function[3] = &ft_export;
+	shell->function[4] = &ft_unset;
+	shell->function[5] = &ft_env;
+	shell->function[6] = &ft_exit;
 	pid = 1;
 	prompt = 1;
 	shell->argenv = ft_dup_arg(argenv);

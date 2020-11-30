@@ -62,7 +62,6 @@ void iterate_word(char *str, size_t *i, size_t p)
 
 size_t count_tokens(char *str)
 {
-	char **tab;
 	size_t i = 0;
 	size_t j = 0;
 	size_t p = 0;
@@ -79,23 +78,17 @@ size_t count_tokens(char *str)
 			d = i;
 		}
 		while (not_a_sep(str[i]) && str[i] && str[i] != ' ')
-		{
 			i++;
-		}
 		d = i;
 		if (j != d)
-		{
 			p++;
-		}
 		if (str[i] == '>' && str[i+1] == '>')
 		{
 			i += 1;
 			p++;
 		}
 		else if (!not_a_sep(str[i]))
-		{
-					p++;
-		}
+			p++;
 		if (str[i])
 			i++;
 	}
@@ -112,13 +105,28 @@ char	*ft_cut_replace(char *str, t_shell *shell, int j)
 	pt1 = ft_substr(str, 0, j);
 	pt2 = ft_itoa(shell->signal);
 	if (str[j + 2] && (ft_strlen(str) > j + 2))
-		pt3 = ft_substr(str, j + 2, ft_strlen(str) - (j+2));
+		pt3 = ft_substr(str, j + 2, ft_strlen(str) - (j + 2));
 	else
 		pt3 = ft_strdup("");
 	free(str);
 	str = ft_strjoin_freeall(pt1, pt2);
 	str = ft_strjoin_freeall(str, pt3);
 	return (str);
+}
+
+int		ft_check_doll(char *tab)
+{
+	int j;
+
+	j = 0;
+	while (tab[j])
+	{
+		if ((tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?')
+			|| (tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?'))
+			return (j);
+		j++;
+	}
+	return (j = -1);
 }
 
 void	ft_dollar(char **tab, t_shell *shell)
@@ -130,8 +138,9 @@ void	ft_dollar(char **tab, t_shell *shell)
 	while (tab[i])
 	{
 		if ((i == 0 && ft_strcmp(tab[i], "$?") == 0)
-			|| (ft_strcmp(tab[i], "$?") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
-			{
+			|| (ft_strcmp(tab[i], "$?") == 0 
+				&& ft_strcmp(tab[i - 1], "echo") != 0))
+		{
 			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
 		}
@@ -139,14 +148,10 @@ void	ft_dollar(char **tab, t_shell *shell)
 		{
 			if (tab[i][0] == '\'')
 				return ;
-			j = 0;
-			while (tab[i][j])
-			{
-				if ((i == 0 && tab[i][j + 1] && tab[i][j] == '$' && tab[i][j + 1] == '?') 
-					|| (tab[i][j + 1] && tab[i][j] == '$' && tab[i][j + 1] == '?' && ft_strcmp(tab[i - 1], "echo") != 0))
-						tab[i] = ft_cut_replace(tab[i], shell, j);
-				j++;
-			}
+			if ((i == 0 && (j = ft_check_doll(tab[i]) > 0))
+				|| ((j = ft_check_doll(tab[i]) > 0)
+					&& ft_strcmp(tab[i - 1], "echo") != 0))
+				tab[i] = ft_cut_replace(tab[i], shell, j);
 		}
 		i++;
 	}
@@ -172,9 +177,7 @@ char **ft_parser(char *str, t_shell *shell)
 			d = i;
 		}
 		while (not_a_sep(str[i]) && str[i] && str[i] != ' ')
-		{
 			i++;
-		}
 		d = i;
 		if (j != d)
 		{
@@ -190,7 +193,7 @@ char **ft_parser(char *str, t_shell *shell)
 		else if (!not_a_sep(str[i]))
 		{
 			ft_strndup(&tab[p], str, i , i+1);
-					p++;
+			p++;
 		}
 		if (str[i])
 			i++;

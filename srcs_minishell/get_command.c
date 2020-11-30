@@ -14,26 +14,14 @@ void	ft_init_commands(t_shell *shell)
 	shell->echo->option_n = 1;
 }
 
-void	ft_init_functions(t_shell *shell)
-{
-	shell->function[0] = &ft_echo;
-	shell->function[1] = &ft_cd;
-	shell->function[2] = &ft_pwd;
-	shell->function[3] = &ft_export;
-	shell->function[4] = &ft_unset;
-	shell->function[5] = &ft_env;
-	shell->function[6] = &ft_exit;
-}
-
 void	ft_get_command(t_shell *shell)
 {
 	int 	i;
 	int 	j;
-	int		found; //0 = success, -1 = command not found, -2 = wrong path/file, -3 = trop d'args
+	int		found;
 
 	ft_init_commands(shell);
-	ft_init_functions(shell);
-	shell->home_path = ft_get_var(shell->argenv, "HOME="); //On recupere le path du home
+	shell->home_path = ft_get_var(shell->argenv, "HOME=");
 	i = 0;
 	found = -1;
 	while (shell->args[i] && found == -1)
@@ -41,7 +29,8 @@ void	ft_get_command(t_shell *shell)
 		j = 0;
 		while (j < 7 && found == -1)
 		{
-			if (ft_strcmp(shell->args[i], shell->commands[j]) == 0 && ft_nopipes(shell->args))
+			if (ft_strcmp(shell->args[i], shell->commands[j]) == 0 
+				&& ft_nopipes(shell->args))
 				found = shell->function[j](shell);
 			j++;
 		}
