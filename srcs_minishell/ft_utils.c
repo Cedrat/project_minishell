@@ -56,3 +56,14 @@ char **ft_dup_arg(char **arg)
 	new_tab[i] = NULL;
 	return (new_tab);
 }
+
+void ft_free_tab(char **tab)
+{
+	size_t i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}

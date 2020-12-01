@@ -1,4 +1,4 @@
-#include "header/minishell.h" // |
+#include "header/minishell.h"
 
 void 	ft_put_prompt()
 {

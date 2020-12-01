@@ -12,12 +12,12 @@
 
 #include "../header/minishell.h"
 
-void ft_strndup(char **dest, char *src, size_t start, size_t end)
+void	ft_strndup(char **dest, char *src, size_t start, size_t end)
 {
-	char *str;
-	size_t i;
-	i = 0;
+	char	*str;
+	size_t	i;
 
+	i = 0;
 	str = malloc(sizeof(char) * (end - start + 1));
 	while (start < end && src[start])
 	{
@@ -29,65 +29,76 @@ void ft_strndup(char **dest, char *src, size_t start, size_t end)
 	*dest = str;
 }
 
-int not_a_sep(char letter)
+int		not_a_sep(char letter)
 {
 	if (letter == ';' || letter == '>' || letter == '<' || letter == '|')
 		return (0);
 	return (1);
 }
 
-
-void iterate_word(char *str, size_t *i, size_t p)
+int		ft_is_not_space(char *str, size_t *i)
 {
-	char sep = str[*i];
-	while((str[*i] == '"' || str[*i] == '\'') && str[*i])
-	{
-		if (str[*i] == sep)
-			p++;
-		(*i)++;
-	}
-	while((str[*i] != '"' && str[*i] != '\'' && str[*i]))
-	{
-		(*i)++;
-	}
-	while((str[*i] == '"' || str[*i] == '\'') && str[*i])
-	{
-		if (str[*i] == sep)
-			p++;
-		(*i)++;
-	}
-	if (((str[*i] != ' ' && not_a_sep(str[*i])) || (p%2 != 0)) && str[*i])
-		iterate_word(str, i, p);
+	while (not_a_sep(str[*i]) && str[*i] && str[*i] != ' ')
+		*i += 1;
+	return (*i);
 }
 
-size_t count_tokens(char *str)
+int		ft_is_space(char *str, size_t *i)
 {
-	size_t i = 0;
-	size_t j = 0;
-	size_t p = 0;
-	size_t d = 0;
+	while (str[*i] == ' ')
+		*i += 1;
+	return (*i);
+}
 
+int		iterate_word(char *str, size_t *i, size_t p)
+{
+	char sep;
+
+	sep = str[*i];
+	while ((str[*i] == '"' || str[*i] == '\'') && str[*i])
+	{
+		if (str[*i] == sep)
+			p++;
+		(*i)++;
+	}
+	if (p > 1 && p % 2 == 0)
+		return (*i);
+	while ((str[*i] != '"' && str[*i] != '\'' && str[*i]))
+	{
+		(*i)++;
+	}
+	while ((str[*i] == '"' || str[*i] == '\'') && str[*i] && p % 2 != 0)
+	{
+		if (str[*i] == sep)
+			p++;
+		(*i)++;
+	}
+	if (((str[*i] != ' ' && not_a_sep(str[*i])) || (p % 2 != 0)) && str[*i])
+		iterate_word(str, i, p);
+	return (*i);
+}
+
+size_t	count_tokens(char *str)
+{
+	size_t i;
+	size_t j;
+	size_t p;
+	size_t d;
+
+	i = 0;
+	p = 0;
 	while (str[i])
 	{
-		while(str[i] == ' ')
-			i++;
-		j = i;
+		j = ft_is_space(str, &i);
 		if (str[i] == '\'' || str[i] == '"')
-		{
-			iterate_word(str, &i, 0);
-			d = i;
-		}
-		while (not_a_sep(str[i]) && str[i] && str[i] != ' ')
-			i++;
-		d = i;
-		if (j != d)
-			p++;
-		if (str[i] == '>' && str[i+1] == '>')
+			d = iterate_word(str, &i, 0);
+		d = ft_is_not_space(str, &i);
+		if (str[i] == '>' && str[i + 1] == '>')
 		{
 			i += 1;
 			p++;
 		}
-		else if (!not_a_sep(str[i]))
+		else if (!not_a_sep(str[i]) || j != d)
 			p++;
 		if (str[i])
 			i++;
@@ -97,10 +108,10 @@ size_t count_tokens(char *str)
 
 char	*ft_cut_replace(char *str, t_shell *shell, int j)
 {
-	char *pt1;
-	char *pt2;
-	char *pt3;
-	int	 len;
+	char	*pt1;
+	char	*pt2;
+	char	*pt3;
+	int		len;
 
 	pt1 = ft_substr(str, 0, j);
 	pt2 = ft_itoa(shell->signal);
@@ -116,7 +127,7 @@ char	*ft_cut_replace(char *str, t_shell *shell, int j)
 
 int		ft_check_doll(char *tab)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (tab[j])
@@ -138,13 +149,13 @@ void	ft_dollar(char **tab, t_shell *shell)
 	while (tab[i])
 	{
 		if ((i == 0 && ft_strcmp(tab[i], "$?") == 0)
-			|| (ft_strcmp(tab[i], "$?") == 0 
+			|| (ft_strcmp(tab[i], "$?") == 0
 				&& ft_strcmp(tab[i - 1], "echo") != 0))
 		{
 			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
 		}
-		else 
+		else
 		{
 			if (tab[i][0] == '\'')
 				return ;
@@ -157,59 +168,48 @@ void	ft_dollar(char **tab, t_shell *shell)
 	}
 }
 
-char **ft_parser(char *str, t_shell *shell)
+void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
 {
-	char **tab;
-	size_t i = 0;
-	size_t j = 0;
-	size_t p = 0;
-	size_t d = 0;
+	if (str[*i] == '>' && str[*i + 1] == '>')
+	{
+		ft_strndup(&tab[*p], str, *i, *i + 2);
+		*i += 1;
+		*p += 1;
+	}
+	else if (!not_a_sep(str[*i]))
+	{
+		ft_strndup(&tab[*p], str, *i, *i + 1);
+		*p += 1;
+	}
+	if (str[*i])
+		*i += 1;
+}
+
+char	**ft_parser(char *str, t_shell *shell)
+{
+	char	**tab;
+	size_t	i;
+	size_t	j;
+	size_t	p;
+	size_t	d;
 
 	tab = malloc(sizeof(char *) * (count_tokens(str) + 1));
+	i = 0;
+	p = 0;
 	while (str[i])
 	{
-		while(str[i] == ' ')
-			i++;
-		j = i;
+		j = ft_is_space(str, &i);
 		if (str[i] == '\'' || str[i] == '"')
-		{
-			iterate_word(str, &i, 0);
-			d = i;
-		}
-		while (not_a_sep(str[i]) && str[i] && str[i] != ' ')
-			i++;
-		d = i;
+			d = iterate_word(str, &i, 0);
+		d = ft_is_not_space(str, &i);
 		if (j != d)
 		{
-			ft_strndup(&tab[p], str, j , i );
+			ft_strndup(&tab[p], str, j, i);
 			p++;
 		}
-		if (str[i] == '>' && str[i+1] == '>')
-		{
-			ft_strndup(&tab[p], str, i , i+2);
-			i += 1;
-			p++;
-		}
-		else if (!not_a_sep(str[i]))
-		{
-			ft_strndup(&tab[p], str, i , i+1);
-			p++;
-		}
-		if (str[i])
-			i++;
+		ft_parser_2(str, tab, &i, &p);
 	}
 	tab[p] = NULL;
 	ft_dollar(tab, shell);
 	return (tab);
-}
-
-void ft_free_tab(char **tab)
-{
-	size_t i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }

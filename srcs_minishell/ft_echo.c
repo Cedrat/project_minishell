@@ -166,8 +166,8 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 	i = 0;
 	while (args[i] != '\0')
 	{
-		if (args[i] == '$' && (ft_dollar_sign(args, shell, &i, shell->fd)))
-				break;
+		if (args[i] == '$')
+				ft_dollar_sign(args, shell, &i, shell->fd);
 		else if (i == 0 && args[i] == '~' && !args[i + 1]
 			|| args[i] == '~' && !args[i + 1] && !args[i - 1])
 			ft_echo_pwd(shell, &i);
@@ -193,7 +193,7 @@ int		ft_echo(t_shell *shell)
 	int 	i;
 
 	if (!shell->args[1])
-		return (0);
+		return (-1);
 	shell->echo->signal = shell->signal;
 	ft_echo_config(shell->echo, shell->args);
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0)
