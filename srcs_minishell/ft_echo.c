@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/03 16:14:09 by dchampda          #+#    #+#             */
+/*   Updated: 2020/12/03 16:14:10 by dchampda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 void	ft_init_echo(t_echo *config, int *i, char **args)
@@ -38,7 +50,8 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 	while (arg[i] != '\0')
 	{
 		if ((i == 0 && arg[i] == '\"') || (arg[i] == '\"' && arg[i - 1] != '\\')
-			|| (arg[i] == '\"' && arg[i - 1] == '\\' && config->backslash % 2 == 0))
+			|| (arg[i] == '\"' && arg[i - 1] == '\\'
+				&& config->backslash % 2 == 0))
 		{
 			if (config->sg_qt == 0 && config->db_qt == 0)
 				config->token = 2;
@@ -54,7 +67,7 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 void	ft_echo_config(t_echo *config, char **args)
 {
 	int		i;
-	int 	j;
+	int		j;
 
 	ft_init_echo(config, &i, args);
 	while (args[i])
@@ -75,15 +88,15 @@ void	ft_echo_config(t_echo *config, char **args)
 	}
 }
 
-int	ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
+int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 {
-	if (args[*i] == '$' &&  args[*i + 1] && args[*i + 1] == '?')
+	if (args[*i] == '$' && args[*i + 1] && args[*i + 1] == '?')
 	{
 		ft_putnbr_fd(shell->echo->signal, fd);
 		*i = *i + 2;
 		return (1);
 	}
-	else if (args[*i] == '$' &&  args[*i + 1] &&
+	else if (args[*i] == '$' && args[*i + 1] &&
 		!ft_strchr(" \"\\\'\0\n", args[*i + 1]))
 	{
 		shell->echo->var_name = ft_extract_var_name(args, i);
@@ -100,7 +113,7 @@ int	ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 
 void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
-	int 	i;
+	int		i;
 	int		j;
 
 	i = 0;
@@ -124,7 +137,7 @@ void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 
 void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (args[i] != '\0')
@@ -144,7 +157,7 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 		else if ((args[i] == '\\' && args[i + 1] == '\\')
 				|| (args[i] == '\\' && args[i + 1] == '\"'))
 			i++;
-		if ((args[i] != '\"') || (args[i] == '\"' && i >= 2 
+		if ((args[i] != '\"') || (args[i] == '\"' && i >= 2
 			&& args[i - 1] == '\\' && args[i - 2] != '\\'))
 			ft_putchar_fd(args[i], shell->fd);
 		i++;
@@ -161,13 +174,13 @@ void	ft_echo_pwd(t_shell *shell, int *i)
 
 void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (args[i] != '\0')
 	{
 		if (args[i] == '$')
-				ft_dollar_sign(args, shell, &i, shell->fd);
+			ft_dollar_sign(args, shell, &i, shell->fd);
 		else if (i == 0 && args[i] == '~' && !args[i + 1]
 			|| args[i] == '~' && !args[i + 1] && !args[i - 1])
 			ft_echo_pwd(shell, &i);
@@ -190,7 +203,7 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 
 int		ft_echo(t_shell *shell)
 {
-	int 	i;
+	int		i;
 
 	if (!shell->args[1])
 		return (-1);

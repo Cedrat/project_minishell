@@ -30,7 +30,7 @@ char	*ft_strndupl(const char *s, int len)
 
 char	*ft_extract_var_name(char *arg, int *j)
 {
-	int 	i;
+	int		i;
 	char	*str;
 
 	*j += 1;
@@ -53,7 +53,7 @@ char	*ft_extract_var_name(char *arg, int *j)
 char	*ft_get_var(char **argenv, char *tofind)
 {
 	char	*path;
-	int 	i;
+	int		i;
 	int		j;
 
 	i = 0;

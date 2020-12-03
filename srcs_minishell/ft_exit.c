@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/03 16:45:56 by dchampda          #+#    #+#             */
+/*   Updated: 2020/12/03 16:45:57 by dchampda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 void	ft_free_all(t_shell *shell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 7)
@@ -19,8 +31,8 @@ void	ft_free_all(t_shell *shell)
 
 int		ft_exit(t_shell *shell)
 {
-	char *str;
-	int nb;
+	char	*str;
+	int		nb;
 
 	nb = 0;
 	if (shell->args[1])
@@ -36,7 +48,7 @@ int		ft_exit(t_shell *shell)
 			return (0);
 		}
 	}
-	nb = nb%256;
+	nb = nb % 256;
 	write(1, "Bye ! \n", 7);
 	ft_free_all(shell);
 	exit(nb);

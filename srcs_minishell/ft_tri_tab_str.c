@@ -12,9 +12,9 @@
 
 #include "../header/minishell.h"
 
-void ft_tri_tab_str(char** str)
+void	ft_tri_tab_str(char **str)
 {
-	size_t		i;
+	size_t	i;
 	char	*old_value;
 
 	i = 1;

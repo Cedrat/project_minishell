@@ -16,7 +16,7 @@ void	ft_strcat(char *str, char *str1, char *str2)
 {
 	char	*res;
 	int		len;
-	int 	i;
+	int		i;
 	int		j;
 
 	len = ft_strlen(str) + ft_strlen(str1) + ft_strlen(str2);
@@ -37,7 +37,7 @@ void	ft_strcat(char *str, char *str1, char *str2)
 	free(res);
 }
 
-void		ft_errors(int error, t_shell *shell)
+void	ft_errors(int error, t_shell *shell)
 {
 	if (error == -1)
 	{

@@ -12,13 +12,14 @@
 
 #include "../header/minishell.h"
 
-void ft_beautifull_export(char *str, int is_export, int fd)
+void	ft_beautifull_export(char *str, int is_export, int fd)
 {
-	char letter;
-	size_t i = 0;
+	char	letter;
+	size_t	i;
 
+	i = 0;
 	letter = ' ';
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '"' && letter != '"' && letter != '\'')
 			letter = '"';
@@ -40,16 +41,17 @@ void ft_beautifull_export(char *str, int is_export, int fd)
 	}
 }
 
-char *ft_str_treatement(char *str)
+char	*ft_str_treatement(char *str)
 {
-	char letter;
-	char *newstr;
-	size_t i = 0;
-	size_t p = 0;
+	char	letter;
+	char	*newstr;
+	size_t	i;
+	size_t	p;
 
-
+	i = 0;
+	p = 0;
 	letter = ' ';
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '"' && letter != '"' && letter != '\'')
 			letter = '"';
@@ -59,10 +61,6 @@ char *ft_str_treatement(char *str)
 			letter = '\'';
 		else if (str[i] == '\'' && letter == '\'')
 			letter = ' ';
-		else if (str[i] == '"' && letter == '\'')
-		{
-			str[p++] = str[i];
-		}
 		else
 			str[p++] = str[i];
 		i++;
@@ -71,3 +69,9 @@ char *ft_str_treatement(char *str)
 	newstr = ft_strdup(str);
 	return (newstr);
 }
+
+/*
+Verifier que sans ça, ça fonctionne tj bien (l.64)
+	else if (str[i] == '"' && letter == '\'')
+		str[p++] = str[i];*/
+

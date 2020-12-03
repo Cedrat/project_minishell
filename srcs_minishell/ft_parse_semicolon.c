@@ -12,14 +12,17 @@
 
 #include "../header/minishell.h"
 
-int count_args(char *str)
+int		count_args(char *str)
 {
-	char **tab_args;
-	size_t p = 0;
-	size_t i = 0;
-	size_t old_i = i;
+	char	**tab_args;
+	size_t	p;
+	size_t	i;
+	size_t	old_i;
 
-	while(str[i])
+	p = 0;
+	i = 0;
+	old_i = i;
+	while (str[i])
 	{
 		old_i = i;
 		i = ft_semi_colon(&str[i]);
@@ -31,15 +34,18 @@ int count_args(char *str)
 	return (p);
 }
 
-char **ft_args(char *str)
+char	**ft_args(char *str)
 {
-	char **tab_args;
-	size_t p = 0;
-	size_t i = 0;
-	size_t old_i = i;
+	char	**tab_args;
+	size_t	p;
+	size_t	i;
+	size_t	old_i;
 
+	p = 0;
+	i = 0;
+	old_i = i;
 	tab_args = malloc(sizeof(char *) * (1 + count_args(str)));
-	while(str[i])
+	while (str[i])
 	{
 		old_i = i;
 		i = ft_semi_colon(&str[i]);
@@ -53,14 +59,16 @@ char **ft_args(char *str)
 	return (tab_args);
 }
 
-int ft_semi_colon(char *str)
+int		ft_semi_colon(char *str)
 {
-	char letter;
-	size_t i = 0;
-	size_t p = 0;
+	char	letter;
+	size_t	i;
+	size_t	p;
 
+	i = 0;
 	letter = ' ';
-	while(str[i])
+	p = 0;
+	while (str[i])
 	{
 		if (str[i] == '"' && letter != '"' && letter != '\'')
 			letter = '"';
@@ -71,7 +79,7 @@ int ft_semi_colon(char *str)
 		else if (str[i] == '\'' && letter == '\'')
 			letter = ' ';
 		else if (letter == ' ' && str[i] == ';')
-			break;
+			break ;
 		i++;
 	}
 	return (i);

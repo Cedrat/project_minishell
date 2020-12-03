@@ -14,10 +14,10 @@
 
 char *ft_give_without_quote(char *str) //not finish as weel
 {
-	size_t nb_dq;
-	size_t nb_sq;
+	size_t	nb_dq;
+	size_t	nb_sq;
 	char	first_quote;
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -26,5 +26,4 @@ char *ft_give_without_quote(char *str) //not finish as weel
 			first_quote = str[i];
 		i++;
 	}
-
 }
