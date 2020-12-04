@@ -28,9 +28,9 @@ void 	ft_put_prompt()
 
 void    sig_handler(int signum)
 {
-	if (pid == 0)
+	if (g_pid == 0)
 	{
-		kill(pid, SIGTERM);
+		kill(g_pid, SIGTERM);
 		ft_putstr("\n");
 		return ;
 	}
@@ -38,7 +38,7 @@ void    sig_handler(int signum)
 	{
 		ft_putstr("\n");
 		ft_put_prompt();
-		prompt = 0;
+		g_prompt = 0;
 		return ;
 	}
 	else if (signum == SIGQUIT) //ctrl-\ =quit
@@ -61,8 +61,8 @@ void 	ft_init_main(t_shell *shell, char **argenv)
 	shell->function[4] = &ft_unset;
 	shell->function[5] = &ft_env;
 	shell->function[6] = &ft_exit;
-	pid = 1;
-	prompt = 1;
+	g_pid = 1;
+	g_prompt = 1;
 	shell->argenv = ft_dup_arg(argenv);
 	shell->signal = 0;
 	shell->nb_error = 0;
@@ -98,13 +98,13 @@ int main (int argc, char **argv, char **argenv)
 		ft_putstr("Error catching signal\n");
 	while(1)
 	{
-		if (prompt)
+		if (g_prompt)
 			ft_put_prompt();
 		ft_get_line(&buff, &shell);
 		shell.args_line = ft_args(buff);
 		free(buff);
 		i = 0;
-		prompt = 1;
+		g_prompt = 1;
 		while (shell.args_line[i])
 		{
 			shell.args = ft_parser(shell.args_line[i], &shell);

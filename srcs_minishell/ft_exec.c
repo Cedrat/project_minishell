@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/01 19:04:08 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/04 18:50:28 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 	int 	pipefd;
 
 	i = 0;
-	pid = fork();
-	if (pid == 0)  //Processus enfant
+	g_pid = fork();
+	if (g_pid == 0)  //Processus enfant
 	{
 		dup2(shell->fd,1);
 		while (paths[i])
@@ -43,9 +43,9 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		ft_free_tab(paths);
 		exit(-1);
 	}
-	else if (pid > 0)  //Processus parent
+	else if (g_pid > 0)  //Processus parent
 	{
-		waitpid(pid, &shell->signal, WUNTRACED);
+		waitpid(g_pid, &shell->signal, WUNTRACED);
 		// free(arg);
 
 	}
@@ -60,9 +60,9 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 
 void	ft_path(char *arg, t_shell *shell)
 {
-	pid = fork();
+	g_pid = fork();
 
-	if (pid == 0)  //Processus enfant
+	if (g_pid == 0)  //Processus enfant
 	{
 		dup2(shell->fd,1);
 		if (execve(arg, shell->args, shell->argenv) == -1)
@@ -73,8 +73,8 @@ void	ft_path(char *arg, t_shell *shell)
 		}
 		exit(0);
 	}
-	else if (pid > 0)  //Processus parent
-		waitpid(pid, &shell->signal, WUNTRACED);
+	else if (g_pid > 0)  //Processus parent
+		waitpid(g_pid, &shell->signal, WUNTRACED);
 	else
 	{
 		ft_errors(-7, shell);
