@@ -110,6 +110,7 @@ int ft_give_to_pipe(t_shell *shell);
 char ***ft_args_pipe(char **args);
 char *ft_file_to_str(char *path);
 char **add_env(char **arg, char *str);
+void ft_recursives_pipes(char **args_pipes, int i, int *fd, int *fd2, t_shell *shell);
 
 void    sig_handler(int signum);
 char **ft_divide_to_pipe(char **split);

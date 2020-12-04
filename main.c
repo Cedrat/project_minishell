@@ -46,6 +46,10 @@ void    sig_handler(int signum)
 		write(1, "\b\b  \b\b", 6); // Erase ctrl-backslash
 		return ;
 	}
+	else if (signum == SIGPIPE) //ctrl-\ =quit
+	{
+		ft_putstr("PIPE FULL");
+	}
 }
 
 void 	ft_init_main(t_shell *shell, char **argenv)
@@ -83,7 +87,7 @@ int main (int argc, char **argv, char **argenv)
 
 	ft_init_main(&shell, argenv);
 	if ((signal(SIGINT, sig_handler) == SIG_ERR)
-		|| (signal(SIGQUIT, sig_handler) == SIG_ERR))
+		|| (signal(SIGQUIT, sig_handler) == SIG_ERR) || (signal(SIGPIPE, sig_handler)))
 		ft_putstr("Error catching signal\n");
 	while(1)
 	{
