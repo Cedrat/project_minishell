@@ -75,8 +75,7 @@ int		ft_unset(t_shell *shell)
 				shell->argenv = ft_remove_in_tab(shell->argenv, shell->args[o]);
 				break ;
 			}
-			else
-				i++;
+			i++;
 		}
 		o++;
 	}

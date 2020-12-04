@@ -12,20 +12,20 @@
 
 #include "../header/minishell.h"
 
-void ft_putstr(char *word)
+void	ft_putstr(char *word)
 {
-	while(*word)
+	while (*word)
 	{
 		write(1, word, 1);
 		word++;
 	}
 }
 
-t_list *ft_convert_2dchar_chainedlist(char **str)
+t_list	*ft_convert_2dchar_chainedlist(char **str)
 {
-	size_t i;
-	t_list *char_list;
-	t_list *new;
+	size_t	i;
+	t_list	*char_list;
+	t_list	*new;
 
 	i = 0;
 	char_list = ft_lstnew(str[i]);
@@ -39,11 +39,12 @@ t_list *ft_convert_2dchar_chainedlist(char **str)
 	return (char_list);
 }
 
-char **ft_dup_arg(char **arg)
+char	**ft_dup_arg(char **arg)
 {
-	size_t i = 0;
-	char **new_tab;
+	size_t	i;
+	char	**new_tab;
 
+	i = 0;
 	while (arg[i])
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 1));
@@ -57,9 +58,11 @@ char **ft_dup_arg(char **arg)
 	return (new_tab);
 }
 
-void ft_free_tab(char **tab)
+void	ft_free_tab(char **tab)
 {
-	size_t i = 0;
+	size_t	i;
+
+	i = 0;
 	while (tab[i])
 	{
 		free(tab[i]);
