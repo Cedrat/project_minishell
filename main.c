@@ -108,7 +108,7 @@ int main (int argc, char **argv, char **argenv)
 		while (shell.args_line[i])
 		{
 			shell.args = ft_parser(shell.args_line[i], &shell);
-			if (ft_str_is_present(shell.args_line, "|"))
+			if (ft_str_is_present(shell.args, "|"))
 				ft_give_to_pipe(&shell);
 			else
 			{			//Faire un ft_launch qui regroupe tout ce bloc ?
