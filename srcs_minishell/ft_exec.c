@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/04 18:50:28 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/05 19:07:35 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 		while (paths[i])
 		{
 			bin = ft_strjoin(paths[i], arg);
-			if (execve(bin, shell->args, shell->argenv) == -1)
-			{
-				free(bin);
-			}
+			if ((execve(bin, shell->args, shell->argenv)) == -1)
+				;
 			else
 			{
 				// free(arg);
 				exit(0);
 			}
+			free(bin);
 			i++;
 		}
 		free(arg);
@@ -46,12 +45,10 @@ void	ft_no_path(char *arg, char **paths, t_shell *shell)
 	else if (g_pid > 0)  //Processus parent
 	{
 		waitpid(g_pid, &shell->signal, WUNTRACED);
-		// free(arg);
 
 	}
 	else
 	{
-		// free(arg);
 		ft_errors(-7, shell);
 		exit(-1);
 	}
