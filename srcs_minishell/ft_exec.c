@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/07 16:15:16 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/07 16:45:52 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	ft_exec(t_shell *shell, char *arg)
 	//2.Parser PATH
 	paths = ft_split(path_line, ':');
 	free(path_line);
+	ft_purify_args(shell->args + 1);
 	// 3. Check si il y a un path dans l'arg (comparer)
 	while (found_path == 0 && paths[i])
 	{

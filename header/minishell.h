@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/04 18:37:06 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/07 16:35:10 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell);
 
 void ft_beautifull_export(char *str, int is_export, int fd);
 char *ft_str_treatement(char *str);
+void ft_purify_args(char **args);
 
 void ft_choose_fd(t_shell *shell);
 int ft_str_is_number(char *str);
