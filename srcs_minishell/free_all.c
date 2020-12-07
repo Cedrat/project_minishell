@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 18:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/04 17:49:46 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/07 16:10:40 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,13 @@ void free_shell_commands(t_shell *shell)
 	free(shell->commands[5]);
 	free(shell->commands[6]);
 	free(shell->home_path);
+}
+
+void	ft_free_all(t_shell *shell)
+{
+	free_shell_commands(shell);
+	free(shell->echo);
+	ft_free_tab(shell->args);
+	ft_free_tab(shell->args_line);
+	ft_free_tab(shell->argenv);
 }

@@ -6,28 +6,12 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:45:56 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/03 16:45:57 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/12/07 16:05:32 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void	ft_free_all(t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	while (i < 7)
-	{
-		free(shell->commands[i]);
-		i++;
-	}
-	free(shell->echo);
-	free(shell->home_path);
-	ft_free_tab(shell->args);
-	ft_free_tab(shell->args_line);
-	ft_free_tab(shell->argenv);
-}
 
 int		ft_exit(t_shell *shell)
 {

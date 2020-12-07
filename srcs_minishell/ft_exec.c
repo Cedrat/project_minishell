@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/05 19:07:35 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/07 16:15:16 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,13 @@ void	ft_path(char *arg, t_shell *shell)
 		if (execve(arg, shell->args, shell->argenv) == -1)
 		{
 			ft_errors(-6, shell);
-			// ft_free_all(shell);
-			exit(-1);
+
+			// exit(-1);
 		}
+		// free(arg);
+		ft_errors(-1, shell);
+		ft_free_all(shell);
+		// ft_free_tab(paths);
 		exit(0);
 	}
 	else if (g_pid > 0)  //Processus parent
@@ -98,10 +102,11 @@ int	ft_exec(t_shell *shell, char *arg)
 	paths = ft_split(path_line, ':');
 	free(path_line);
 	// 3. Check si il y a un path dans l'arg (comparer)
-	while (paths[i] && found_path == 0)
+	while (found_path == 0 && paths[i])
 	{
 		if (ft_strncmp(paths[i], arg, ft_strlen(paths[i])) == 0)
 		{
+			ft_free_tab(paths);
 			ft_path(arg, shell);
 			found_path = 1;
 		}
@@ -138,10 +143,11 @@ int	ft_exec(t_shell *shell, char *arg)
 			ft_no_path(temp, paths, shell);
 			free(temp);
 		}
+		ft_free_tab(paths);
 
 	}
 	// free(arg);
-	ft_free_tab(paths);     //possible cause de bug
+	// ft_free_tab(paths);     //possible cause de bug
 	if (shell->signal == 256)
 		shell->signal = 130;	//cat + fichier inexistant
 	else if (shell->signal > 0)
