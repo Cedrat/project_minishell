@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:53:39 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/03 16:53:39 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/12/08 17:44:27 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,20 @@ int		ft_unset(t_shell *shell)
 	size_t	p;
 	size_t	o;
 
-	o = 1;
+	o = 0;
+	while (shell->args[o + 1])
+	{
+		str = ft_str_treatement(shell->args[o + 1]);
+		if (!(ft_is_varenv(str)) || (ft_charispresent(shell->args[o + 1], '=')))
+		{
+			ft_putstr("minishell: env: « ");
+			ft_putstr(shell->args[o + 1]);
+			ft_putstr(" » : bad variable name\n");
+		}
+		free(str);
+		o++;
+	}
+	o = 0;
 	while (shell->args[o])
 	{
 		i = 0;
