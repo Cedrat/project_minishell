@@ -49,6 +49,8 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 {
 	while (arg[i] != '\0')
 	{
+		if (arg[i] == '\\')
+			config->backslash++;
 		if ((i == 0 && arg[i] == '\"') || (arg[i] == '\"' && arg[i - 1] != '\\')
 			|| (arg[i] == '\"' && arg[i - 1] == '\\'
 				&& config->backslash % 2 == 0))
@@ -56,7 +58,6 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 			if (config->sg_qt == 0 && config->db_qt == 0)
 				config->token = 2;
 			config->db_qt++;
-			return (i);
 		}
 		if (config->db_qt % 2 == 0)
 			return (i);
@@ -187,7 +188,7 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 		else if (i == 0 && args[i] == '~' && !args[i + 1]
 			|| args[i] == '~' && !args[i + 1] && !args[i - 1])
 			ft_echo_pwd(shell, &i);
-		else if (args[i] == '\'' || args[i] == '\"')
+		if (args[i] == '\'' || args[i] == '\"')
 		{
 			if (args[i] == '\'')
 				ft_single_qt(config, &args[i], argenv, shell);
