@@ -6,13 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/27 18:18:05 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:11:28 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void ft_choose_fd(t_shell *shell)
+int ft_choose_fd(t_shell *shell)
 {
 	size_t i;
 
@@ -23,7 +23,15 @@ void ft_choose_fd(t_shell *shell)
 		if (!(ft_strcmp(shell->args[i], ">")))
 		{
 			if (!(shell->args[i + 1]))
-				return (ft_errors(-4, shell));
+			{
+				ft_errors(-4, shell);
+				return(0);
+			}
+			if (!ft_strcmp(shell->args[i + 1], ">") || !ft_strcmp(shell->args[i + 1], ">>") || !ft_strcmp(shell->args[i + 1], "<"))
+			{
+				ft_strcat("minishell: syntax error near the unexpected symbol «", shell->args[i], "»\n");
+				return (0); // gerer signal error
+			}
 			if (shell->fd != 1)
 				close(shell->fd);
 			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_TRUNC|O_APPEND|O_NONBLOCK, 0644);
@@ -33,7 +41,15 @@ void ft_choose_fd(t_shell *shell)
 		else if (!(ft_strcmp(shell->args[i], ">>")))
 		{
 			if (!(shell->args[i + 1]))
-				return (ft_errors(-4, shell));
+			{
+				ft_errors(-4, shell);
+				return(0);
+			}
+			if (!ft_strcmp(shell->args[i + 1], ">") || !ft_strcmp(shell->args[i + 1], ">>") || !ft_strcmp(shell->args[i + 1], "<"))
+			{
+				ft_strcat("minishell: syntax error near the unexpected symbol «", shell->args[i], "»\n");
+				return (0); // gerer signal error
+			}
 			if (shell->fd != 1)
 				close(shell->fd);
 			shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_APPEND|O_NONBLOCK, 0644);
@@ -43,13 +59,21 @@ void ft_choose_fd(t_shell *shell)
 		else if (!(ft_strcmp(shell->args[i], "<")))
 		{
 			if (!(shell->args[i + 1]))
-				return (ft_errors(-4, shell));
+			{
+				ft_errors(-4, shell);
+				return(0);
+			}
+			if (!ft_strcmp(shell->args[i + 1], ">") || !ft_strcmp(shell->args[i + 1], ">>") || !ft_strcmp(shell->args[i + 1], "<"))
+			{
+				ft_strcat("minishell: syntax error near the unexpected symbol «", shell->args[i], "»\n");
+				return (0) ; // gerer signal error
+			}
 			shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 			if (ft_str_is_present(shell->args, "<"))
 				shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
-
 		}
 		else
 			i++;
 	}
+	return (1);
 }

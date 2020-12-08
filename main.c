@@ -108,16 +108,18 @@ int main (int argc, char **argv, char **argenv)
 		while (shell.args_line[i])
 		{
 			shell.args = ft_parser(shell.args_line[i], &shell);
-			if (ft_str_is_present(shell.args, "|"))
+			if (ft_str_is_present(shell.args, "|") && ft_choose_fd(&shell))
 				ft_give_to_pipe(&shell);
 			else
 			{			//Faire un ft_launch qui regroupe tout ce bloc ?
-				ft_choose_fd(&shell);
-				ft_get_command(&shell);
-				if (shell.fd != 1)
-					close(shell.fd);
-				free(shell.echo);
-				free_shell_commands(&shell);
+				if (ft_choose_fd(&shell))
+				{
+					ft_get_command(&shell);
+					if (shell.fd != 1)
+						close(shell.fd);
+					free(shell.echo);
+					free_shell_commands(&shell);
+				}
 				ft_free_tab(shell.args);
 			}
 			i++;

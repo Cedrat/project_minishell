@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/07 16:35:10 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:12:29 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void			ft_strndup(char **dest, char *src, size_t start, size_t end);
 void			sig_handler(int signum);
 void			ft_errors(int error, t_shell *shell);
 void			ft_free_all(t_shell *shell);
+void			ft_strcat(char *str, char *str1, char *str2);
 
 /*
 **----------Tableaux---------**
@@ -112,6 +113,7 @@ void			ft_free_tab(char **tab);
 char			*ft_extract_var_name(char *arg, int *j);
 char			*ft_get_var(char **argenv, char *tofind);
 void			export_env(t_shell *env, char *arg);
+int				ft_is_varenv(char *env);
 
 /*
 **----------Echo---------**
@@ -130,7 +132,7 @@ int				ft_give_to_pipe(t_shell *shell);
 char			***ft_args_pipe(char **args);
 char			*ft_file_to_str(char *path);
 char			**ft_divide_to_pipe(char **split);
-void			ft_choose_fd(t_shell *shell);
+int				ft_choose_fd(t_shell *shell);
 
 /*
 **----------Divers---------**
@@ -185,7 +187,7 @@ void ft_beautifull_export(char *str, int is_export, int fd);
 char *ft_str_treatement(char *str);
 void ft_purify_args(char **args);
 
-void ft_choose_fd(t_shell *shell);
+int ft_choose_fd(t_shell *shell);
 int ft_str_is_number(char *str);
 void ft_strndup(char **dest, char *src, size_t start, size_t end);
 char **ft_args(char *str);

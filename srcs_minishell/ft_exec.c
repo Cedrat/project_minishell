@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/07 16:45:52 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/08 17:48:49 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,17 @@ int	ft_exec(t_shell *shell, char *arg)
 	path_line = ft_get_var(shell->argenv, "PATH=");
 	//2.Parser PATH
 	paths = ft_split(path_line, ':');
+
 	free(path_line);
 	ft_purify_args(shell->args + 1);
+	if (paths[0] == NULL)
+	{
+		ft_putstr("bash: ");
+		ft_putstr(shell->args[0]);
+		ft_putstr(" : No files or folders of this type\n");
+		ft_free_tab(paths); //gerer signal d'erreurs
+		return(0);
+	}
 	// 3. Check si il y a un path dans l'arg (comparer)
 	while (found_path == 0 && paths[i])
 	{
