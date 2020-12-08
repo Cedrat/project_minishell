@@ -56,6 +56,7 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 			if (config->sg_qt == 0 && config->db_qt == 0)
 				config->token = 2;
 			config->db_qt++;
+			return (i);
 		}
 		if (config->db_qt % 2 == 0)
 			return (i);
@@ -94,8 +95,9 @@ int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 	{
 		ft_putnbr_fd(shell->echo->signal, fd);
 		*i = *i + 2;
-		return (1);
 	}
+	else if (args[*i] == '$' && ft_strchr("0123456789", args[*i + 1]))
+		*i = *i + 2;
 	else if (args[*i] == '$' && args[*i + 1] &&
 		!ft_strchr(" \"\\\'\0\n", args[*i + 1]))
 	{
@@ -106,9 +108,10 @@ int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 			ft_putstr(shell->echo->var_path);
 		free(shell->echo->var_path);
 		free(shell->echo->var_name);
-		return (1);
 	}
-	return (0);
+	else
+		*i = *i + 2;
+	return (1);
 }
 
 void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell)

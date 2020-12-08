@@ -116,9 +116,13 @@ int	ft_exec(t_shell *shell, char *arg)
 	//4. Si pas de path -> aller tester les chemins de PATH dans argenv
 	if (found_path == 0)
 	{
+		if (arg[0] == '.' && arg[1] && arg[1] == '/')
+		{
+			ft_path(arg, shell);
+		}
 		// if (arg[0] != '"')
 		// 	temp = ft_str_treatement(arg);
-		if (arg[0] != '/') // && arg[0] != '"')
+		else if (arg[0] != '/')
 		{
 			// if (arg[0] != '"')
 			// {
