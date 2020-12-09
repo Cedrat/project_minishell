@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:52:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 16:25:46 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 16:44:57 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int is_right_syntax(char **line)
 		}
 		i++;
 	}
-	if (!ft_strcmp("|", line[i - 1]))
+	if (i > 1 && !ft_strcmp("|", line[i - 1]))
 	{
 		ft_putstr("minishell : multi_line not supported\n");
 		ft_free_tab(line);
