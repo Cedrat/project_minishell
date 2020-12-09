@@ -64,8 +64,8 @@ void	ft_path(char *arg, t_shell *shell)
 		dup2(shell->fd,1);
 		if (execve(arg, shell->args, shell->argenv) == -1)
 		{
-			ft_errors(-6, shell);
-
+				;
+			//ft_errors(-6, shell);
 			// exit(-1);
 		}
 		// free(arg);
@@ -75,6 +75,28 @@ void	ft_path(char *arg, t_shell *shell)
 		exit(0);
 	}
 	else if (g_pid > 0)  //Processus parent
+		waitpid(g_pid, &shell->signal, WUNTRACED);
+	else
+	{
+		ft_errors(-7, shell);
+		exit(-1);
+	}
+}
+
+void	ft_path_binary(char *arg, t_shell *shell, char **paths)
+{
+	g_pid = fork();
+
+	if (g_pid == 0)
+	{
+		dup2(shell->fd,1);
+		execve(arg, shell->args, shell->argenv);
+		ft_errors(-1, shell);
+		ft_free_all(shell);
+		ft_free_tab(paths);
+		exit(0);
+	}
+	else if (g_pid > 0)
 		waitpid(g_pid, &shell->signal, WUNTRACED);
 	else
 	{
@@ -103,14 +125,19 @@ int	ft_exec(t_shell *shell, char *arg)
 
 	free(path_line);
 	ft_purify_args(shell->args + 1);
-	if (paths[0] == NULL)
+	if (ft_strcmp("/bin/", arg) == 0 || ft_strcmp("/bin", arg) == 0)
 	{
-		ft_putstr("bash: ");
-		ft_putstr(shell->args[0]);
-		ft_putstr(" : No files or folders of this type\n");
+		ft_strcat("bash: ", arg, " is a folder\n");
+		ft_free_tab(paths);
+		return(0);
+	}
+	if (paths[0] == NULL && ft_strncmp("/bin", arg, 4) != 0)
+	{
+		ft_strcat("bash: ", shell->args[0], " : No files or folders of this type\n");
 		ft_free_tab(paths); //gerer signal d'erreurs
 		return(0);
 	}
+
 	// 3. Check si il y a un path dans l'arg (comparer)
 	while (found_path == 0 && paths[i])
 	{
@@ -125,9 +152,10 @@ int	ft_exec(t_shell *shell, char *arg)
 	//4. Si pas de path -> aller tester les chemins de PATH dans argenv
 	if (found_path == 0)
 	{
-		if (arg[0] == '.' && arg[1] && arg[1] == '/')
+		if (arg[0] == '.' && arg[1] && arg[1] == '/'
+			|| ft_strncmp("/bin/", arg, 5) == 0)
 		{
-			ft_path(arg, shell);
+			ft_path_binary(arg, shell, paths);
 		}
 		// if (arg[0] != '"')
 		// 	temp = ft_str_treatement(arg);
@@ -158,7 +186,6 @@ int	ft_exec(t_shell *shell, char *arg)
 			free(temp);
 		}
 		ft_free_tab(paths);
-
 	}
 	// free(arg);
 	// ft_free_tab(paths);     //possible cause de bug

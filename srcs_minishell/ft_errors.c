@@ -58,6 +58,8 @@ void	ft_errors(int error, t_shell *shell)
 		ft_strcat(shell->args[0], " : No file or folder of this type", "\n");
 	else if (error == -7)
 		ft_putstr("Error with the child processus\n");
+	else if (error == -8)
+		ft_strcat("cd : ", "« HOME »", " undefined\n");
 	if (error != 0)
 		shell->nb_error += 1;
 }
