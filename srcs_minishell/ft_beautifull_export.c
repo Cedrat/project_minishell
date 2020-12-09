@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:54:02 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/26 14:26:20 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 15:42:10 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ char	*ft_str_treatement(char *str)
 Verifier que sans ça, ça fonctionne tj bien (l.64)
 	else if (str[i] == '"' && letter == '\'')
 		str[p++] = str[i];*/
-
