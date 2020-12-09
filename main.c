@@ -101,29 +101,36 @@ int main (int argc, char **argv, char **argenv)
 		if (g_prompt)
 			ft_put_prompt();
 		ft_get_line(&buff, &shell);
-		shell.args_line = ft_args(buff);
-		free(buff);
-		i = 0;
-		g_prompt = 1;
-		while (shell.args_line[i])
+		if (is_right_syntax(ft_parser(buff, &shell)))
 		{
-			shell.args = ft_parser(shell.args_line[i], &shell);
-			if (ft_str_is_present(shell.args, "|") && ft_choose_fd(&shell))
-				ft_give_to_pipe(&shell);
-			else
-			{			//Faire un ft_launch qui regroupe tout ce bloc ?
-				if (ft_choose_fd(&shell))
-				{
-					ft_get_command(&shell);
-					if (shell.fd != 1)
-						close(shell.fd);
-					free(shell.echo);
-					free_shell_commands(&shell);
+			shell.args_line = ft_args(buff);
+			free(buff);
+			i = 0;
+			g_prompt = 1;
+			while (shell.args_line[i])
+			{
+				shell.args = ft_parser(shell.args_line[i], &shell);
+				if (!ft_choose_fd(&shell))
+					ft_free_tab(shell.args);
+				else if (ft_str_is_present(shell.args, "|"))
+					ft_give_to_pipe(&shell);
+				else
+				{			//Faire un ft_launch qui regroupe tout ce bloc ?
+					if (ft_choose_fd(&shell))
+					{
+						ft_get_command(&shell);
+						if (shell.fd != 1)
+							close(shell.fd);
+						free(shell.echo);
+						free_shell_commands(&shell);
+					}
+					ft_free_tab(shell.args);
 				}
-				ft_free_tab(shell.args);
+				i++;
 			}
-			i++;
+			ft_free_tab(shell.args_line);
 		}
-		ft_free_tab(shell.args_line);
+		else
+			free(buff);
 	}
 }

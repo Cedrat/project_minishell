@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/02 20:29:11 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 16:28:31 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ char	**ft_parser(char *str, t_shell *shell)
 	size_t	p;
 	size_t	d;
 
-	tab = malloc(sizeof(char *) * (count_tokens(str) + 1));
+	tab = malloc(sizeof(char *) * (count_tokens(str) + 2));
 	i = 0;
 	p = 0;
 	while (str[i])
