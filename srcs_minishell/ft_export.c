@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:46:20 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/08 17:12:40 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 18:53:07 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ char	**add_env(char **arg, char *str)
 		new_tab[i] = ft_strdup(arg[i]);
 		i++;
 	}
-	new_tab[i] = str;
+	new_tab[i] = ft_strdup(str);
+	free(str);
 	new_tab[i + 1] = 0;
 	ft_free_tab(arg);
 	return (new_tab);
@@ -132,7 +133,10 @@ void	modify_env(char **argenv, char *str)
 		while (argenv[p][i] != '=' && argenv[p][i])
 			i++;
 		if (!(ft_strncmp(str, argenv[p], i)))
+		{
+			free(argenv[p]);
 			argenv[p] = str;
+		}
 		p++;
 	}
 }

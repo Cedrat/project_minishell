@@ -6,11 +6,14 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 17:02:10 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 18:25:35 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+
+int		iterate_word(char *str, size_t *i, size_t p);
 
 void	ft_strndup(char **dest, char *src, size_t start, size_t end)
 {
@@ -39,7 +42,12 @@ int		not_a_sep(char letter)
 int		ft_is_not_space(char *str, size_t *i)
 {
 	while (not_a_sep(str[*i]) && str[*i] && str[*i] != ' ')
-		*i += 1;
+	{
+		if (str[*i] == '"')
+			iterate_word(str, i, 0);
+		if (str[*i])
+			*i += 1;
+	}
 	return (*i);
 }
 
@@ -128,6 +136,24 @@ char	*ft_cut_replace(char *str, t_shell *shell, int j)
 	return (str);
 }
 
+char	*ft_replace_var(t_shell *shell, char *arg)
+{
+	char	*tmp;
+	char	*var_path;
+	int 	i;
+
+	i = 0;
+	tmp = arg;
+	var_path = ft_extract_var_name(arg, &i);
+	if (var_path[1])
+	{
+		free(arg);
+		arg = ft_get_var(shell->argenv, var_path);
+	}
+	free(var_path);
+	return (arg);
+}
+
 int		ft_check_doll(char *tab)
 {
 	int	j;
@@ -166,6 +192,8 @@ void	ft_dollar(char **tab, t_shell *shell)
 				|| ((j = ft_check_doll(tab[i]) > 0)
 					&& ft_strcmp(tab[i - 1], "echo") != 0))
 				tab[i] = ft_cut_replace(tab[i], shell, j);
+				if (tab[i][j] == '$' && tab[i][j + 1])
+					tab[i] = ft_replace_var(shell, tab[i]);
 		}
 		i++;
 	}
@@ -179,7 +207,7 @@ void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
 		*i += 1;
 		*p += 1;
 	}
-	else if (!not_a_sep(str[*i]))
+	else if (str[*i] != ' ' && !not_a_sep(str[*i]))
 	{
 		ft_strndup(&tab[*p], str, *i, *i + 1);
 		*p += 1;
