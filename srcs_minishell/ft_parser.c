@@ -6,11 +6,14 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 17:02:10 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 19:02:06 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+
+int		iterate_word(char *str, size_t *i, size_t p);
 
 void	ft_strndup(char **dest, char *src, size_t start, size_t end)
 {
@@ -39,7 +42,12 @@ int		not_a_sep(char letter)
 int		ft_is_not_space(char *str, size_t *i)
 {
 	while (not_a_sep(str[*i]) && str[*i] && str[*i] != ' ')
-		*i += 1;
+	{
+		if (str[*i] == '"')
+			iterate_word(str, i, 0);
+		if (str[*i])
+			*i += 1;
+	}
 	return (*i);
 }
 
@@ -198,7 +206,7 @@ void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
 		*i += 1;
 		*p += 1;
 	}
-	else if (!not_a_sep(str[*i]))
+	else if (str[*i] != ' ' && !not_a_sep(str[*i]))
 	{
 		ft_strndup(&tab[*p], str, *i, *i + 1);
 		*p += 1;
