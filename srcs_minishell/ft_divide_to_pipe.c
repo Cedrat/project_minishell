@@ -24,7 +24,7 @@ char **ft_divide_to_pipe(char **split)
 			p++;
 		i++;
 	}
-	new_tab = malloc(sizeof(char *) * (p  + 2));
+	new_tab = malloc(sizeof(char *) * (p + 2));
 	i = 0;
 	p = 0;
 	new_tab[p] = malloc(1);
@@ -35,12 +35,6 @@ char **ft_divide_to_pipe(char **split)
 		{
 			new_tab[p] = ft_strjoin_freeone(new_tab[p], split[i]);
 			new_tab[p] = ft_strjoin_freeone(new_tab[p], " ");
-		}
-		else if (ft_strcmp(split[i], "|") == 0 && !split[i + 1]) //New modif
-		{
-			new_tab[p][0] = '\0';		//Gere le cas de "truc |"
-			new_tab[p + 1] = NULL;
-			return (new_tab);
 		}
 		else
 		{
