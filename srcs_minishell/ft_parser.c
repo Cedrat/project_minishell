@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 16:28:31 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/09 17:02:10 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_strndup(char **dest, char *src, size_t start, size_t end)
 
 int		not_a_sep(char letter)
 {
-	if (letter == ';' || letter == '>' || letter == '<' || letter == '|')
+	if (letter == ';' || letter == '>' || letter == '<' || letter == '|' )
 		return (0);
 	return (1);
 }
@@ -92,13 +92,16 @@ size_t	count_tokens(char *str)
 		j = ft_is_space(str, &i);
 		if (str[i] == '\'' || str[i] == '"')
 			d = iterate_word(str, &i, 0);
-		d = ft_is_not_space(str, &i);
+		else
+			d = ft_is_not_space(str, &i);
 		if (str[i] == '>' && str[i + 1] == '>')
 		{
 			i += 1;
 			p++;
 		}
 		else if (!not_a_sep(str[i]) || j != d)
+			p++;
+		if (!not_a_sep(str[i]))
 			p++;
 		if (str[i])
 			i++;
