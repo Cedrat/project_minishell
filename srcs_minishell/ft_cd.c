@@ -19,6 +19,8 @@ int		ft_cd(t_shell *shell)
 	i = 0;
 	while (shell->args[i])
 		i++;
+	if (i == 2)
+		ft_purify_args(shell->args);
 	if (i == 2 && (shell->signal = chdir(shell->args[1])) == 0)
 	{
 		shell->newline = 1;
