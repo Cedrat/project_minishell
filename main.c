@@ -20,10 +20,8 @@ void 	ft_put_prompt()
 				return ;
 		}
 	}
-	ft_putstr("~");
-	ft_putstr(cwd);
+	ft_strcat("~", cwd, "$ ");
 	free(cwd);
-	ft_putstr("$ ");
 }
 
 void    sig_handler(int signum)
