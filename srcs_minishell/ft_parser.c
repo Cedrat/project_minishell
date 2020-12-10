@@ -194,7 +194,7 @@ char**	ft_dollar(char **tab, t_shell *shell)
 				|| ((j = ft_check_doll(tab[i]) > 0)
 					&& ft_strcmp(tab[i - 1], "echo") != 0))
 				tab[i] = ft_cut_replace(tab[i], shell, j);
-				if (tab[i][j] == '$' && tab[i][j + 1])
+				if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
 				{
 					tab[i] = ft_replace_var(shell, tab[i]);
 					tab = add_split_arg(tab, &i);
