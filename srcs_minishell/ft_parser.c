@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 19:02:06 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/10 03:22:48 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char	*ft_replace_var(t_shell *shell, char *arg)
 	char	*tmp;
 	char	*var_path;
 	int 	i;
+	char 	**tab;
 
 	i = 0;
 	tmp = arg;
@@ -169,16 +170,18 @@ int		ft_check_doll(char *tab)
 	return (j = -1);
 }
 
-void	ft_dollar(char **tab, t_shell *shell)
+char**	ft_dollar(char **tab, t_shell *shell)
 {
 	int i;
 	int j;
+
 
 	i = 0;
 	while (tab[i])
 	{
 		if ((i == 0 && ft_strcmp(tab[i], "$?") == 0)
-	|| (ft_strcmp(tab[i], "$?") == 0 && ft_strcmp(tab[i - 1], "echo") != 0))
+			|| (ft_strcmp(tab[i], "$?") == 0
+				&& ft_strcmp(tab[i - 1], "echo") != 0))
 		{
 			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
@@ -186,16 +189,20 @@ void	ft_dollar(char **tab, t_shell *shell)
 		else
 		{
 			if (tab[i][0] == '\'')
-				return ;
+				break;
 			if ((i == 0 && (j = ft_check_doll(tab[i]) > 0))
 				|| ((j = ft_check_doll(tab[i]) > 0)
 					&& ft_strcmp(tab[i - 1], "echo") != 0))
 				tab[i] = ft_cut_replace(tab[i], shell, j);
-			if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
-				tab[i] = ft_replace_var(shell, tab[i]);
+				if (tab[i][j] == '$' && tab[i][j + 1])
+				{
+					tab[i] = ft_replace_var(shell, tab[i]);
+					tab = add_split_arg(tab, &i);
+				}
 		}
 		i++;
 	}
+	return (tab);
 }
 
 void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
@@ -240,6 +247,6 @@ char	**ft_parser(char *str, t_shell *shell)
 		ft_parser_2(str, tab, &i, &p);
 	}
 	tab[p] = NULL;
-	ft_dollar(tab, shell);
+	tab = ft_dollar(tab, shell);
 	return (tab);
 }
