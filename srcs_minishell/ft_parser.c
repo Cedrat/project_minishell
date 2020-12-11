@@ -178,7 +178,8 @@ char**	ft_dollar(char **tab, t_shell *shell)
 	i = 0;
 	while (tab[i])
 	{
-		if (i > 0 && ft_strcmp(tab[i - 1], "echo") == 0)
+		if ((i > 0 && ft_strcmp(tab[i - 1], "echo") == 0)
+			|| ((tab[i][0] == '\'')))
 			break ;
 		if (ft_strcmp(tab[i], "$?") == 0)
 		{
@@ -187,8 +188,6 @@ char**	ft_dollar(char **tab, t_shell *shell)
 		}
 		else
 		{
-			if (tab[i][0] == '\'')
-				break;
 			if (j = ft_check_doll(tab[i]) > 0)
 				tab[i] = ft_cut_replace(tab[i], shell, j);
 			if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
