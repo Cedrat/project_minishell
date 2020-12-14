@@ -6,11 +6,34 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:46:20 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/09 18:53:07 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 16:41:13 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+static void print_export(char *str, int fd)
+{
+	while (*str != '=' && *str)
+	{
+		ft_putchar_fd(*str, fd);
+		str++;
+	}
+	if (*str == '=')
+	{
+		ft_putchar_fd(*str, fd);
+		str++;
+		ft_putstr_fd("\"", fd);
+		while (*str)
+		{
+			if (*str == '"')
+				ft_putchar_fd('\\', fd);
+			ft_putchar_fd(*str, fd);
+			str++;
+		}
+		ft_putstr_fd("\"", fd);
+	}
+}
 
 void	display_export(char **char_list, int fd)
 {
@@ -25,25 +48,7 @@ void	display_export(char **char_list, int fd)
 	{
 		ft_putstr_fd("declare -x ", fd);
 		str = temp_tab_char[i];
-		while (*str != '=' && *str)
-		{
-			ft_putchar_fd(*str, fd);
-			str++;
-		}
-		if (*str == '=')
-		{
-			ft_putchar_fd(*str, fd);
-			str++;
-			ft_putstr_fd("\"", fd);
-			while (*str)
-			{
-				if (*str == '"')
-					ft_putchar_fd('\\', fd);
-				ft_putchar_fd(*str, fd);
-				str++;
-			}
-			ft_putstr_fd("\"", fd);
-		}
+		print_export(str, fd);
 		ft_putchar_fd('\n', fd);
 		i++;
 	}

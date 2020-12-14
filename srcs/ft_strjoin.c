@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 14:23:23 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/24 18:23:35 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 15:25:10 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		len_s2++;
 	}
 	s_join[len_s1 + len_s2] = '\0';
-
 	return (s_join);
 }

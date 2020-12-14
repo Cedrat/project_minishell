@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/10 03:24:44 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 15:47:00 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char 			**add_split_arg(char **tab, int *i);
 char			**ft_remove_in_tab(char **tab, char *str);
 void			ft_tri_tab_str(char **str);
 void			ft_free_tab(char **tab);
+size_t			tab_range(char **tab);
 
 /*
 **----------Env vars---------**
