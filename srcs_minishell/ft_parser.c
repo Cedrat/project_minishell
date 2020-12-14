@@ -12,7 +12,7 @@
 
 #include "../header/minishell.h"
 
-void	ft_strndup(char **dest, char *src, size_t start, size_t end)
+void		ft_strndup(char **dest, char *src, size_t start, size_t end)
 {
 	char	*str;
 	size_t	i;
@@ -29,14 +29,14 @@ void	ft_strndup(char **dest, char *src, size_t start, size_t end)
 	*dest = str;
 }
 
-int		not_a_sep(char letter)
+int			not_a_sep(char letter)
 {
 	if (letter == ';' || letter == '>' || letter == '<' || letter == '|' )
 		return (0);
 	return (1);
 }
 
-int		ft_is_not_space(char *str, size_t *i)
+int			ft_is_not_space(char *str, size_t *i)
 {
 	while (not_a_sep(str[*i]) && str[*i] && str[*i] != ' ')
 	{
@@ -48,14 +48,14 @@ int		ft_is_not_space(char *str, size_t *i)
 	return (*i);
 }
 
-int		ft_is_space(char *str, size_t *i)
+int			ft_is_space(char *str, size_t *i)
 {
 	while (str[*i] == ' ')
 		*i += 1;
 	return (*i);
 }
 
-int		iterate_word(char *str, size_t *i, size_t p)
+int			iterate_word(char *str, size_t *i, size_t p)
 {
 	char sep;
 
@@ -83,7 +83,7 @@ int		iterate_word(char *str, size_t *i, size_t p)
 	return (*i);
 }
 
-size_t	count_tokens(char *str)
+size_t		count_tokens(char *str)
 {
 	size_t i;
 	size_t j;
@@ -111,7 +111,7 @@ size_t	count_tokens(char *str)
 	return (p);
 }
 
-char	*ft_cut_replace(char *str, t_shell *shell, int j)
+static char	*ft_cut_replace(char *str, t_shell *shell, int j)
 {
 	char	*pt1;
 	char	*pt2;
@@ -130,7 +130,7 @@ char	*ft_cut_replace(char *str, t_shell *shell, int j)
 	return (str);
 }
 
-char	*ft_replace_var(t_shell *shell, char *arg)
+static char	*ft_replace_var(t_shell *shell, char *arg)
 {
 	char	*tmp;
 	char	*var_path;
@@ -149,22 +149,21 @@ char	*ft_replace_var(t_shell *shell, char *arg)
 	return (arg);
 }
 
-int		ft_check_doll(char *tab)
+static int	ft_check_doll(char *tab)
 {
 	int	j;
 
 	j = 0;
 	while (tab[j])
 	{
-		if ((tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?')
-			|| (tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?'))
+		if (tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?')
 			return (j);
 		j++;
 	}
 	return (j = -1);
 }
-//27 lines
-char**	ft_dollar(char **tab, t_shell *shell)
+
+char**		ft_dollar(char **tab, t_shell *shell)
 {
 	int i;
 	int j;
@@ -180,22 +179,19 @@ char**	ft_dollar(char **tab, t_shell *shell)
 			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
 		}
-		else
+		if (j = ft_check_doll(tab[i]) > 0)
+			tab[i] = ft_cut_replace(tab[i], shell, j);
+		if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
 		{
-			if (j = ft_check_doll(tab[i]) > 0)
-				tab[i] = ft_cut_replace(tab[i], shell, j);
-			if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
-			{
-				tab[i] = ft_replace_var(shell, tab[i]);
-				tab = add_split_arg(tab, &i);
-			}
+			tab[i] = ft_replace_var(shell, tab[i]);
+			tab = add_split_arg(tab, &i);
 		}
 		i++;
 	}
 	return (tab);
 }
 
-void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
+static void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
 {
 	if (str[*i] == '>' && str[*i + 1] == '>')
 	{
@@ -212,7 +208,7 @@ void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)
 		*i += 1;
 }
 
-char	**ft_parser(char *str, t_shell *shell)
+char		**ft_parser(char *str, t_shell *shell)
 {
 	char	**tab;
 	size_t	i;

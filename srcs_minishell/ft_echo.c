@@ -92,6 +92,8 @@ void	ft_echo_config(t_echo *config, char **args)
 
 int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 {
+	if (args[*i] == '$' && !args[*i + 1])
+		return (*i = *i + 1);
 	if (args[*i] == '$' && args[*i + 1] && args[*i + 1] == '?')
 	{
 		ft_putnbr_fd(shell->echo->signal, fd);
