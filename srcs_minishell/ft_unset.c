@@ -6,11 +6,38 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:53:39 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/08 17:44:27 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 16:32:42 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+static void check_syntax(char **arg_tab)
+{
+	size_t	o;
+	char	*str;
+
+	o = 0;
+	while (arg_tab[o + 1])
+	{
+		str = ft_str_treatement(arg_tab[o + 1]);
+		if (!(ft_is_varenv(str)) || (ft_charispresent(arg_tab[o + 1], '=')))
+			ft_strcat("minishell: env: « ", arg_tab[o + 1],
+												" » : bad variable name\n");
+		free(str);
+		o++;
+	}
+}
+static size_t length_before_equal(char *str)
+{
+	size_t p;
+
+	p = 0;
+	while (str[p] && str[p] != '=')
+		p++;
+
+	return (p);
+}
 
 char	**ft_malloc_tab(char **tab)
 {
@@ -60,29 +87,15 @@ int		ft_unset(t_shell *shell)
 	size_t	p;
 	size_t	o;
 
-	o = 0;
-	while (shell->args[o + 1])
-	{
-		str = ft_str_treatement(shell->args[o + 1]);
-		if (!(ft_is_varenv(str)) || (ft_charispresent(shell->args[o + 1], '=')))
-		{
-			ft_putstr("minishell: env: « ");
-			ft_putstr(shell->args[o + 1]);
-			ft_putstr(" » : bad variable name\n");
-		}
-		free(str);
-		o++;
-	}
+	check_syntax(shell->args);
 	o = 0;
 	while (shell->args[o])
 	{
 		i = 0;
 		while (shell->argenv[i])
 		{
-			p = 0;
 			str = shell->argenv[i];
-			while (str[p] && str[p] != '=')
-				p++;
+			p = length_before_equal(str);
 			if (!(ft_strncmp(shell->args[o], str, p)))
 			{
 				shell->argenv = ft_remove_in_tab(shell->argenv, shell->args[o]);

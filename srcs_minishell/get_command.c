@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:13:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/09 15:44:13 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 17:17:42 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ int		ft_strcmp_cmds(const char *s1, const char *s2)
 	return ((unsigned char)s1[pos1] - (unsigned char)s2[pos2]);
 }
 
+static int check_build_in(int found, char *command, t_shell *shell)
+{
+	size_t j;
+
+	j = 0;
+	while (j < 7 && found == -1)
+	{
+		if (ft_strcmp_cmds(command, shell->commands[j]) == 0
+			&& ft_nopipes(shell->args))
+			found = shell->function[j](shell);
+		j++;
+	}
+}
+
 void	ft_init_commands(t_shell *shell)
 {
 	shell->echo = malloc(sizeof(t_echo));
@@ -51,7 +65,6 @@ void	ft_get_command(t_shell *shell)
 	int		found;
 	char 	*tmp;
 
-
 	ft_init_commands(shell);
 	shell->home_path = ft_get_var(shell->argenv, "HOME=");
 	i = 0;
@@ -63,14 +76,7 @@ void	ft_get_command(t_shell *shell)
 	found = -1;
 	while (shell->args[i] && found == -1)
 	{
-		j = 0;
-		while (j < 7 && found == -1)
-		{
-			if (ft_strcmp_cmds(shell->args[i], shell->commands[j]) == 0
-				&& ft_nopipes(shell->args))
-				found = shell->function[j](shell);
-			j++;
-		}
+		found = check_build_in(found ,shell->args[i], shell);
 		if (found == -1)
 			found = ft_exec(shell, shell->args[i]);
 		i++;

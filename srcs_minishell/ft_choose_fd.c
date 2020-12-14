@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 20:07:24 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 17:29:11 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,5 @@ int ft_choose_fd(t_shell *shell)
 	}
 	return (1);
 }
+
+// faire une bonne gestion d'erreur.
