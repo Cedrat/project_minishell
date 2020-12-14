@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 19:37:18 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 19:46:13 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		cleans(int fdin, int fdout, t_shell *shell)
 {
 	if (dup2(fdin, 0) == -1)
 		exit(0);
-	if (dup2(fdout, 0) == -1)
+	if (dup2(fdout, 1) == -1)
 		exit(0);
 	free_shell_commands(shell);
 	free(shell->echo);
@@ -48,8 +48,17 @@ static void		son_works(int fd[512][2], t_shell *shell,
 			close(fd[i - 1][0]);
 		}
 		ft_free_tab(args_pipes);
-		ft_get_command(shell);
-		ft_free_all(shell);
+		if (shell->fd != -1)
+		{
+			ft_get_command(shell);
+			ft_free_all(shell);
+		}
+		else
+		{
+			ft_free_tab(shell->args);
+			ft_free_tab(shell->args_line);
+			ft_free_tab(shell->argenv);
+		}
 		exit(0);
 	}
 	else
@@ -69,8 +78,8 @@ int				ft_give_to_pipe(t_shell *shell)
 	int		tmpout;
 
 	i = 0;
-	tmpin = dup(1);
-	tmpout = dup(2);
+	tmpin = dup(0);
+	tmpout = dup(1);
 	args_pipes = ft_divide_to_pipe(shell->args);
 	while (args_pipes[i + 1])
 	{

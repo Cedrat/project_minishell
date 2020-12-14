@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/14 15:47:00 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 19:49:09 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef	struct	s_shell
 	int		nb_error;
 	char	*home_path;
 	int		fd;
+	char 	*name_error;
+	int		tmp_in;
 
 	t_echo	*echo;
 

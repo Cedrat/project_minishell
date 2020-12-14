@@ -112,10 +112,15 @@ int main (int argc, char **argv, char **argenv)
 					ft_give_to_pipe(&shell);
 				else
 				{			//Faire un ft_launch qui regroupe tout ce bloc ?
-						ft_choose_fd(&shell);
+						if (ft_choose_fd(&shell) == 0)
+						{
+							ft_free_tab(shell.args);
+							break;
+						}
 						ft_get_command(&shell);
 						if (shell.fd != 1)
 							close(shell.fd);
+						dup2(shell.tmp_in, 0);
 						free(shell.echo);
 						free_shell_commands(&shell);
 					ft_free_tab(shell.args);
