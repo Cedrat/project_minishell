@@ -39,6 +39,12 @@ t_list	*ft_convert_2dchar_chainedlist(char **str)
 	return (char_list);
 }
 
+void	ft_inc_values(size_t *i, size_t *j)
+{
+	*i += 1;
+	*j += 1;
+}
+
 char	**ft_dup_arg(char **arg)
 {
 	size_t	i;

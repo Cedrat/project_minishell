@@ -82,7 +82,7 @@ int		iterate_word(char *str, size_t *i, size_t p)
 		iterate_word(str, i, p);
 	return (*i);
 }
-//27 lines
+
 size_t	count_tokens(char *str)
 {
 	size_t i;
@@ -100,10 +100,7 @@ size_t	count_tokens(char *str)
 		else
 			d = ft_is_not_space(str, &i);
 		if (str[i] == '>' && str[i + 1] == '>')
-		{
-			i += 1;
-			p++;
-		}
+			ft_inc_values(&i, &p);
 		else if (!not_a_sep(str[i]) || j != d)
 			p++;
 		if (!not_a_sep(str[i]))
