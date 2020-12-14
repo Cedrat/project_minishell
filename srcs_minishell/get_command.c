@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:13:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/14 17:17:42 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/14 17:38:06 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int check_build_in(int found, char *command, t_shell *shell)
 			found = shell->function[j](shell);
 		j++;
 	}
+	return (found);
 }
 
 void	ft_init_commands(t_shell *shell)
