@@ -12,9 +12,6 @@
 
 #include "../header/minishell.h"
 
-
-int		iterate_word(char *str, size_t *i, size_t p);
-
 void	ft_strndup(char **dest, char *src, size_t start, size_t end)
 {
 	char	*str;
@@ -85,7 +82,7 @@ int		iterate_word(char *str, size_t *i, size_t p)
 		iterate_word(str, i, p);
 	return (*i);
 }
-
+//27 lines
 size_t	count_tokens(char *str)
 {
 	size_t i;
@@ -169,7 +166,7 @@ int		ft_check_doll(char *tab)
 	}
 	return (j = -1);
 }
-
+//27 lines
 char**	ft_dollar(char **tab, t_shell *shell)
 {
 	int i;
