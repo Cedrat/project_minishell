@@ -58,7 +58,7 @@ typedef	struct	s_shell
 	int		nb_error;
 	char	*home_path;
 	int		fd;
-	char 	*name_error;
+	char	*name_error;
 	int		tmp_in;
 
 	t_echo	*echo;
@@ -101,8 +101,8 @@ void			sig_handler(int signum);
 void			ft_errors(int error, t_shell *shell);
 void			ft_free_all(t_shell *shell);
 void			ft_strcat(char *str, char *str1, char *str2);
-int 			is_right_syntax(char **line);
-char 			**add_split_arg(char **tab, int *i);
+int				is_right_syntax(char **line);
+char			**add_split_arg(char **tab, int *i);
 
 /*
 **----------Tableaux---------**

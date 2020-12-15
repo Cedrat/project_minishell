@@ -31,7 +31,7 @@ void		ft_strndup(char **dest, char *src, size_t start, size_t end)
 
 int			not_a_sep(char letter)
 {
-	if (letter == ';' || letter == '>' || letter == '<' || letter == '|' )
+	if (letter == ';' || letter == '>' || letter == '<' || letter == '|')
 		return (0);
 	return (1);
 }
@@ -134,8 +134,8 @@ static char	*ft_replace_var(t_shell *shell, char *arg)
 {
 	char	*tmp;
 	char	*var_path;
-	int 	i;
-	char 	**tab;
+	int		i;
+	char	**tab;
 
 	i = 0;
 	tmp = arg;
@@ -163,7 +163,7 @@ static int	ft_check_doll(char *tab)
 	return (j = -1);
 }
 
-char**		ft_dollar(char **tab, t_shell *shell)
+char		**ft_dollar(char **tab, t_shell *shell)
 {
 	int i;
 	int j;

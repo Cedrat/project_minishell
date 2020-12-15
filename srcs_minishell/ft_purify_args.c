@@ -12,18 +12,17 @@
 
 #include "../header/minishell.h"
 
-void ft_purify_args(char **args)
+void	ft_purify_args(char **args)
 {
-	size_t i;
-	char *tmp;
+	size_t	i;
+	char	*tmp;
 
 	i = 0;
-	while(args[i])
+	while (args[i])
 	{
 		tmp = ft_str_treatement(args[i]);
 		free(args[i]);
 		args[i] = tmp;
 		i++;
 	}
-
 }

@@ -36,7 +36,7 @@ void		ft_no_path(char *arg, char **paths, t_shell *shell)
 	g_pid = fork();
 	if (g_pid == 0)
 	{
-		dup2(shell->fd,1);
+		dup2(shell->fd, 1);
 		ft_joinpath(paths, arg, bin, shell);
 		free(arg);
 		ft_errors(-1, shell);
@@ -53,16 +53,14 @@ void		ft_no_path(char *arg, char **paths, t_shell *shell)
 	}
 }
 
-
 void		ft_path(char *arg, t_shell *shell)
 {
 	g_pid = fork();
-
 	if (g_pid == 0)
 	{
-		dup2(shell->fd,1);
+		dup2(shell->fd, 1);
 		if (execve(arg, shell->args, shell->argenv) != -1)
-			exit (0);
+			exit(0);
 		else
 		{
 			ft_errors(-1, shell);
@@ -82,10 +80,9 @@ void		ft_path(char *arg, t_shell *shell)
 void		ft_path_binary(char *arg, t_shell *shell, char **paths)
 {
 	g_pid = fork();
-
 	if (g_pid == 0)
 	{
-		dup2(shell->fd,1);
+		dup2(shell->fd, 1);
 		execve(arg, shell->args, shell->argenv);
 		ft_errors(-1, shell);
 		ft_free_all(shell);
@@ -107,14 +104,14 @@ static int	ft_check_specific_cases(char **paths, char *arg, t_shell *shell)
 	{
 		ft_strcat("minishell: ", arg, " is a folder\n");
 		ft_free_tab(paths);
-		return(0);
+		return (0);
 	}
 	if (paths[0] == NULL && ft_strncmp("/bin", arg, 4) != 0)
 	{
 		ft_strcat("minishell: ", shell->args[0],
 		" : No files or folders of this type\n");
 		ft_free_tab(paths);
-		return(0);
+		return (0);
 	}
 	return (1);
 }
@@ -166,7 +163,7 @@ int			ft_exec(t_shell *shell, char *arg)
 {
 	char	*path_line;
 	char	**paths;
-	int 	i;
+	int		i;
 	int		found_path;
 
 	i = 0;
@@ -179,7 +176,7 @@ int			ft_exec(t_shell *shell, char *arg)
 	ft_purify_args(shell->args + 1);
 	if (!ft_check_specific_cases(paths, arg, shell))
 		return (0);
-	if (! ft_try_path(paths, arg, shell))
+	if (!ft_try_path(paths, arg, shell))
 		ft_manage_no_path(paths, arg, shell);
 	if (shell->signal == 256)
 		shell->signal = 130;

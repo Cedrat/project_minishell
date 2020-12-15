@@ -12,8 +12,16 @@
 
 #include "../header/minishell.h"
 
+static int	ft_exit_illegal_nb(char *str, t_shell *shell)
+{
+	write(1, "Bye ! \n", 7);
+	ft_strcat("minishell: exit : Illegal number: ", str, "\n");
+	ft_free_all(shell);
+	free(str);
+	exit(2);
+}
 
-int		ft_exit(t_shell *shell)
+int			ft_exit(t_shell *shell)
 {
 	char	*str;
 	int		nb;
@@ -28,20 +36,10 @@ int		ft_exit(t_shell *shell)
 			free(str);
 		}
 		else
-		{
-			write(1, "Bye ! \n", 7);
-			ft_putstr("minishell: exit : Illegal number: ");
-			ft_putstr(str);
-			ft_putstr("\n");
-			ft_free_all(shell);
-			free(str);
-			exit(2);
-		}
+			ft_exit_illegal_nb(str, shell);
 		if (shell->args[2])
 		{
-			write(1, "Bye ! \n", 7);
-			ft_putstr("minishell: exit : Too many args");
-			ft_putstr("\n");
+			ft_strcat("Bye ! \n", "minishell: exit : Too many args", "\n");
 			ft_free_all(shell);
 			exit(1);
 		}

@@ -12,11 +12,11 @@
 
 #include "../header/minishell.h"
 
-char *ft_file_to_str(char *path)
+char	*ft_file_to_str(char *path)
 {
-	char *str;
-	int fd;
-	struct stat sb;
+	char		*str;
+	int			fd;
+	struct stat	sb;
 
 	stat(path, &sb);
 	str = malloc(sizeof(char) * sb.st_size);
