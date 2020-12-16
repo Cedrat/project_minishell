@@ -1,15 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/16 15:27:03 by dchampda          #+#    #+#             */
+/*   Updated: 2020/12/16 15:27:04 by dchampda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header/minishell.h"
 
-void 	ft_put_prompt()
+void	ft_put_prompt(void)
 {
-	char 	*cwd;
+	char	*cwd;
 	size_t	cwd_size;
 
 	cwd = 0;
 	cwd_size = 255;
 	while (!cwd)
 	{
-		cwd = malloc(sizeof(char) * cwd_size + 1);
+		if (!(cwd = malloc(sizeof(char) * cwd_size + 1)))
+			return ;
 		if (getcwd(cwd, cwd_size) < 0)
 		{
 			free(cwd);
@@ -20,11 +33,11 @@ void 	ft_put_prompt()
 				return ;
 		}
 	}
-	ft_strcat("~", cwd, "$ ");
+	ft_strcat("\033[94;1m~", cwd, "$ \033[0m");
 	free(cwd);
 }
 
-void    sig_handler(int signum)
+void	sig_handler(int signum)
 {
 	if (g_pid == 0)
 	{
@@ -32,25 +45,25 @@ void    sig_handler(int signum)
 		ft_putstr("\n");
 		return ;
 	}
-	if (signum == SIGINT) //ctrl-c = interrupt
+	if (signum == SIGINT)
 	{
 		ft_putstr("\n");
 		ft_put_prompt();
 		g_prompt = 0;
 		return ;
 	}
-	else if (signum == SIGQUIT) //ctrl-\ =quit
+	else if (signum == SIGQUIT)
 	{
-		write(1, "\b\b  \b\b", 6); // Erase ctrl-backslash
+		write(1, "\b\b  \b\b", 6);
 		return ;
 	}
-	else if (signum == SIGPIPE) //ctrl-\ =quit
+	else if (signum == SIGPIPE)
 	{
 		ft_putstr("PIPE FULL");
 	}
 }
 
-void 	ft_init_main(t_shell *shell, char **argenv)
+void	ft_init_main(t_shell *shell, char **argenv)
 {
 	shell->function[0] = &ft_echo;
 	shell->function[1] = &ft_cd;
@@ -68,7 +81,7 @@ void 	ft_init_main(t_shell *shell, char **argenv)
 
 void	ft_get_line(char **buff, t_shell *shell)
 {
-	int i;
+	int	i;
 
 	i = get_next_line(0, buff);
 	if (i == -1)
@@ -82,19 +95,47 @@ void	ft_get_line(char **buff, t_shell *shell)
 		ft_putstr("\n");
 }
 
-int main (int argc, char **argv, char **argenv)
+void	ft_launch(t_shell *shell)
+{
+	size_t	i;
+
+	i = 0;
+	while (shell->args_line[i])
+	{
+		shell->args = ft_parser(shell->args_line[i], shell);
+		if (ft_str_is_present(shell->args, "|"))
+			ft_give_to_pipe(shell);
+		else
+		{
+			if (ft_choose_fd(shell) == 0)
+			{
+				ft_free_tab(shell->args);
+				break ;
+			}
+			ft_get_command(shell);
+			if (shell->fd != 1)
+				close(shell->fd);
+			dup2(shell->tmp_in, 0);
+			free(shell->echo);
+			free_shell_commands(shell);
+			ft_free_tab(shell->args);
+		}
+		i++;
+	}
+}
+
+int		main(int argc, char **argv, char **argenv)
 {
 	t_shell	shell;
 	char	*buff;
-	size_t	i;
 	char	**args;
-
 
 	ft_init_main(&shell, argenv);
 	if ((signal(SIGINT, sig_handler) == SIG_ERR)
-		|| (signal(SIGQUIT, sig_handler) == SIG_ERR) || (signal(SIGPIPE, sig_handler)))
+		|| (signal(SIGQUIT, sig_handler) == SIG_ERR)
+		|| (signal(SIGPIPE, sig_handler)))
 		ft_putstr("Error catching signal\n");
-	while(1)
+	while (1)
 	{
 		if (g_prompt)
 			ft_put_prompt();
@@ -103,30 +144,8 @@ int main (int argc, char **argv, char **argenv)
 		{
 			shell.args_line = ft_args(buff);
 			free(buff);
-			i = 0;
 			g_prompt = 1;
-			while (shell.args_line[i])
-			{
-				shell.args = ft_parser(shell.args_line[i], &shell);
-				if (ft_str_is_present(shell.args, "|"))
-					ft_give_to_pipe(&shell);
-				else
-				{			//Faire un ft_launch qui regroupe tout ce bloc ?
-						if (ft_choose_fd(&shell) == 0)
-						{
-							ft_free_tab(shell.args);
-							break;
-						}
-						ft_get_command(&shell);
-						if (shell.fd != 1)
-							close(shell.fd);
-						dup2(shell.tmp_in, 0);
-						free(shell.echo);
-						free_shell_commands(&shell);
-					ft_free_tab(shell.args);
-				}
-				i++;
-			}
+			ft_launch(&shell);
 			ft_free_tab(shell.args_line);
 		}
 		else
