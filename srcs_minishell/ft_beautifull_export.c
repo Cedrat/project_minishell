@@ -6,13 +6,19 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:54:02 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/14 16:47:13 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 18:33:19 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void	ft_beautifull_export(char *str, int is_export, int fd)
+static	void	set_to_zeros(size_t *i, size_t *j)
+{
+	*i = 0;
+	*j = 0;
+}
+
+void			ft_beautifull_export(char *str, int is_export, int fd)
 {
 	char	letter;
 	size_t	i;
@@ -41,15 +47,14 @@ void	ft_beautifull_export(char *str, int is_export, int fd)
 	}
 }
 
-char	*ft_str_treatement(char *str)
+char			*ft_str_treatement(char *str)
 {
 	char	letter;
 	char	*newstr;
 	size_t	i;
 	size_t	p;
 
-	i = 0;
-	p = 0;
+	set_to_zeros(&i, &p);
 	letter = ' ';
 	while (str[i])
 	{
@@ -66,6 +71,7 @@ char	*ft_str_treatement(char *str)
 		i++;
 	}
 	str[p] = '\0';
-	newstr = ft_strdup(str);
+	if ((newstr = ft_strdup(str)) == NULL)
+		exit(0);
 	return (newstr);
 }
