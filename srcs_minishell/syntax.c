@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:52:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/16 16:46:47 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:40:35 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int			check_nb_sep(t_shell *shell, int sep, size_t i, char **line)
 {
 	if (sep == 2)
 	{
-		ft_strcat("minishell: syntax error near the unexpected symbol «",
-												line[i], "»\n");
+		ft_strcat_fd("minishell: syntax error near the unexpected symbol «",
+												line[i], "»\n", 2);
 		ft_free_tab(line);
 		shell->signal = 2;
 		return (0);
@@ -44,8 +44,8 @@ static	int	two_symbols(t_shell *shell, char **line, size_t i)
 		(!ft_strcmp(line[i + 1], "<") || !ft_strcmp(line[i + 1], ">") ||
 		!ft_strcmp(line[i + 1], ">>") || !ft_strcmp(line[i + 1], "|")))
 	{
-		ft_strcat("minishell: syntax error near the unexpected symbol « ",
-			line[i + 1], " »\n");
+		ft_strcat_fd("minishell: syntax error near the unexpected symbol « ",
+			line[i + 1], " »\n", 2);
 		ft_free_tab(line);
 		shell->signal = 2;
 		return (0);
@@ -53,8 +53,8 @@ static	int	two_symbols(t_shell *shell, char **line, size_t i)
 	else if ((!ft_strcmp(line[i], ">") || !ft_strcmp(line[i], ">>")
 			|| !ft_strcmp(line[i], "<")) && line[i + 1] == NULL)
 	{
-		ft_strcat("minishell: syntax error near the unexpected symbol «",
-								" newline ", "»\n");
+		ft_strcat_fd("minishell: syntax error near the unexpected symbol «",
+								" newline ", "»\n", 2);
 		ft_free_tab(line);
 		shell->signal = 2;
 		return (0);

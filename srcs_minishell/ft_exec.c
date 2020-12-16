@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 17:14:41 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:39:06 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ static int	ft_check_specific_cases(char **paths, char *arg, t_shell *shell)
 {
 	if (ft_strcmp("/bin/", arg) == 0 || ft_strcmp("/bin", arg) == 0)
 	{
-		ft_strcat("minishell: ", arg, " is a folder\n");
+		ft_strcat_fd("minishell: ", arg, " is a folder\n", 2);
 		ft_free_tab(paths);
 		return (0);
 	}
 	if (paths[0] == NULL && ft_strncmp("/bin", arg, 4) != 0)
 	{
-		ft_strcat("minishell: ", shell->args[0],
-		" : No files or folders of this type\n");
+		ft_strcat_fd("minishell: ", shell->args[0],
+		" : No files or folders of this type\n", 2);
 		ft_free_tab(paths);
 		return (0);
 	}

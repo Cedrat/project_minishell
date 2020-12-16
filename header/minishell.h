@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 17:03:00 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:37:44 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void			ft_strndup(char **dest, char *src, size_t start, size_t end);
 void			sig_handler(int signum);
 void			ft_errors(int error, t_shell *shell);
 void			ft_free_all(t_shell *shell);
-void			ft_strcat(char *str, char *str1, char *str2);
+void			ft_strcat_fd(char *str, char *str1, char *str2, int fd);
 int				is_right_syntax(char **line, t_shell *shell);
 char			**add_split_arg(char **tab, int *i);
 

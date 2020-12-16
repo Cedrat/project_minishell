@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:27:03 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 17:21:28 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:36:51 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_put_prompt(void)
 				return ;
 		}
 	}
-	ft_strcat("\033[94;1m~", cwd, "$ \033[0m");
+	ft_strcat_fd("\033[94;1m~", cwd, "$ \033[0m", 1);
 	free(cwd);
 }
 

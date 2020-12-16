@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:53:39 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/15 19:07:05 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:39:55 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static	void	check_syntax(char **arg_tab)
 	{
 		str = ft_str_treatement(arg_tab[o + 1]);
 		if (!(ft_is_varenv(str)) || (ft_charispresent(arg_tab[o + 1], '=')))
-			ft_strcat("minishell: env: « ", arg_tab[o + 1],
-												" » : bad variable name\n");
+			ft_strcat_fd("minishell: env: « ", arg_tab[o + 1],
+												" » : bad variable name\n", 2);
 		free(str);
 		o++;
 	}

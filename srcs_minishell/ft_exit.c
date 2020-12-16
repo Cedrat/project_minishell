@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:45:56 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/08 16:51:33 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:50:59 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_exit_illegal_nb(char *str, t_shell *shell)
 {
 	write(1, "Bye ! \n", 7);
-	ft_strcat("minishell: exit : Illegal number: ", str, "\n");
+	ft_strcat_fd("minishell: exit : Illegal number: ", str, "\n", 2);
 	ft_free_all(shell);
 	free(str);
 	exit(2);
@@ -39,13 +39,13 @@ int			ft_exit(t_shell *shell)
 			ft_exit_illegal_nb(str, shell);
 		if (shell->args[2])
 		{
-			ft_strcat("Bye ! \n", "minishell: exit : Too many args", "\n");
+			ft_strcat_fd("Bye ! \n", "minishell: exit : Too many args",
+			 "\n", 2);
 			ft_free_all(shell);
 			exit(1);
 		}
 	}
-	nb = nb % 256;
 	write(1, "Bye ! \n", 7);
 	ft_free_all(shell);
-	exit(nb);
+	exit(nb % 256);
 }

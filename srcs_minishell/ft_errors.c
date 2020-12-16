@@ -6,13 +6,13 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 15:42:19 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/08 17:58:49 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:51:33 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void	ft_strcat(char *str, char *str1, char *str2)
+void	ft_strcat_fd(char *str, char *str1, char *str2, int fd)
 {
 	char	*res;
 	int		len;
@@ -33,7 +33,7 @@ void	ft_strcat(char *str, char *str1, char *str2)
 	while (str2[j])
 		res[i++] = str2[j++];
 	res[i] = '\0';
-	ft_putstr(res);
+	ft_putstr_fd(res, fd);
 	free(res);
 }
 
@@ -42,24 +42,26 @@ void	ft_errors(int error, t_shell *shell)
 	if (error == -1)
 	{
 		if (shell->args[0])
-			ft_strcat("Command not found : ", shell->args[0], "\n");
+			ft_strcat_fd("Command not found : ", shell->args[0], "\n", 2);
 		else
-			ft_strcat("Command not found : ", "", "\n");
+			ft_strcat_fd("Command not found : ", "", "\n", 2);
 	}
 	else if (error == -2)
-		ft_strcat(shell->args[1], " : No file or folder of this type", "\n");
+		ft_strcat_fd(shell->args[1], " : No file or folder	of this type",
+		 											"\n", 2);
 	else if (error == -3)
-		ft_putstr("Error : Too many/few quotes");
+		ft_putstr_fd("Error : Too many/few quotes", 2);
 	else if (error == -4)
-		ft_putstr("Error, no fd\n");
+		ft_putstr_fd("Error, no fd\n", 2);
 	else if (error == -5)
-		ft_putstr("Error : Too many/few arguments");
+		ft_putstr_fd("Error : Too many/few arguments", 2);
 	else if (error == -6)
-		ft_strcat(shell->args[0], " : No file or folder of this type", "\n");
+		ft_strcat_fd(shell->args[0], " : No file or folder of this type"
+		, "\n", 2);
 	else if (error == -7)
-		ft_putstr("Error with the child processus\n");
+		ft_putstr_fd("Error with the child processus\n", 2);
 	else if (error == -8)
-		ft_strcat("cd : ", "« HOME »", " undefined\n");
+		ft_strcat_fd("cd : ", "« HOME »", " undefined\n", 2);
 	if (error != 0)
 		shell->nb_error += 1;
 }

@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/16 17:11:50 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 19:37:05 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int			ft_choose_fd(t_shell *shell)
 	}
 	if (shell->fd == -1)
 	{
-		ft_strcat("minishell: ", shell->name_error,
-			": Permission not granted\n");
+		ft_strcat_fd("minishell: ", shell->name_error,
+			": Permission not granted\n", 2);
 		free(shell->name_error);
 		return (0);
 	}
