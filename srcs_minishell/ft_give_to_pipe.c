@@ -74,7 +74,7 @@ static void		son_works(int fd[512][2], t_shell *shell,
 	}
 }
 
-void				ft_give_to_pipe(t_shell *shell)
+void			ft_give_to_pipe(t_shell *shell)
 {
 	int		fd[512][2];
 	size_t	i;

@@ -12,7 +12,7 @@
 
 #include "../header/minishell.h"
 
-size_t	count_pipe(char **split)
+size_t			count_pipe(char **split)
 {
 	size_t p;
 	size_t i;

@@ -187,7 +187,7 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 		if (args[i] == '$')
 			ft_dollar_sign(args, shell, &i, shell->fd);
 		else if ((i == 0 && args[i] == '~' && !args[i + 1])
-            || (args[i] == '~' && !args[i + 1] && !args[i - 1]))
+			|| (args[i] == '~' && !args[i + 1] && !args[i - 1]))
 			ft_echo_pwd(shell, &i);
 		if (args[i] == '\'' || args[i] == '\"')
 		{
