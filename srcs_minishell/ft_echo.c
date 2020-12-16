@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:14:09 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/03 16:14:10 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:09:43 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 void	ft_single_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 {
 	int		i;
-	int		j;
 
 	i = 0;
 	while (args[i] != '\0')
@@ -187,8 +186,8 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 	{
 		if (args[i] == '$')
 			ft_dollar_sign(args, shell, &i, shell->fd);
-		else if (i == 0 && args[i] == '~' && !args[i + 1]
-			|| args[i] == '~' && !args[i + 1] && !args[i - 1])
+		else if ((i == 0 && args[i] == '~' && !args[i + 1])
+            || (args[i] == '~' && !args[i + 1] && !args[i - 1]))
 			ft_echo_pwd(shell, &i);
 		if (args[i] == '\'' || args[i] == '\"')
 		{

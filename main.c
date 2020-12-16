@@ -10,7 +10,7 @@ void 	ft_put_prompt()
 	while (!cwd)
 	{
 		cwd = malloc(sizeof(char) * cwd_size + 1);
-		if (getcwd(cwd, cwd_size) < 0)
+		if (getcwd(cwd, cwd_size) == NULL)
 		{
 			free(cwd);
 			cwd = NULL;
@@ -87,9 +87,9 @@ int main (int argc, char **argv, char **argenv)
 	t_shell	shell;
 	char	*buff;
 	size_t	i;
-	char	**args;
 
-
+	(void)argc;
+	(void)argv;
 	ft_init_main(&shell, argenv);
 	if ((signal(SIGINT, sig_handler) == SIG_ERR)
 		|| (signal(SIGQUIT, sig_handler) == SIG_ERR) || (signal(SIGPIPE, sig_handler)))
@@ -99,7 +99,7 @@ int main (int argc, char **argv, char **argenv)
 		if (g_prompt)
 			ft_put_prompt();
 		ft_get_line(&buff, &shell);
-		if (is_right_syntax(ft_parser(buff, &shell)))
+		if (is_right_syntax(ft_parser(buff, &shell), &shell))
 		{
 			shell.args_line = ft_args(buff);
 			free(buff);

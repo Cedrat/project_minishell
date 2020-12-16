@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/14 19:49:09 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:03:00 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void			sig_handler(int signum);
 void			ft_errors(int error, t_shell *shell);
 void			ft_free_all(t_shell *shell);
 void			ft_strcat(char *str, char *str1, char *str2);
-int				is_right_syntax(char **line);
+int				is_right_syntax(char **line, t_shell *shell);
 char			**add_split_arg(char **tab, int *i);
 
 /*
@@ -133,13 +133,14 @@ void			ft_single_qt(t_echo *config, char *args,
 /*
 **----------Pipes---------**
 */
-int				ft_give_to_pipe(t_shell *shell);
+void			ft_give_to_pipe(t_shell *shell);
 int				ft_choose_fd(t_shell *shell);
 char			***ft_args_pipe(char **args);
 char			*ft_file_to_str(char *path);
 char			**ft_divide_to_pipe(char **split);
 void			ft_recursives_pipes(char **args_pipes, int i,
 				int *fd, int *fd2, t_shell *shell);
+size_t			count_pipe(char **split);
 
 /*
 **----------Parser---------**

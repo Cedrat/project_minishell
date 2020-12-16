@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/15 19:37:03 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:02:41 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void		son_works(int fd[512][2], t_shell *shell,
 	}
 }
 
-int				ft_give_to_pipe(t_shell *shell)
+void				ft_give_to_pipe(t_shell *shell)
 {
 	int		fd[512][2];
 	size_t	i;
@@ -85,7 +85,7 @@ int				ft_give_to_pipe(t_shell *shell)
 	tmpin = dup(0);
 	tmpout = dup(1);
 	args_pipes = ft_divide_to_pipe(shell->args);
-	while (args_pipes[i + 1])
+	while (args_pipes[i + 1] && i < 511)
 	{
 		new_argument(shell, args_pipes[i]);
 		son_works(fd, shell, args_pipes, i);
