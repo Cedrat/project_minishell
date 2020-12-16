@@ -111,7 +111,8 @@ char			**add_env(char **arg, char *str)
 	i = 0;
 	while (arg[i])
 		i++;
-	new_tab = malloc(sizeof(char *) * (i + 2));
+	if (!(new_tab = malloc(sizeof(char *) * (i + 2))))
+		return (NULL);
 	i = 0;
 	while (arg[i])
 	{
