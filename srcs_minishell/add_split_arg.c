@@ -6,14 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 03:06:45 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/14 16:08:20 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 16:56:33 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-
-static void insert_tab(size_t *l, size_t p, char **new_tab, char **str)
+static	void	insert_tab(size_t *l, size_t p, char **new_tab, char **str)
 {
 	while (str[*l])
 	{
@@ -23,12 +22,12 @@ static void insert_tab(size_t *l, size_t p, char **new_tab, char **str)
 	(*l)--;
 }
 
-char **add_split_arg(char **tab, int *i)
+char			**add_split_arg(char **tab, int *i)
 {
-	char **str;
-	char **new_tab;
- 	size_t p;
-	size_t l;
+	char	**str;
+	char	**new_tab;
+	size_t	p;
+	size_t	l;
 
 	str = ft_split(tab[*i], ' ');
 	p = tab_range(str);
@@ -36,7 +35,7 @@ char **add_split_arg(char **tab, int *i)
 	new_tab = malloc(sizeof(char *) * (p + l + 1));
 	p = 0;
 	l = 0;
-	while(tab[p])
+	while (tab[p])
 	{
 		if (p == *i)
 			insert_tab(&l, p, new_tab, str);

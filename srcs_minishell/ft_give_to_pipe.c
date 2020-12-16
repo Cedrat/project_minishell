@@ -6,12 +6,26 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/14 19:46:13 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:37:03 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
+static	void exec_commands(t_shell *shell)
+{
+	if (shell->fd != -1)
+	{
+		ft_get_command(shell);
+		ft_free_all(shell);
+	}
+	else
+	{
+		ft_free_tab(shell->args);
+		ft_free_tab(shell->args_line);
+		ft_free_tab(shell->argenv);
+	}
+}
 static void		new_argument(t_shell *shell, char *arg_pipe)
 {
 	ft_free_tab(shell->args);
@@ -48,17 +62,7 @@ static void		son_works(int fd[512][2], t_shell *shell,
 			close(fd[i - 1][0]);
 		}
 		ft_free_tab(args_pipes);
-		if (shell->fd != -1)
-		{
-			ft_get_command(shell);
-			ft_free_all(shell);
-		}
-		else
-		{
-			ft_free_tab(shell->args);
-			ft_free_tab(shell->args_line);
-			ft_free_tab(shell->argenv);
-		}
+		exec_commands(shell);
 		exit(0);
 	}
 	else

@@ -6,18 +6,18 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 15:38:51 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/14 17:45:52 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:15:46 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-size_t tab_range(char **tab)
+size_t	tab_range(char **tab)
 {
 	size_t p;
 
 	p = 0;
-	while(tab[p])
+	while (tab[p])
 		p++;
-	return(p);
+	return (p);
 }

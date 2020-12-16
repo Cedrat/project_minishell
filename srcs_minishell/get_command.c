@@ -6,13 +6,13 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:13:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/14 20:09:42 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:09:34 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int		ft_strcmp_cmds(const char *s1, const char *s2)
+int			ft_strcmp_cmds(const char *s1, const char *s2)
 {
 	size_t	pos1;
 	size_t	pos2;
@@ -30,7 +30,7 @@ int		ft_strcmp_cmds(const char *s1, const char *s2)
 	return ((unsigned char)s1[pos1] - (unsigned char)s2[pos2]);
 }
 
-static int check_build_in(int found, char *command, t_shell *shell)
+static	int	check_build_in(int found, char *command, t_shell *shell)
 {
 	size_t j;
 
@@ -45,7 +45,7 @@ static int check_build_in(int found, char *command, t_shell *shell)
 	return (found);
 }
 
-void	ft_init_commands(t_shell *shell)
+void		ft_init_commands(t_shell *shell)
 {
 	shell->echo = malloc(sizeof(t_echo));
 	shell->commands[0] = ft_strdup("echo");
@@ -59,12 +59,12 @@ void	ft_init_commands(t_shell *shell)
 	shell->echo->option_n = 1;
 }
 
-void	ft_get_command(t_shell *shell)
+void		ft_get_command(t_shell *shell)
 {
 	int		i;
 	int		j;
 	int		found;
-	char 	*tmp;
+	char	*tmp;
 
 	ft_init_commands(shell);
 	shell->home_path = ft_get_var(shell->argenv, "HOME=");
@@ -77,7 +77,7 @@ void	ft_get_command(t_shell *shell)
 	found = -1;
 	while (shell->args[i] && found == -1)
 	{
-		found = check_build_in(found ,shell->args[i], shell);
+		found = check_build_in(found, shell->args[i], shell);
 		if (found == -1)
 			found = ft_exec(shell, shell->args[i]);
 		i++;

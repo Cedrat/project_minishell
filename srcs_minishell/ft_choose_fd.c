@@ -6,22 +6,21 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/14 19:57:13 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 17:07:52 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static int redirect_right(t_shell* shell, size_t i)
+static	int	redirect_right(t_shell *shell, size_t i)
 {
 	if (!(shell->args[i + 1]))
 	{
 		ft_errors(-4, shell);
-		return(0);
+		return (0);
 	}
-	// if (shell->fd != 1)
-	// 	close(shell->fd);
-	shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_TRUNC|O_NONBLOCK, 0644);
+	shell->fd = open(shell->args[i + 1], O_WRONLY | O_CREAT
+											| O_TRUNC | O_NONBLOCK, 0644);
 	if (shell->fd == -1)
 	{
 		if (shell->name_error == NULL)
@@ -31,16 +30,15 @@ static int redirect_right(t_shell* shell, size_t i)
 	shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 }
 
-static int redirect_right_right(t_shell* shell, size_t i)
+static	int	redirect_right_right(t_shell *shell, size_t i)
 {
 	if (!(shell->args[i + 1]))
 	{
 		ft_errors(-4, shell);
-		return(0);
+		return (0);
 	}
-	// if (shell->fd != 1)
-	// 	close(shell->fd);
-	shell->fd = open(shell->args[i + 1], O_WRONLY|O_CREAT|O_APPEND|O_NONBLOCK, 0644);
+	shell->fd = open(shell->args[i + 1], O_WRONLY | O_CREAT |
+											O_APPEND | O_NONBLOCK, 0644);
 	if (shell->fd == -1)
 	{
 		if (shell->name_error == NULL)
@@ -50,15 +48,16 @@ static int redirect_right_right(t_shell* shell, size_t i)
 	shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 }
 
-static int redirect_left(t_shell* shell, size_t i)
+static	int	redirect_left(t_shell *shell, size_t i)
 {
 	int fd_in;
+
 	shell->tmp_in = dup(0);
 	fd_in = open(shell->args[i + 1], O_RDONLY, 0644);
 	if (!(shell->args[i + 1]))
 	{
 		ft_errors(-4, shell);
-		return(0);
+		return (0);
 	}
 	if (fd_in == -1)
 	{
@@ -73,7 +72,7 @@ static int redirect_left(t_shell* shell, size_t i)
 	dup2(fd_in, 0);
 }
 
-int ft_choose_fd(t_shell *shell)
+int			ft_choose_fd(t_shell *shell)
 {
 	size_t i;
 
@@ -81,7 +80,7 @@ int ft_choose_fd(t_shell *shell)
 	shell->fd = 1;
 	shell->tmp_in = dup(0);
 	i = 0;
-	while(shell->args[i] != NULL)
+	while (shell->args[i] != NULL)
 	{
 		if (!(ft_strcmp(shell->args[i], ">")))
 			redirect_right(shell, i);
@@ -92,13 +91,13 @@ int ft_choose_fd(t_shell *shell)
 		else
 			i++;
 	}
-		if (shell->fd == -1)
-		{
-			ft_strcat("minishell: ", shell->name_error, ": Permission not granted\n");
-			free(shell->name_error);
-			return (0);
-		}
+	if (shell->fd == -1)
+	{
+		ft_strcat("minishell: ", shell->name_error,
+			": Permission not granted\n");
+		free(shell->name_error);
+		return (0);
+	}
 	return (1);
 }
-
-// faire une bonne gestion d'erreur. soucis avec < , gestion d'erreurs a revoir.. cas cat main.c > 2 > 2
+//signal error

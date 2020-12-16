@@ -6,13 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:51:56 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/12 18:17:22 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:53:30 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-char *ft_give_without_quote(char *str) //not finish as weel
+char	*ft_give_without_quote(char *str)
 {
 	size_t	nb_dq;
 	size_t	nb_sq;

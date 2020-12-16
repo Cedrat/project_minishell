@@ -6,13 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:52:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/09 20:46:47 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:38:51 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int is_right_syntax(char **line)
+int	is_right_syntax(char **line)
 {
 	size_t sep;
 	size_t i;
@@ -27,22 +27,28 @@ int is_right_syntax(char **line)
 			sep = 0;
 		if (sep == 2)
 		{
-			ft_strcat("minishell: syntax error near the unexpected symbol «", line[i], "»\n");
+			ft_strcat("minishell: syntax error near the unexpected symbol «",
+													line[i], "»\n");
 			ft_free_tab(line);
 			return (0);
 		}
-		else if ((!ft_strcmp(line[i], ">") || !ft_strcmp(line[i], ">>") || !ft_strcmp(line[i], "<")) && line[i+1] &&
-			(!ft_strcmp(line[i + 1], "<") || !ft_strcmp(line[i + 1], ">") || !ft_strcmp(line[i + 1], ">>" ) || !ft_strcmp(line[i + 1], "|")))
-			{
-				ft_strcat("minishell: syntax error near the unexpected symbol « ", line[i + 1], " »\n");
-				ft_free_tab(line);
-				return (0); //
-			}
-		else if ((!ft_strcmp(line[i], ">") || !ft_strcmp(line[i], ">>") || !ft_strcmp(line[i], "<")) && line[i + 1] == NULL)
+		else if ((!ft_strcmp(line[i], ">") || !ft_strcmp(line[i], ">>") ||
+		!ft_strcmp(line[i], "<")) && line[i + 1] &&
+			(!ft_strcmp(line[i + 1], "<") || !ft_strcmp(line[i + 1], ">") ||
+			!ft_strcmp(line[i + 1], ">>") || !ft_strcmp(line[i + 1], "|")))
 		{
-			ft_strcat("minishell: syntax error near the unexpected symbol «", " newline ", "»\n");
+			ft_strcat("minishell: syntax error near the unexpected symbol « ",
+			 	line[i + 1], " »\n");
 			ft_free_tab(line);
-			return (0); // gerer signal error
+			return (0);
+		}
+		else if ((!ft_strcmp(line[i], ">") || !ft_strcmp(line[i], ">>")
+				|| !ft_strcmp(line[i], "<")) && line[i + 1] == NULL)
+		{
+			ft_strcat("minishell: syntax error near the unexpected symbol «",
+			 " newline ", "»\n");
+			ft_free_tab(line);
+			return (0);
 		}
 		i++;
 	}
@@ -50,8 +56,10 @@ int is_right_syntax(char **line)
 	{
 		ft_putstr("minishell : multi_line not supported\n");
 		ft_free_tab(line);
-		return(0);
+		return (0);
 	}
 	ft_free_tab(line);
 	return (1);
 }
+
+//gerer signal error

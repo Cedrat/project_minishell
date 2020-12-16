@@ -6,13 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 18:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/07 16:10:40 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 16:57:59 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void free_shell_commands(t_shell *shell)
+void	free_shell_commands(t_shell *shell)
 {
 	free(shell->commands[0]);
 	free(shell->commands[1]);

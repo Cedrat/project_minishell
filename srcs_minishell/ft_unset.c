@@ -6,13 +6,13 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:53:39 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/14 16:32:42 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:07:05 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static void check_syntax(char **arg_tab)
+static	void	check_syntax(char **arg_tab)
 {
 	size_t	o;
 	char	*str;
@@ -28,18 +28,18 @@ static void check_syntax(char **arg_tab)
 		o++;
 	}
 }
-static size_t length_before_equal(char *str)
+
+static	size_t	length_before_equal(char *str)
 {
 	size_t p;
 
 	p = 0;
 	while (str[p] && str[p] != '=')
 		p++;
-
 	return (p);
 }
 
-char	**ft_malloc_tab(char **tab)
+char			**ft_malloc_tab(char **tab)
 {
 	int		i;
 	char	**new_tab;
@@ -52,7 +52,7 @@ char	**ft_malloc_tab(char **tab)
 	return (new_tab);
 }
 
-char	**ft_remove_in_tab(char **tab, char *str)
+char			**ft_remove_in_tab(char **tab, char *str)
 {
 	size_t	i;
 	size_t	p;
@@ -80,7 +80,7 @@ char	**ft_remove_in_tab(char **tab, char *str)
 	return (new_tab);
 }
 
-int		ft_unset(t_shell *shell)
+int				ft_unset(t_shell *shell)
 {
 	size_t	i;
 	char	*str;

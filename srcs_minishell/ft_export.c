@@ -6,13 +6,13 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:46:20 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/14 16:41:13 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:52:15 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static void print_export(char *str, int fd)
+static	void	print_export(char *str, int fd)
 {
 	while (*str != '=' && *str)
 	{
@@ -35,7 +35,7 @@ static void print_export(char *str, int fd)
 	}
 }
 
-void	display_export(char **char_list, int fd)
+void			display_export(char **char_list, int fd)
 {
 	char	**temp_tab_char;
 	char	*str;
@@ -55,7 +55,7 @@ void	display_export(char **char_list, int fd)
 	ft_free_tab(temp_tab_char);
 }
 
-size_t	sizeofenv(char **argenv)
+size_t			sizeofenv(char **argenv)
 {
 	size_t	i;
 
@@ -65,7 +65,7 @@ size_t	sizeofenv(char **argenv)
 	return (i);
 }
 
-int		ft_is_varenv(char *env)
+int				ft_is_varenv(char *env)
 {
 	size_t	i;
 
@@ -82,7 +82,7 @@ int		ft_is_varenv(char *env)
 	return (1);
 }
 
-int		env_exist(char **env, char *arg)
+int				env_exist(char **env, char *arg)
 {
 	size_t	i;
 	char	*str;
@@ -103,7 +103,7 @@ int		env_exist(char **env, char *arg)
 	return (0);
 }
 
-char	**add_env(char **arg, char *str)
+char			**add_env(char **arg, char *str)
 {
 	char	**new_tab;
 	size_t	i;
@@ -125,7 +125,7 @@ char	**add_env(char **arg, char *str)
 	return (new_tab);
 }
 
-void	modify_env(char **argenv, char *str)
+void			modify_env(char **argenv, char *str)
 {
 	size_t	i;
 	size_t	p;
@@ -146,7 +146,7 @@ void	modify_env(char **argenv, char *str)
 	}
 }
 
-void	export_env(t_shell *shell, char *arg)
+void			export_env(t_shell *shell, char *arg)
 {
 	if (env_exist(shell->argenv, arg) && ft_charispresent(arg, '='))
 		modify_env(shell->argenv, arg);
@@ -156,7 +156,7 @@ void	export_env(t_shell *shell, char *arg)
 		shell->argenv = add_env(shell->argenv, arg);
 }
 
-int		ft_export(t_shell *shell)
+int				ft_export(t_shell *shell)
 {
 	int		i;
 	char	*str;
