@@ -21,7 +21,8 @@ int		ft_pwd(t_shell *shell)
 	path_size = 255;
 	while (!path)
 	{
-		path = malloc(sizeof(char) * path_size + 1);
+		if (!(path = malloc(sizeof(char) * path_size + 1)))
+			exit(0);
 		if (getcwd(path, path_size) == NULL)
 		{
 			free(path);

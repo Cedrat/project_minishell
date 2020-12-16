@@ -45,6 +45,12 @@ void	ft_inc_values(size_t *i, size_t *j)
 	*j += 1;
 }
 
+void	ft_init(size_t *i, size_t *j)
+{
+	*i = 0;
+	*j = 0;
+}
+
 char	**ft_dup_arg(char **arg)
 {
 	size_t	i;
@@ -53,7 +59,8 @@ char	**ft_dup_arg(char **arg)
 	i = 0;
 	while (arg[i])
 		i++;
-	new_tab = malloc(sizeof(char *) * (i + 1));
+	if (!(new_tab = malloc(sizeof(char *) * (i + 1))))
+		return (NULL);
 	i = 0;
 	while (arg[i])
 	{

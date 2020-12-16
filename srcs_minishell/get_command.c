@@ -47,7 +47,8 @@ static	int	check_build_in(int found, char *command, t_shell *shell)
 
 void		ft_init_commands(t_shell *shell)
 {
-	shell->echo = malloc(sizeof(t_echo));
+	if (!(shell->echo = malloc(sizeof(t_echo))))
+		exit(0);
 	shell->commands[0] = ft_strdup("echo");
 	shell->commands[1] = ft_strdup("cd");
 	shell->commands[2] = ft_strdup("pwd");

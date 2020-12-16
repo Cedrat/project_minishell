@@ -19,7 +19,8 @@ char	*ft_file_to_str(char *path)
 	struct stat	sb;
 
 	stat(path, &sb);
-	str = malloc(sizeof(char) * sb.st_size);
+	if (!(str = malloc(sizeof(char) * sb.st_size)))
+		return (NULL);
 	fd = open(path, O_RDONLY);
 	read(fd, str, sb.st_size);
 	close(fd);

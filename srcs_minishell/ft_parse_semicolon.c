@@ -43,7 +43,8 @@ char	**ft_args(char *str)
 	p = 0;
 	i = 0;
 	old_i = i;
-	tab_args = malloc(sizeof(char *) * (1 + count_args(str)));
+	if (!(tab_args = malloc(sizeof(char *) * (1 + count_args(str)))))
+		return (NULL);
 	while (str[i])
 	{
 		old_i = i;

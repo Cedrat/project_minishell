@@ -61,7 +61,8 @@ char			**ft_remove_in_tab(char **tab, char *str)
 
 	i = 0;
 	found = 0;
-	new_tab = ft_malloc_tab(tab);
+	if (!(new_tab = ft_malloc_tab(tab)))
+		return (NULL);
 	while (tab[i + found])
 	{
 		p = 0;

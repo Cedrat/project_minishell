@@ -37,7 +37,8 @@ char	*ft_extract_var_name(char *arg, int *j)
 	i = *j;
 	while (!ft_strchr(" \"\\\'\0", arg[i]))
 		i++;
-	str = malloc(sizeof(char) * (i - *j) + 2);
+	if (!(str = malloc(sizeof(char) * (i - *j) + 2)))
+		return (NULL);
 	i = 0;
 	while (!ft_strchr(" \"\\\'\0", arg[*j]))
 	{

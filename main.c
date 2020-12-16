@@ -22,7 +22,7 @@ void	ft_put_prompt(void)
 	while (!cwd)
 	{
 		if (!(cwd = malloc(sizeof(char) * cwd_size + 1)))
-			return ;
+			exit(0);
 		if (getcwd(cwd, cwd_size) == NULL)
 		{
 			free(cwd);

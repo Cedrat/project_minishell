@@ -18,7 +18,8 @@ void		ft_strndup(char **dest, char *src, size_t start, size_t end)
 	size_t	i;
 
 	i = 0;
-	str = malloc(sizeof(char) * (end - start + 1));
+	if (!(str = malloc(sizeof(char) * (end - start + 1))))
+		exit(0);
 	while (start < end && src[start])
 	{
 		str[i] = src[start];
@@ -213,9 +214,9 @@ char		**ft_parser(char *str, t_shell *shell)
 	size_t	p;
 	size_t	d;
 
-	tab = malloc(sizeof(char *) * (count_tokens(str) + 2));
-	i = 0;
-	p = 0;
+	if (!(tab = malloc(sizeof(char *) * (count_tokens(str) + 2))))
+		return (NULL);
+	ft_init(&i, &p);
 	while (str[i])
 	{
 		j = ft_is_space(str, &i);
