@@ -37,7 +37,7 @@ void	ft_put_prompt(void)
 	free(cwd);
 }
 
-void	sig_handler(int signum)
+void	sig_handle(int signum)
 {
 	if (g_pid == 0)
 	{
@@ -49,7 +49,7 @@ void	sig_handler(int signum)
 	{
 		ft_putstr("\n");
 		ft_put_prompt();
-		g_prompt = 0;
+		g_prompt = -1;
 		return ;
 	}
 	else if (signum == SIGQUIT)
@@ -93,6 +93,15 @@ void	ft_get_line(char **buff, t_shell *shell)
 	}
 	else if (i == -2)
 		ft_putstr("\n");
+	else if (i == -3)
+	{
+		ft_putstr("Error : Command line is too long\n");
+		g_prompt = 0;
+		free(*buff);
+		buff[0] = ft_strdup("\0");
+	}
+	if (g_prompt == -1)
+		shell->signal = 130;
 }
 
 void	ft_launch(t_shell *shell)
@@ -131,13 +140,13 @@ int		main(int argc, char **argv, char **argenv)
 	char	**args;
 
 	ft_init_main(&shell, argenv);
-	if ((signal(SIGINT, sig_handler) == SIG_ERR)
-		|| (signal(SIGQUIT, sig_handler) == SIG_ERR)
-		|| (signal(SIGPIPE, sig_handler)))
+	if ((signal(SIGINT, sig_handle) == SIG_ERR)
+		|| (signal(SIGQUIT, sig_handle) == SIG_ERR)
+		|| (signal(SIGPIPE, sig_handle)))
 		ft_putstr("Error catching signal\n");
 	while (1)
 	{
-		if (g_prompt)
+		if (g_prompt > 0)
 			ft_put_prompt();
 		ft_get_line(&buff, &shell);
 		if (is_right_syntax(ft_parser(buff, &shell)))

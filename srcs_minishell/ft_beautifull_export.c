@@ -69,9 +69,3 @@ char	*ft_str_treatement(char *str)
 	newstr = ft_strdup(str);
 	return (newstr);
 }
-
-/*
-Verifier que sans ça, ça fonctionne tj bien (l.64)
-	else if (str[i] == '"' && letter == '\'')
-		str[p++] = str[i]; a priori, on peut virer ce commentaire
-		*/

@@ -32,11 +32,8 @@ char	*read_file(char *buffer, int fd, int *nb_letters)
 		}
 		if (find_n(buffer, '\n'))
 			n = 1;
-		if (ft_strlen(buffer) > 2048)
-		{
-			*nb_letters = -1;
-			n = 1;
-		}
+		if (ft_strlen(buffer) > 4096)
+			*nb_letters = -3;
 	}
 	return (buffer);
 }
@@ -99,10 +96,10 @@ int		get_next_line(int fd, char **line)
 	if (!line || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
 		return (-1);
 	buffer = read_file(buffer, fd, &nb_letters);
-	if (nb_letters < 0)
-		return (-1);
 	ret = read_buffer(buffer, line);
 	free(buffer);
 	buffer = NULL;
+	if (nb_letters < 0)
+		return (nb_letters);
 	return (ret);
 }
