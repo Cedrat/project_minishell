@@ -12,7 +12,7 @@
 
 #include "../header/minishell.h"
 
-static	void exec_commands(t_shell *shell)
+static void		exec_commands(t_shell *shell)
 {
 	if (shell->fd != -1)
 	{
@@ -26,6 +26,7 @@ static	void exec_commands(t_shell *shell)
 		ft_free_tab(shell->argenv);
 	}
 }
+
 static void		new_argument(t_shell *shell, char *arg_pipe)
 {
 	ft_free_tab(shell->args);
