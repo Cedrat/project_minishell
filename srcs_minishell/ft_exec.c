@@ -174,7 +174,7 @@ int			ft_exec(t_shell *shell, char *arg)
 	if (!ft_try_path(paths, arg, shell))
 		ft_manage_no_path(paths, arg, shell);
 	if (shell->signal == 256)
-		shell->signal = 130;
+		shell->signal = 1;
 	else if (shell->signal > 0)
 		shell->signal = 127;
 	return (0);
