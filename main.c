@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:27:03 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 15:27:04 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:21:28 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_put_prompt(void)
 	{
 		if (!(cwd = malloc(sizeof(char) * cwd_size + 1)))
 			return ;
-		if (getcwd(cwd, cwd_size) < 0)
+		if (getcwd(cwd, cwd_size) == NULL)
 		{
 			free(cwd);
 			cwd = NULL;
@@ -137,8 +137,10 @@ int		main(int argc, char **argv, char **argenv)
 {
 	t_shell	shell;
 	char	*buff;
-	char	**args;
+	size_t	i;
 
+	(void)argc;
+	(void)argv;
 	ft_init_main(&shell, argenv);
 	if ((signal(SIGINT, sig_handle) == SIG_ERR)
 		|| (signal(SIGQUIT, sig_handle) == SIG_ERR)
@@ -149,7 +151,7 @@ int		main(int argc, char **argv, char **argenv)
 		if (g_prompt > 0)
 			ft_put_prompt();
 		ft_get_line(&buff, &shell);
-		if (is_right_syntax(ft_parser(buff, &shell)))
+		if (is_right_syntax(ft_parser(buff, &shell), &shell))
 		{
 			shell.args_line = ft_args(buff);
 			free(buff);

@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/15 17:07:52 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:11:50 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static	int	redirect_right(t_shell *shell, size_t i)
 	}
 	shell->args = ft_remove_in_tab(shell->args, shell->args[i + 1]);
 	shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
+	return (1);
 }
 
 static	int	redirect_right_right(t_shell *shell, size_t i)
@@ -46,6 +47,7 @@ static	int	redirect_right_right(t_shell *shell, size_t i)
 	}
 	shell->args = ft_remove_in_tab(shell->args, shell->args[i + 1]);
 	shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
+	return (1);
 }
 
 static	int	redirect_left(t_shell *shell, size_t i)
@@ -70,6 +72,7 @@ static	int	redirect_left(t_shell *shell, size_t i)
 	if (ft_str_is_present(shell->args, "<"))
 		shell->args = ft_remove_in_tab(shell->args, shell->args[i]);
 	dup2(fd_in, 0);
+	return (1);
 }
 
 int			ft_choose_fd(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:52:35 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/03 16:52:36 by dchampda         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:47:33 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_pwd(t_shell *shell)
 	while (!path)
 	{
 		path = malloc(sizeof(char) * path_size + 1);
-		if (getcwd(path, path_size) < 0)
+		if (getcwd(path, path_size) == NULL)
 		{
 			free(path);
 			path = NULL;

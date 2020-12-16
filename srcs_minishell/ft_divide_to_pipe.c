@@ -6,13 +6,13 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 16:27:35 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/15 19:37:46 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:11:01 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static	size_t	count_pipe(char **split)
+size_t	count_pipe(char **split)
 {
 	size_t p;
 	size_t i;
@@ -59,13 +59,11 @@ static	int		split_line_args(char **split, char **new_tab)
 char			**ft_divide_to_pipe(char **split)
 {
 	char	**new_tab;
-	size_t	i;
 	size_t	p;
 
 	p = count_pipe(split);
 	if ((new_tab = malloc(sizeof(char *) * (p + 2))) == NULL)
 		exit(0);
-	i = 0;
 	p = 0;
 	if ((new_tab[p] = malloc(1)) == NULL)
 		exit(0);

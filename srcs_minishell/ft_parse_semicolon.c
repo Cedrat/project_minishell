@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 18:04:11 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/11/16 19:25:29 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:48:18 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		count_args(char *str)
 {
-	char	**tab_args;
 	size_t	p;
 	size_t	i;
 	size_t	old_i;
@@ -63,11 +62,9 @@ int		ft_semi_colon(char *str)
 {
 	char	letter;
 	size_t	i;
-	size_t	p;
 
 	i = 0;
 	letter = ' ';
-	p = 0;
 	while (str[i])
 	{
 		if (str[i] == '"' && letter != '"' && letter != '\'')

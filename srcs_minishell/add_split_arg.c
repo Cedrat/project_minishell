@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 03:06:45 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/15 16:56:33 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:12:11 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char			**add_split_arg(char **tab, int *i)
 	l = 0;
 	while (tab[p])
 	{
-		if (p == *i)
+		if ((int)p == *i)
 			insert_tab(&l, p, new_tab, str);
 		else
 			new_tab[p + l] = ft_strdup(tab[p]);

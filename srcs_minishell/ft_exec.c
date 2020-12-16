@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/09 19:42:15 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:14:41 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ static void	ft_joinpath(char **paths, char *arg, char *bin, t_shell *shell)
 
 void		ft_no_path(char *arg, char **paths, t_shell *shell)
 {
-	int		i;
 	char	*bin;
 
-	i = 0;
+	bin = NULL;
 	g_pid = fork();
 	if (g_pid == 0)
 	{
@@ -120,8 +119,8 @@ static void	ft_manage_no_path(char **paths, char *arg, t_shell *shell)
 {
 	char	*temp;
 
-	if (arg[0] == '.' && arg[1] && arg[1] == '/'
-		|| ft_strncmp("/bin/", arg, 5) == 0)
+	if ((arg[0] == '.' && arg[1] && arg[1] == '/')
+	|| ft_strncmp("/bin/", arg, 5) == 0)
 	{
 		ft_path_binary(arg, shell, paths);
 	}
@@ -163,11 +162,7 @@ int			ft_exec(t_shell *shell, char *arg)
 {
 	char	*path_line;
 	char	**paths;
-	int		i;
-	int		found_path;
 
-	i = 0;
-	found_path = 0;
 	if (!arg || arg[0] == '\n')
 		return (0);
 	path_line = ft_get_var(shell->argenv, "PATH=");

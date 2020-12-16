@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:13:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/15 19:09:34 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 16:46:45 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void		ft_init_commands(t_shell *shell)
 void		ft_get_command(t_shell *shell)
 {
 	int		i;
-	int		j;
 	int		found;
 	char	*tmp;
 

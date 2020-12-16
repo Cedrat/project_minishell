@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:19:21 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/24 20:36:11 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:03:25 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strndupl(const char *s, int len)
 {
 	char	*copy;
-	size_t	count;
+	int		count;
 
 	count = 0;
 	if (!(copy = malloc(sizeof(char) * (len + 1))))
