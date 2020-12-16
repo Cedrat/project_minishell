@@ -37,7 +37,7 @@ void	ft_put_prompt(void)
 	free(cwd);
 }
 
-void	sig_handle(int signum)
+void	sig_hdl(int signum)
 {
 	if (g_pid == 0)
 	{
@@ -137,14 +137,12 @@ int		main(int argc, char **argv, char **argenv)
 {
 	t_shell	shell;
 	char	*buff;
-	size_t	i;
 
 	(void)argc;
 	(void)argv;
 	ft_init_main(&shell, argenv);
-	if ((signal(SIGINT, sig_handle) == SIG_ERR)
-		|| (signal(SIGQUIT, sig_handle) == SIG_ERR)
-		|| (signal(SIGPIPE, sig_handle)))
+	if ((signal(SIGINT, sig_hdl) == SIG_ERR)
+	|| (signal(SIGQUIT, sig_hdl) == SIG_ERR) || (signal(SIGPIPE, sig_hdl)))
 		ft_putstr("Error catching signal\n");
 	while (1)
 	{
