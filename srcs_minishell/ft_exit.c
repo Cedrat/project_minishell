@@ -40,7 +40,7 @@ int			ft_exit(t_shell *shell)
 		if (shell->args[2])
 		{
 			ft_strcat_fd("Bye ! \n", "minishell: exit : Too many args",
-			 "\n", 2);
+			"\n", 2);
 			ft_free_all(shell);
 			exit(1);
 		}

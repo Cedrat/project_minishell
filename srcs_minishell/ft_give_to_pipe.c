@@ -99,6 +99,4 @@ void			ft_give_to_pipe(t_shell *shell)
 	ft_free_tab(args_pipes);
 	ft_get_command(shell);
 	cleans(tmpin, tmpout, shell);
-
-
 }

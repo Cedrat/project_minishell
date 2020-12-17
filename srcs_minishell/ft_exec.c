@@ -120,6 +120,7 @@ static void	ft_manage_no_path(char **paths, char *arg, t_shell *shell)
 	char	*temp;
 
 	if ((arg[0] == '.' && arg[1] && arg[1] == '/')
+	|| (arg[0] == '.' && arg[1] && arg[1] == '.' && arg[2] && arg[2] == '/')
 	|| ft_strncmp("/bin/", arg, 5) == 0)
 	{
 		ft_path_binary(arg, shell, paths);
