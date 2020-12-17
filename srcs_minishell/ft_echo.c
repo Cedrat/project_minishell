@@ -28,11 +28,34 @@ void	ft_init_echo(t_echo *config, int *i, char **args)
 		*i = 1;
 }
 
+int		ft_check_bs(char *arg, int *i, t_echo *config)
+{
+	int	count;
+
+	count = 0;
+	while (arg[*i] == '\\')
+	{
+		if (arg[*i] == '\\')
+			count++;
+		if (arg[*i + 1] && count % 2 != 0 && arg[*i] == '\\'
+			&& arg[*i + 1] == '\"' && arg[*i + 2] != '\"')
+			return (-1);
+		*i += 1;
+	}
+	return (config->backslash = count);
+}
+
 int		ft_config_single_qt(t_echo *config, char *arg, int i)
 {
 	while (arg[i] != '\0')
 	{
-		if (arg[i] == '\'')
+		if ((i > 0 && arg[i - 1] != '\\' && arg[i] == '\'' 
+				&& config->sg_qt % 2 == 0)
+			|| (i > 0 && arg[i - 1] == '\\' && arg[i] == '\'' 
+				&& config->sg_qt % 2 != 0)
+			|| (i > 0 && arg[i - 1] == '\\' && arg[i] == '\'' 
+				&& config->sg_qt % 2 == 0 && config->backslash % 2 == 0)
+			|| (i == 0 && arg[i] == '\''))
 		{
 			if (config->sg_qt == 0 && config->db_qt == 0)
 				config->token = 1;
@@ -50,10 +73,13 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 	while (arg[i] != '\0')
 	{
 		if (arg[i] == '\\')
-			config->backslash++;
-		if ((i == 0 && arg[i] == '\"') || (arg[i] == '\"' && arg[i - 1] != '\\')
-			|| (arg[i] == '\"' && arg[i - 1] == '\\'
-				&& config->backslash % 2 == 0))
+		{
+			if (ft_check_bs(arg, &i, config) == -1)
+				config->backslash = -1;
+		}
+		if ((i > 1 && arg[i - 1] != '\\' && arg[i] == '\"')
+			|| (i == 0 && arg[i] == '\"')
+			|| (arg[i] == '\"' && config->backslash % 2 == 0))
 		{
 			if (config->sg_qt == 0 && config->db_qt == 0)
 				config->token = 2;
@@ -61,8 +87,10 @@ int		ft_config_double_qt(t_echo *config, char *arg, int i)
 		}
 		if (config->db_qt % 2 == 0)
 			return (i);
-		i++;
+		if (arg[i])
+			i++;
 	}
+	config->db_qt = -1;
 	return (i);
 }
 
@@ -83,6 +111,11 @@ void	ft_echo_config(t_echo *config, char **args)
 				j = ft_config_single_qt(config, args[i], j);
 			else if (args[i][j] == '\"')
 				j = ft_config_double_qt(config, args[i], j);
+			else if (args[i][j] == '\\' && !args[i][j + 1])
+			{
+				config->backslash = -1;
+				break ;
+			}
 			if (args[i][j])
 				j++;
 		}
@@ -90,13 +123,33 @@ void	ft_echo_config(t_echo *config, char **args)
 	}
 }
 
+int		ft_count_bs(char *arg)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (arg[i] == '\\')
+		i++;
+	while (i >= 0)
+	{
+		if (arg[i] == '\\')
+			count++;
+		i--;
+	}
+	return (count);
+}
+
 int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 {
-	if (args[*i] == '$' && !args[*i + 1])
-		return (*i = *i + 1);
+	if ((args[*i] == '$' && !args[*i + 1])
+		|| (*i > 0 && args[*i - 1] == '\\' && ft_count_bs(args) % 2 != 0)
+		|| (args[*i] == '$' && args[*i + 1] && args[*i + 1] == ' ')) 
+		return (*i);
 	if (args[*i] == '$' && args[*i + 1] && args[*i + 1] == '?')
 	{
-		ft_putnbr_fd(shell->echo->signal, fd);
+		ft_putnbr_fd(shell->signal, fd);
 		*i = *i + 2;
 	}
 	else if (args[*i] == '$' && ft_strchr("0123456789", args[*i + 1]))
@@ -159,13 +212,13 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 				ft_no_qt(config, &args[i + 1], argenv, shell);
 			return ;
 		}
-		else if ((args[i] == '\\' && args[i + 1] == '\\')
-				|| (args[i] == '\\' && args[i + 1] == '\"'))
+		else if ((args[i] == '\\' && args[i + 1] == '\\') 
+			|| (args[i] == '\\' && ft_strchr("\"$", args[i + 1])))
 			i++;
-		if ((args[i] != '\"') || (args[i] == '\"' && i >= 2
-			&& args[i - 1] == '\\' && args[i - 2] != '\\'))
+		if (args[i] != '\"' || (i > 0 && args[i - 1] == '\\'))
 			ft_putchar_fd(args[i], shell->fd);
-		i++;
+		if (args[i])
+			i++;
 	}
 }
 
@@ -197,8 +250,8 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 				ft_double_qt(config, &args[i], argenv, shell);
 			return ;
 		}
-		else if ((args[i] == '\\' && args[i + 1] == '\\')
-				|| (args[i] == '\\' && args[i + 1] == '\"'))
+		else if ((args[i] == '\\' && args[i + 1] != '$')
+			|| (args[i] == '\\' && ft_count_bs(&args[i]) % 2 != 0))
 			i++;
 		ft_putchar_fd(args[i], shell->fd);
 		if (args[i])
@@ -212,9 +265,8 @@ int		ft_echo(t_shell *shell)
 
 	if (!shell->args[1])
 		return (-1);
-	shell->echo->signal = shell->signal;
 	ft_echo_config(shell->echo, shell->args);
-	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0)
+	if (shell->echo->sg_qt % 2 != 0	|| shell->echo->db_qt == -1 || shell->echo->backslash == -1)
 		return (shell->signal = -3);
 	if (shell->echo->option_n == 1)
 		i = 2;
