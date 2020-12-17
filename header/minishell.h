@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 19:37:44 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 18:19:51 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ int				ft_env();
 int				ft_exit();
 int				ft_exec(t_shell *shell, char *arg);
 void			ft_beautifull_export(char *str, int is_export, int fd);
+void			ft_no_path(char *arg, char **paths, t_shell *shell);
+void			ft_path(char *arg, t_shell *shell);
+void			ft_put_prompt(void);
+void			ft_get_line(char **buff, t_shell *shell);
 
 /*
 **----------Utilitaires--------**
@@ -103,6 +107,9 @@ void			ft_free_all(t_shell *shell);
 void			ft_strcat_fd(char *str, char *str1, char *str2, int fd);
 int				is_right_syntax(char **line, t_shell *shell);
 char			**add_split_arg(char **tab, int *i);
+int				not_a_sep(char letter);
+int				ft_is_not_space(char *str, size_t *i);
+int				ft_is_space(char *str, size_t *i);
 
 /*
 **----------Tableaux---------**
@@ -119,6 +126,8 @@ char			*ft_extract_var_name(char *arg, int *j);
 char			*ft_get_var(char **argenv, char *tofind);
 void			export_env(t_shell *env, char *arg);
 int				ft_is_varenv(char *env);
+int				env_exist(char **env, char *arg);
+void			modify_env(char **argenv, char *str);
 
 /*
 **----------Echo---------**
@@ -129,6 +138,11 @@ void			ft_double_qt(t_echo *config, char *args,
 				char **argenv, t_shell *shell);
 void			ft_single_qt(t_echo *config, char *args,
 				char **argenv, t_shell *shell);
+int				ft_dollar_sign(char *args, t_shell *shell,
+				int *i, int fd);
+void			ft_echo_config(t_echo *config, char **args);
+int				ft_count_bs(char *arg);
+int				ft_check_bs(char *arg, int *i, t_echo *config);
 
 /*
 **----------Pipes---------**
@@ -148,6 +162,7 @@ size_t			count_pipe(char **split);
 int				iterate_word(char *str, size_t *i, size_t p);
 char			**ft_parser(char *str, t_shell *shell);
 void			ft_purify_args(char **args);
+char			**ft_dollar(char **tab, t_shell *shell);
 
 /*
 **----------Divers---------**

@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:45:56 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 19:50:59 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 18:14:11 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			ft_exit(t_shell *shell)
 		if (shell->args[2])
 		{
 			ft_strcat_fd("Bye ! \n", "minishell: exit : Too many args",
-			"\n", 2);
+																	"\n", 2);
 			ft_free_all(shell);
 			exit(1);
 		}
