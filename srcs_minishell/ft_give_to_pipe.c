@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/16 19:27:56 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 16:43:13 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,4 @@ void			ft_give_to_pipe(t_shell *shell)
 	ft_free_tab(args_pipes);
 	ft_get_command(shell);
 	cleans(tmpin, tmpout, shell);
-
-
 }

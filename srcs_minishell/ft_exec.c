@@ -6,77 +6,13 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 17:39:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 19:39:06 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 17:57:27 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static void	ft_joinpath(char **paths, char *arg, char *bin, t_shell *shell)
-{
-	int i;
-
-	i = 0;
-	while (paths[i])
-	{
-		bin = ft_strjoin(paths[i], arg);
-		if ((execve(bin, shell->args, shell->argenv)) != -1)
-			exit(0);
-		free(bin);
-		i++;
-	}
-}
-
-void		ft_no_path(char *arg, char **paths, t_shell *shell)
-{
-	char	*bin;
-
-	bin = NULL;
-	g_pid = fork();
-	if (g_pid == 0)
-	{
-		dup2(shell->fd, 1);
-		ft_joinpath(paths, arg, bin, shell);
-		free(arg);
-		ft_errors(-1, shell);
-		ft_free_all(shell);
-		ft_free_tab(paths);
-		exit(-1);
-	}
-	else if (g_pid > 0)
-		waitpid(g_pid, &shell->signal, WUNTRACED);
-	else
-	{
-		ft_errors(-7, shell);
-		exit(-1);
-	}
-}
-
-void		ft_path(char *arg, t_shell *shell)
-{
-	g_pid = fork();
-	if (g_pid == 0)
-	{
-		dup2(shell->fd, 1);
-		if (execve(arg, shell->args, shell->argenv) != -1)
-			exit(0);
-		else
-		{
-			ft_errors(-1, shell);
-			ft_free_all(shell);
-			exit(-1);
-		}
-	}
-	else if (g_pid > 0)
-		waitpid(g_pid, &shell->signal, WUNTRACED);
-	else
-	{
-		ft_errors(-7, shell);
-		exit(-1);
-	}
-}
-
-void		ft_path_binary(char *arg, t_shell *shell, char **paths)
+void			ft_path_binary(char *arg, t_shell *shell, char **paths)
 {
 	g_pid = fork();
 	if (g_pid == 0)
@@ -97,7 +33,7 @@ void		ft_path_binary(char *arg, t_shell *shell, char **paths)
 	}
 }
 
-static int	ft_check_specific_cases(char **paths, char *arg, t_shell *shell)
+int				ft_check_specific_cases(char **paths, char *arg, t_shell *shell)
 {
 	if (ft_strcmp("/bin/", arg) == 0 || ft_strcmp("/bin", arg) == 0)
 	{
@@ -115,7 +51,7 @@ static int	ft_check_specific_cases(char **paths, char *arg, t_shell *shell)
 	return (1);
 }
 
-static void	ft_manage_no_path(char **paths, char *arg, t_shell *shell)
+static	void	ft_manage_no_path(char **paths, char *arg, t_shell *shell)
 {
 	char	*temp;
 
@@ -140,7 +76,7 @@ static void	ft_manage_no_path(char **paths, char *arg, t_shell *shell)
 	ft_free_tab(paths);
 }
 
-static int	ft_try_path(char **paths, char *arg, t_shell *shell)
+int				ft_try_path(char **paths, char *arg, t_shell *shell)
 {
 	int	i;
 
@@ -158,7 +94,7 @@ static int	ft_try_path(char **paths, char *arg, t_shell *shell)
 	return (0);
 }
 
-int			ft_exec(t_shell *shell, char *arg)
+int				ft_exec(t_shell *shell, char *arg)
 {
 	char	*path_line;
 	char	**paths;

@@ -6,55 +6,11 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 16:48:44 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/16 16:57:39 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 17:42:00 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-void		ft_strndup(char **dest, char *src, size_t start, size_t end)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	if (!(str = malloc(sizeof(char) * (end - start + 1))))
-		exit(0);
-	while (start < end && src[start])
-	{
-		str[i] = src[start];
-		start++;
-		i++;
-	}
-	str[i] = '\0';
-	*dest = str;
-}
-
-int			not_a_sep(char letter)
-{
-	if (letter == ';' || letter == '>' || letter == '<' || letter == '|')
-		return (0);
-	return (1);
-}
-
-int			ft_is_not_space(char *str, size_t *i)
-{
-	while (not_a_sep(str[*i]) && str[*i] && str[*i] != ' ')
-	{
-		if (str[*i] == '"')
-			iterate_word(str, i, 0);
-		if (str[*i])
-			*i += 1;
-	}
-	return (*i);
-}
-
-int			ft_is_space(char *str, size_t *i)
-{
-	while (str[*i] == ' ')
-		*i += 1;
-	return (*i);
-}
 
 int			iterate_word(char *str, size_t *i, size_t p)
 {
@@ -110,83 +66,6 @@ size_t		count_tokens(char *str)
 			i++;
 	}
 	return (p);
-}
-
-static char	*ft_cut_replace(char *str, t_shell *shell, int j)
-{
-	char	*pt1;
-	char	*pt2;
-	char	*pt3;
-
-	pt1 = ft_substr(str, 0, j);
-	pt2 = ft_itoa(shell->signal);
-	if (str[j + 2] && ((int)ft_strlen(str) > j + 2))
-		pt3 = ft_substr(str, j + 2, (int)ft_strlen(str) - (j + 2));
-	else
-		pt3 = ft_strdup("");
-	free(str);
-	str = ft_strjoin_freeall(pt1, pt2);
-	str = ft_strjoin_freeall(str, pt3);
-	return (str);
-}
-
-static char	*ft_replace_var(t_shell *shell, char *arg)
-{
-	char	*var_path;
-	int		i;
-
-	i = 0;
-	var_path = ft_extract_var_name(arg, &i);
-	if (var_path[1])
-	{
-		free(arg);
-		arg = ft_get_var(shell->argenv, var_path);
-	}
-	free(var_path);
-	return (arg);
-}
-
-static int	ft_check_doll(char *tab)
-{
-	int	j;
-
-	j = 0;
-	while (tab[j])
-	{
-		if (tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?')
-			return (j);
-		j++;
-	}
-	return (j = 0);
-}
-
-char		**ft_dollar(char **tab, t_shell *shell)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (tab[i])
-	{
-		if ((i > 0 && ft_strcmp(tab[i - 1], "echo") == 0)
-			|| ((tab[i][0] == '\'')))
-			break ;
-		if (ft_strcmp(tab[i], "$?") == 0)
-		{
-			free(tab[i]);
-			tab[i] = ft_itoa(shell->signal);
-		}
-		if ((j = ft_check_doll(tab[i])) > 0)
-			tab[i] = ft_cut_replace(tab[i], shell, j);
-		else if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
-		{
-			tab[i] = ft_replace_var(shell, tab[i]);
-			tab = add_split_arg(tab, &i);
-		}
-		i++;
-	}
-	return (tab);
 }
 
 static void	ft_parser_2(char *str, char **tab, size_t *i, size_t *p)

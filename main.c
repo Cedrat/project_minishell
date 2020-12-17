@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:27:03 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 19:36:51 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 18:07:19 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ void	sig_hdl(int signum)
 		write(1, "\b\b  \b\b", 6);
 		return ;
 	}
-	else if (signum == SIGPIPE)
-	{
-		ft_putstr("PIPE FULL");
-	}
 }
 
 void	ft_init_main(t_shell *shell, char **argenv)
@@ -77,31 +73,6 @@ void	ft_init_main(t_shell *shell, char **argenv)
 	shell->argenv = ft_dup_arg(argenv);
 	shell->signal = 0;
 	shell->nb_error = 0;
-}
-
-void	ft_get_line(char **buff, t_shell *shell)
-{
-	int	i;
-
-	i = get_next_line(0, buff);
-	if (i == -1)
-	{
-		ft_putstr("\n");
-		free(*buff);
-		ft_free_tab(shell->argenv);
-		exit(0);
-	}
-	else if (i == -2)
-		ft_putstr("\n");
-	else if (i == -3)
-	{
-		ft_putstr("Error : Command line is too long\n");
-		g_prompt = 0;
-		free(*buff);
-		buff[0] = ft_strdup("\0");
-	}
-	if (g_prompt == -1)
-		shell->signal = 130;
 }
 
 void	ft_launch(t_shell *shell)

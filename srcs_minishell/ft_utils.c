@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 16:54:09 by dchampda          #+#    #+#             */
-/*   Updated: 2020/11/25 00:13:27 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 16:52:26 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,6 @@ void	ft_putstr(char *word)
 		write(1, word, 1);
 		word++;
 	}
-}
-
-t_list	*ft_convert_2dchar_chainedlist(char **str)
-{
-	size_t	i;
-	t_list	*char_list;
-	t_list	*new;
-
-	i = 0;
-	char_list = ft_lstnew(str[i]);
-	i++;
-	while (str[i])
-	{
-		new = ft_lstnew(str[i]);
-		ft_lstadd_back(&char_list, new);
-		i++;
-	}
-	return (char_list);
 }
 
 void	ft_inc_values(size_t *i, size_t *j)

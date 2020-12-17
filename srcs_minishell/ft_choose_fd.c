@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/16 19:37:05 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 16:44:15 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,3 @@ int			ft_choose_fd(t_shell *shell)
 	}
 	return (1);
 }
-//signal error

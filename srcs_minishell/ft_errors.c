@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 15:42:19 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 19:51:33 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/17 16:48:18 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_errors(int error, t_shell *shell)
 	}
 	else if (error == -2)
 		ft_strcat_fd(shell->args[1], " : No file or folder	of this type",
-		 											"\n", 2);
+													"\n", 2);
 	else if (error == -3)
 		ft_putstr_fd("Error : Too many/few quotes", 2);
 	else if (error == -4)
