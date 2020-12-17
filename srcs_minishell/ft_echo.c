@@ -40,6 +40,8 @@ int		ft_check_bs(char *arg, int *i, t_echo *config)
 		if (arg[*i + 1] && count % 2 != 0 && arg[*i] == '\\'
 			&& arg[*i + 1] == '\"' && arg[*i + 2] != '\"')
 			return (-1);
+		else if (arg[*i] == '\\' && !arg[*i + 1] && count % 2 != 0)
+			return (-1);
 		*i += 1;
 	}
 	return (config->backslash = count);
@@ -51,7 +53,7 @@ int		ft_config_single_qt(t_echo *config, char *arg, int i)
 	{
 		if ((i > 0 && arg[i - 1] != '\\' && arg[i] == '\''
 				&& config->sg_qt % 2 == 0)
-			||(i > 0 && arg[i - 1] != '\\' && arg[i] == '\''
+			|| (i > 0 && arg[i - 1] != '\\' && arg[i] == '\''
 				&& config->sg_qt % 2 != 0)
 			|| (i > 0 && arg[i - 1] == '\\' && arg[i] == '\''
 				&& config->sg_qt % 2 != 0)
@@ -109,16 +111,15 @@ void	ft_echo_config(t_echo *config, char **args)
 		{
 			if (args[i][j] == '\\')
 				config->backslash++;
-			if (args[i][j] == '\'')
-				j = ft_config_single_qt(config, args[i], j);
-			else if (args[i][j] == '\"')
-				j = ft_config_double_qt(config, args[i], j);
-			else if (config->backslash % 2 != 0 && args[i][j] == '\\'
-				&& !args[i][j + 1])
+			if (ft_check_bs(args[i], &j, config) == -1)
 			{
 				config->backslash = -1;
 				break ;
 			}
+			if (args[i][j] == '\'')
+				j = ft_config_single_qt(config, args[i], j);
+			else if (args[i][j] == '\"')
+				j = ft_config_double_qt(config, args[i], j);
 			if (args[i][j])
 				j++;
 		}
@@ -146,7 +147,7 @@ int		ft_count_bs(char *arg)
 
 int		ft_dollar_sign(char *args, t_shell *shell, int *i, int fd)
 {
-	if ((args[*i] == '$' && !args[*i + 1])
+	if ((!args[*i + 1]) || (args[*i + 1] == '\"') || (args[*i + 1] == '$')
 		|| (*i > 0 && args[*i - 1] == '\\' && ft_count_bs(args) % 2 != 0)
 		|| (args[*i] == '$' && args[*i + 1] && args[*i + 1] == ' '))
 		return (*i);
