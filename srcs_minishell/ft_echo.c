@@ -113,7 +113,8 @@ void	ft_echo_config(t_echo *config, char **args)
 				j = ft_config_single_qt(config, args[i], j);
 			else if (args[i][j] == '\"')
 				j = ft_config_double_qt(config, args[i], j);
-			else if (args[i][j] == '\\' && !args[i][j + 1])
+			else if (config->backslash % 2 != 0 && args[i][j] == '\\'
+				&& !args[i][j + 1])
 			{
 				config->backslash = -1;
 				break ;
