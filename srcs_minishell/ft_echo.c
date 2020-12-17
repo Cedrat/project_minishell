@@ -51,6 +51,8 @@ int		ft_config_single_qt(t_echo *config, char *arg, int i)
 	{
 		if ((i > 0 && arg[i - 1] != '\\' && arg[i] == '\''
 				&& config->sg_qt % 2 == 0)
+			||(i > 0 && arg[i - 1] != '\\' && arg[i] == '\''
+				&& config->sg_qt % 2 != 0)
 			|| (i > 0 && arg[i - 1] == '\\' && arg[i] == '\''
 				&& config->sg_qt % 2 != 0)
 			|| (i > 0 && arg[i - 1] == '\\' && arg[i] == '\''
