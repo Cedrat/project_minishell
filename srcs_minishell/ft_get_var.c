@@ -73,3 +73,27 @@ char	*ft_get_var(char **argenv, char *tofind)
 	}
 	return (ft_strdup(""));
 }
+
+char	*ft_get_var_free(char **argenv, char *tofind)
+{
+	char	*path;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (argenv[i])
+	{
+		if (ft_strncmp(argenv[i], tofind, ft_strlen(tofind)) == 0)
+		{
+			while (argenv[i][j] && argenv[i][j] != '=')
+				j++;
+			j++;
+			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j));
+			free(tofind);
+			return (path);
+		}
+		i++;
+	}
+	return (ft_strdup(""));
+}

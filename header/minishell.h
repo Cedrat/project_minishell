@@ -179,5 +179,6 @@ void			free_shell_commands(t_shell *shell);
 void			ft_inc_values(size_t *i, size_t *j);
 void			ft_init(size_t *i, size_t *j);
 char			*ft_strndupl(const char *s, int len);
+char			*ft_get_var_free(char **argenv, char *tofind);
 
 #endif

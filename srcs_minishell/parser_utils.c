@@ -12,28 +12,20 @@
 
 #include "../header/minishell.h"
 
-char	*ft_get_var2(char **argenv, char *tofind)
+int				ft_count_doll(char *arg)
 {
-	char	*path;
-	int		i;
-	int		j;
+	int	count;
+	int	i;
 
 	i = 0;
-	j = 0;
-	while (argenv[i])
+	count = 0;
+	while (arg[i])
 	{
-		if (ft_strncmp(argenv[i], tofind, ft_strlen(tofind)) == 0)
-		{
-			while (argenv[i][j] && argenv[i][j] != '=')
-				j++;
-			j++;
-			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j));
-			free(tofind);
-			return (path);
-		}
+		if (arg[i] == '$')
+			count++;
 		i++;
 	}
-	return (ft_strdup(""));
+	return (count);
 }
 
 char			*ft_replace_var(t_shell *shell, char *arg, int i)
@@ -42,35 +34,28 @@ char			*ft_replace_var(t_shell *shell, char *arg, int i)
 	int		j;
 	int		count;
 
-	j = i;
-	i = 0;
+	count = ft_count_doll(arg);
+	if (!(var_path = malloc(sizeof(char *) * (count + 1))))
+		return (NULL);
 	j = 0;
-	count = 0;
-	while (arg[i])
-	{
-		if (arg[i] == '$')
-			count++;
-		i++;
-	}
-	var_path = malloc(sizeof(char *) * count);
-	i = j;
 	while (count > 0)
 	{
 		var_path[j] = ft_extract_var_name(arg, &i);
 		if (var_path[j][1])
-			var_path[j] = ft_get_var2(shell->argenv, var_path[j]);
+			var_path[j] = ft_get_var_free(shell->argenv, var_path[j]);
 		j++;
 		count--;
 	}
+	var_path[j] = NULL;
 	j = 0;
 	free(arg);
 	arg = ft_strdup("");
 	while (var_path[j])
 	{
-		arg = ft_strjoin_freeone(arg, var_path[j]);
+		arg = ft_strjoin_freeall(arg, var_path[j]);
 		j++;
 	}
-	ft_free_tab(var_path);
+	free(var_path);
 	return (arg);
 }
 
