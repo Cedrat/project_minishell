@@ -178,5 +178,6 @@ char			*ft_strjoin_freeall(char const *s1, char const *s2);
 void			free_shell_commands(t_shell *shell);
 void			ft_inc_values(size_t *i, size_t *j);
 void			ft_init(size_t *i, size_t *j);
+char			*ft_strndupl(const char *s, int len);
 
 #endif

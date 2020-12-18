@@ -42,7 +42,7 @@ void	ft_double_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 	i = 0;
 	while (args[i] != '\0')
 	{
-		if (args[i] == '$')
+		while (args[i] == '$')
 			ft_dollar_sign(args, shell, &i, shell->fd);
 		if (args[i] == '\"')
 			config->db_qt--;
@@ -79,9 +79,9 @@ void	ft_no_qt(t_echo *config, char *args, char **argenv, t_shell *shell)
 	i = 0;
 	while (args[i] != '\0')
 	{
-		if (args[i] == '$')
+		while (args[i] == '$')
 			ft_dollar_sign(args, shell, &i, shell->fd);
-		else if ((i == 0 && args[i] == '~' && !args[i + 1])
+		if ((i == 0 && args[i] == '~' && !args[i + 1])
 			|| (args[i] == '~' && !args[i + 1] && !args[i - 1]))
 			ft_echo_pwd(shell, &i);
 		if (args[i] == '\'' || args[i] == '\"')
