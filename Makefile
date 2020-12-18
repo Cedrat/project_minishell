@@ -6,7 +6,7 @@
 #    By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:19:38 by lnoaille          #+#    #+#              #
-#    Updated: 2020/12/18 20:35:14 by lnoaille         ###   ########.fr        #
+#    Updated: 2020/12/19 00:31:27 by lnoaille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ ${SRCS_MS}tab_utils.c				${SRCS_MS}ft_cd.c   			${SRCS_MS}ft_errors.c \
 ${SRCS_MS}ft_unset.c             	${SRCS_MS}utils_2.c \
 ${SRCS_MS}ft_charispresent.c      	${SRCS_MS}ft_exec.c             ${SRCS_MS}ft_parse_semicolon.c \
 ${SRCS_MS}ft_choose_fd.c          	${SRCS_MS}ft_exec_second_part.c ${SRCS_MS}ft_purify_args.c \
-${SRCS_MS}ft_count_this_char.c    	${SRCS_MS}ft_exit.c             \
+${SRCS_MS}ft_count_this_char.c    	${SRCS_MS}ft_exit.c             ${SRCS_MS}utils_3.c \
 ${SRCS_MS}ft_divide_to_pipe.c     	${SRCS_MS}ft_export.c           ${SRCS_MS}ft_pwd.c \
 ${SRCS_MS}ft_strcmp.c				${SRCS_MS}ft_get_var.c			${SRCS_MS}ft_echo_utils.c \
 ${SRCS_MS}ft_tri_tab_str.c			${SRCS_MS}ft_parser.c			${SRCS_MS}ft_utils.c \
@@ -48,13 +48,13 @@ RM = rm -f
 
 all : 		${NAME}
 
-${NAME}:	
-			gcc ${CFLAGS} -o ${NAME} ${SRCS}
+${NAME}:
+			gcc  -g ${CFLAGS} -o ${NAME} ${SRCS}
 
 clean :
 			${RM} ${OBJS} ${BONUS}
 
-fclean :	clean
+fclean :
 			${RM} ${NAME}
 
 re :		fclean all
