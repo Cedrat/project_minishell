@@ -62,6 +62,6 @@ void	ft_errors(int error, t_shell *shell)
 		ft_putstr_fd("Error with the child processus\n", 2);
 	else if (error == -8)
 		ft_strcat_fd("cd : ", "« HOME »", " undefined\n", 2);
-	if (error == -5 || error == -2 || error == -3)
+	if (error == -5 || error == -2 || error == -3 || error == -8)
 		shell->signal = 1;
 }
