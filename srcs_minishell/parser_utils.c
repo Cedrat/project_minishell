@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/18 15:08:34 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 15:16:08 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,20 @@ static	char	*ft_cut_replace(char *str, t_shell *shell, int j)
 static	int		ft_check_doll(char *tab)
 {
 	int	j;
+	char *str;
 
 	j = 0;
-	while (tab[j])
+	str = ft_str_treatement(tab);
+	while (str[j])
 	{
-		if (tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?')
+		if (str[j + 1] && str[j] == '$' && str[j + 1] == '?')
+		{
+			free(str);
 			return (j);
+		}
 		j++;
 	}
+	free(str);
 	return (j = 0);
 }
 
@@ -73,15 +79,11 @@ char			**ft_dollar(char **tab, t_shell *shell)
 {
 	int		i;
 	int		j;
-	char	*str;
 
 	i = 0;
 	j = 0;
 	while (tab[i])
 	{
-		str = ft_str_treatement(tab[i]);
-		free(tab[i]);
-		tab[i] = str;
 		if ((i > 0 && ft_strcmp(tab[i - 1], "echo") == 0)
 			|| ((tab[i][0] == '\'')))
 			break ;
