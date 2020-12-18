@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/18 16:58:44 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 17:03:16 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,13 @@ static	int		ft_check_doll(char *tab)
 	while (str[j])
 	{
 		if (str[j + 1] && str[j] == '$' && str[j + 1] == '?')
+		{
+			free(str);
 			return (j);
+		}
 		j++;
 	}
+	free(str);
 	return (j = 0);
 }
 
