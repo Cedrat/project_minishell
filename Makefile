@@ -6,7 +6,7 @@
 #    By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:19:38 by lnoaille          #+#    #+#              #
-#    Updated: 2020/12/18 03:11:58 by lnoaille         ###   ########.fr        #
+#    Updated: 2020/12/18 16:54:46 by lnoaille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ RM = rm -f
 all : 		${NAME}
 
 ${NAME}:	${OBJS}
-			gcc -o ${NAME} ${SRCS}
+			gcc ${CFLAGS} -o ${NAME} ${SRCS}
 
 clean :
 			${RM} ${OBJS} ${BONUS}
