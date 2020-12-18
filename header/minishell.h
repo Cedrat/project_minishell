@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/17 18:19:51 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:09:41 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ char			**ft_divide_to_pipe(char **split);
 void			ft_recursives_pipes(char **args_pipes, int i,
 				int *fd, int *fd2, t_shell *shell);
 size_t			count_pipe(char **split);
+void			new_argument(t_shell *shell, char *arg_pipe);
 
 /*
 **----------Parser---------**
