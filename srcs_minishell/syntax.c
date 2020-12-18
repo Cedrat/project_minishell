@@ -31,7 +31,7 @@ static	int	syntax_multi_line(t_shell *shell, size_t i, char **line)
 	{
 		ft_putstr("minishell : multi_line not supported\n");
 		ft_free_tab(line);
-		shell->signal = 22;
+		shell->signal = 1;
 		return (0);
 	}
 	return (1);

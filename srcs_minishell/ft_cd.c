@@ -31,7 +31,7 @@ int		ft_cd(t_shell *shell)
 		shell->newline = 1;
 		shell->signal = chdir(shell->home_path);
 		if (shell->signal == -1)
-			ft_errors(-8, shell);
+			shell->signal = -8;
 		return (shell->signal);
 	}
 	else if (i > 2)
