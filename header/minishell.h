@@ -165,6 +165,8 @@ char			**ft_parser(char *str, t_shell *shell);
 void			ft_purify_args(char **args);
 char			**ft_dollar(char **tab, t_shell *shell);
 int				ft_count_doll(char *arg);
+int				found_doll_var(char *str);
+int				found_doll_signal(char *str);
 
 /*
 **----------Divers---------**

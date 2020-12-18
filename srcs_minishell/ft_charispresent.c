@@ -22,3 +22,31 @@ int		ft_charispresent(const char *str, char lett)
 	}
 	return (0);
 }
+
+int		found_doll_var(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1] && str[i + 1] != '?')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int		found_doll_signal(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i + 1] && str[i] == '$' && str[i + 1] == '?')
+			return (1);
+		i++;
+	}
+	return (0);
+}

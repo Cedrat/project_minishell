@@ -51,7 +51,7 @@ char			*ft_replace_var(t_shell *shell, char *arg, int i)
 	return (arg);
 }
 
-static	char	*ft_cut_replace(char *str, t_shell *shell, int j)
+static	char	*ft_cut_replace(char *str, t_shell *shell, size_t j)
 {
 	char	*pt1;
 	char	*pt2;
@@ -59,7 +59,7 @@ static	char	*ft_cut_replace(char *str, t_shell *shell, int j)
 
 	pt1 = ft_substr(str, 0, j);
 	pt2 = ft_itoa(shell->signal);
-	if (str[j + 2] && ((int)ft_strlen(str) > j + 2))
+	if (str[j + 2] && ((int)ft_strlen(str) > (int)j + 2))
 		pt3 = ft_substr(str, j + 2, (int)ft_strlen(str) - (j + 2));
 	else
 		pt3 = ft_strdup("");
@@ -69,33 +69,30 @@ static	char	*ft_cut_replace(char *str, t_shell *shell, int j)
 	return (str);
 }
 
-static	int		ft_check_doll(char *tab)
+static	char	*ft_get_doll(char *tab, t_shell *shell, size_t *j)
 {
-	int		j;
 	char	*str;
 
 	str = ft_str_treatement(tab);
-	j = 0;
-	while (str[j])
+	free(tab);
+	*j = 0;
+	while (str[*j])
 	{
-		if (str[j + 1] && str[j] == '$' && str[j + 1] == '?')
-		{
-			free(str);
-			return (j);
-		}
-		j++;
+		if (str[*j + 1] && str[*j] == '$' && str[*j + 1] == '?')
+			str = ft_cut_replace(str, shell, *j);
+		*j += 1;
 	}
+	tab = ft_strdup(str);
 	free(str);
-	return (j = 0);
+	return (tab);
 }
 
 char			**ft_dollar(char **tab, t_shell *shell)
 {
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
-	i = 0;
-	j = 0;
+	ft_init(&i, &j);
 	while (tab[i])
 	{
 		if ((i > 0 && ft_strcmp(tab[i - 1], "echo") == 0)
@@ -106,12 +103,13 @@ char			**ft_dollar(char **tab, t_shell *shell)
 			free(tab[i]);
 			tab[i] = ft_itoa(shell->signal);
 		}
-		if ((j = ft_check_doll(tab[i])) > 0)
-			tab[i] = ft_cut_replace(tab[i], shell, j);
-		if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
+		if (found_doll_signal(tab[i]))
+			tab[i] = ft_get_doll(tab[i], shell, &j);
+		else if (found_doll_var(tab[i]))
 		{
-			tab[i] = ft_replace_var(shell, tab[i], j);
-			tab = add_split_arg(tab, &i);
+			tab[i] = ft_replace_var(shell, tab[i], (int)j);
+			if (ft_strcmp("", tab[i]) != 0)
+				tab = add_split_arg(tab, (int *)&i);
 		}
 		i++;
 	}
