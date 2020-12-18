@@ -6,26 +6,23 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/18 17:03:16 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 20:27:56 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int				ft_count_doll(char *arg)
+static	char	*join_all_args(char **var_path, char *arg)
 {
-	int	count;
-	int	i;
+	int	j;
 
-	i = 0;
-	count = 0;
-	while (arg[i])
+	j = 0;
+	while (var_path[j])
 	{
-		if (arg[i] == '$')
-			count++;
-		i++;
+		arg = ft_strjoin_freeall(arg, var_path[j]);
+		j++;
 	}
-	return (count);
+	return (arg);
 }
 
 char			*ft_replace_var(t_shell *shell, char *arg, int i)
@@ -47,14 +44,9 @@ char			*ft_replace_var(t_shell *shell, char *arg, int i)
 		count--;
 	}
 	var_path[j] = NULL;
-	j = 0;
 	free(arg);
 	arg = ft_strdup("");
-	while (var_path[j])
-	{
-		arg = ft_strjoin_freeall(arg, var_path[j]);
-		j++;
-	}
+	arg = join_all_args(var_path, arg);
 	free(var_path);
 	return (arg);
 }

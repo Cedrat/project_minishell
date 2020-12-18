@@ -6,7 +6,7 @@
 #    By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:19:38 by lnoaille          #+#    #+#              #
-#    Updated: 2020/12/18 16:54:46 by lnoaille         ###   ########.fr        #
+#    Updated: 2020/12/18 20:35:14 by lnoaille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,8 @@ ${SRCS_MS}ft_count_this_char.c    	${SRCS_MS}ft_exit.c             \
 ${SRCS_MS}ft_divide_to_pipe.c     	${SRCS_MS}ft_export.c           ${SRCS_MS}ft_pwd.c \
 ${SRCS_MS}ft_strcmp.c				${SRCS_MS}ft_get_var.c			${SRCS_MS}ft_echo_utils.c \
 ${SRCS_MS}ft_tri_tab_str.c			${SRCS_MS}ft_parser.c			${SRCS_MS}ft_utils.c \
-${SRCS_MS}get_command.c				${SRCS_MS}get_next_line.c		 ${SRCS_MS}get_next_line_utils.c \
-${SRCS_MS}main.c 					${SRCS_MS}pipes_utils.c \
+${SRCS_MS}get_command.c				${SRCS_MS}get_next_line.c		${SRCS_MS}get_next_line_utils.c \
+${SRCS_MS}main.c 					${SRCS_MS}pipes_utils.c 		${SRCS_MS}ft_parser_utils_2.c \
 
 DEP = minishell.h
 
@@ -46,12 +46,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
-.c.o : ${DEP}
-		gcc ${CFLAGS} -c $< -o ${<:.c=.o}
-
 all : 		${NAME}
 
-${NAME}:	${OBJS}
+${NAME}:	
 			gcc ${CFLAGS} -o ${NAME} ${SRCS}
 
 clean :

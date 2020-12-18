@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:19:21 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 17:03:25 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 20:25:31 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ char	*ft_get_var_free(char **argenv, char *tofind)
 		}
 		i++;
 	}
+	free(tofind);
 	return (ft_strdup(""));
 }

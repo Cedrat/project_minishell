@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/18 03:09:41 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 20:30:55 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int				iterate_word(char *str, size_t *i, size_t p);
 char			**ft_parser(char *str, t_shell *shell);
 void			ft_purify_args(char **args);
 char			**ft_dollar(char **tab, t_shell *shell);
+int				ft_count_doll(char *arg);
 
 /*
 **----------Divers---------**
