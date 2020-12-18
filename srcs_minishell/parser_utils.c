@@ -6,34 +6,71 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/18 16:51:12 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 16:58:44 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static	void	check_signal(char **tab, t_shell *shell, int i)
+char	*ft_get_var2(char **argenv, char *tofind)
 {
-	if (ft_strcmp(tab[i], "$?") == 0)
-	{
-		free(tab[i]);
-		tab[i] = ft_itoa(shell->signal);
-	}
-}
-
-char			*ft_replace_var(t_shell *shell, char *arg)
-{
-	char	*var_path;
+	char	*path;
 	int		i;
+	int		j;
 
 	i = 0;
-	var_path = ft_extract_var_name(arg, &i);
-	if (var_path[1])
+	j = 0;
+	while (argenv[i])
 	{
-		free(arg);
-		arg = ft_get_var(shell->argenv, var_path);
+		if (ft_strncmp(argenv[i], tofind, ft_strlen(tofind)) == 0)
+		{
+			while (argenv[i][j] && argenv[i][j] != '=')
+				j++;
+			j++;
+			path = ft_strndupl(&argenv[i][j], (ft_strlen(argenv[i]) - j));
+			free(tofind);
+			return (path);
+		}
+		i++;
 	}
-	free(var_path);
+	return (ft_strdup(""));
+}
+
+char			*ft_replace_var(t_shell *shell, char *arg, int i)
+{
+	char	**var_path;
+	int		j;
+	int		count;
+
+	j = i;
+	i = 0;
+	j = 0;
+	count = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$')
+			count++;
+		i++;
+	}
+	var_path = malloc(sizeof(char *) * count);
+	i = j;
+	while (count > 0)
+	{
+		var_path[j] = ft_extract_var_name(arg, &i);
+		if (var_path[j][1])
+			var_path[j] = ft_get_var2(shell->argenv, var_path[j]);
+		j++;
+		count--;
+	}
+	j = 0;
+	free(arg);
+	arg = ft_strdup("");
+	while (var_path[j])
+	{
+		arg = ft_strjoin_freeone(arg, var_path[j]);
+		j++;
+	}
+	ft_free_tab(var_path);
 	return (arg);
 }
 
@@ -60,25 +97,21 @@ static	int		ft_check_doll(char *tab)
 	int		j;
 	char	*str;
 
-	j = 0;
 	str = ft_str_treatement(tab);
+	j = 0;
 	while (str[j])
 	{
 		if (str[j + 1] && str[j] == '$' && str[j + 1] == '?')
-		{
-			free(str);
 			return (j);
-		}
 		j++;
 	}
-	free(str);
 	return (j = 0);
 }
 
 char			**ft_dollar(char **tab, t_shell *shell)
 {
-	int		i;
-	int		j;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -87,12 +120,16 @@ char			**ft_dollar(char **tab, t_shell *shell)
 		if ((i > 0 && ft_strcmp(tab[i - 1], "echo") == 0)
 			|| ((tab[i][0] == '\'')))
 			break ;
+		if (ft_strcmp(tab[i], "$?") == 0)
+		{
+			free(tab[i]);
+			tab[i] = ft_itoa(shell->signal);
+		}
 		if ((j = ft_check_doll(tab[i])) > 0)
 			tab[i] = ft_cut_replace(tab[i], shell, j);
-		check_signal(tab, shell, i);
 		if (tab[i][j] == '$' && tab[i][j + 1] && tab[i][j + 1] != '?')
 		{
-			tab[i] = ft_replace_var(shell, tab[i]);
+			tab[i] = ft_replace_var(shell, tab[i], j);
 			tab = add_split_arg(tab, &i);
 		}
 		i++;
