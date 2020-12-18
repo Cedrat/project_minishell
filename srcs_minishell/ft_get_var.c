@@ -35,12 +35,12 @@ char	*ft_extract_var_name(char *arg, int *j)
 
 	*j += 1;
 	i = *j;
-	while (!ft_strchr(" \"\\\'\0", arg[i]))
+	while (!ft_strchr("$ \"\\\'\0", arg[i]))
 		i++;
 	if (!(str = malloc(sizeof(char) * (i - *j) + 2)))
 		return (NULL);
 	i = 0;
-	while (!ft_strchr(" \"\\\'\0", arg[*j]))
+	while (!ft_strchr("$ \"\\\'\0", arg[*j]))
 	{
 		str[i] = arg[*j];
 		*j += 1;
