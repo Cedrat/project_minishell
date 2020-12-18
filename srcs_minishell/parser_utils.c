@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/17 17:55:15 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 17:03:16 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,21 @@ static	char	*ft_cut_replace(char *str, t_shell *shell, int j)
 
 static	int		ft_check_doll(char *tab)
 {
-	int	j;
+	int		j;
+	char	*str;
 
+	str = ft_str_treatement(tab);
 	j = 0;
-	while (tab[j])
+	while (str[j])
 	{
-		if (tab[j + 1] && tab[j] == '$' && tab[j + 1] == '?')
+		if (str[j + 1] && str[j] == '$' && str[j + 1] == '?')
+		{
+			free(str);
 			return (j);
+		}
 		j++;
 	}
+	free(str);
 	return (j = 0);
 }
 
