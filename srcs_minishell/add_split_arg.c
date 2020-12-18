@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 03:06:45 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/17 17:53:53 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 22:44:00 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static	void	copy_tab(char **new_tab, char **tab, size_t p, size_t l)
 static	char	**init_tab_with_two_tabs(char **new_tab, char **str,
 												char **tab)
 {
-	size_t p;
-	size_t l;
+	int p;
+	int l;
 
 	p = tab_range(str);
 	l = tab_range(tab);
@@ -31,7 +31,7 @@ static	char	**init_tab_with_two_tabs(char **new_tab, char **str,
 	return (new_tab);
 }
 
-static	void	insert_tab(size_t *l, size_t p, char **new_tab, char **str)
+static	void	insert_tab(int *l, int p, char **new_tab, char **str)
 {
 	while (str[*l])
 	{
@@ -46,8 +46,8 @@ char			**add_split_arg(char **tab, int *i)
 {
 	char	**str;
 	char	**new_tab;
-	size_t	p;
-	size_t	l;
+	int		p;
+	int		l;
 
 	p = 0;
 	l = 0;
@@ -57,7 +57,7 @@ char			**add_split_arg(char **tab, int *i)
 	new_tab = init_tab_with_two_tabs(new_tab, str, tab);
 	while (tab[p])
 	{
-		if ((int)p == *i)
+		if (p == *i)
 			insert_tab(&l, p, new_tab, str);
 		else
 			copy_tab(new_tab, tab, p, l);

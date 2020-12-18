@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:13:24 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/16 16:46:45 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 23:07:56 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		ft_get_command(t_shell *shell)
 	ft_init_commands(shell);
 	shell->home_path = ft_get_var(shell->argenv, "HOME=");
 	i = 0;
-	if (shell->args[i] == NULL)
+	if (shell->args[i] == NULL || shell->is_command == 0)
 		return ;
 	tmp = ft_str_treatement(shell->args[i]);
 	free(shell->args[i]);
@@ -85,4 +85,5 @@ void		ft_get_command(t_shell *shell)
 	ft_errors(found, shell);
 	if (shell->echo->option_n == 0 && shell->newline == 0)
 		ft_putstr_fd("\n", shell->fd);
+	shell->is_command = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/18 20:27:56 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 00:58:10 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char			*ft_replace_var(t_shell *shell, char *arg, int i)
 	free(arg);
 	arg = ft_strdup("");
 	arg = join_all_args(var_path, arg);
+	if (ft_strcmp("", arg) == 0)
+		shell->is_command = 0;
 	free(var_path);
 	return (arg);
 }

@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:35:36 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/18 03:17:35 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/18 23:12:38 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void			ft_give_to_pipe(t_shell *shell)
 	int		tmpin;
 	int		tmpout;
 
+	shell->is_command = 1;
 	i = 0;
 	tmpin = dup(0);
 	tmpout = dup(1);

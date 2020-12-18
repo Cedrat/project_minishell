@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/18 20:30:55 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 00:28:33 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ typedef	struct	s_shell
 	char	*commands[7];
 	int		(*function[7])();
 
+	int		is_command;
 	int		signal;
 	int		nb_error;
 	char	*home_path;
 	int		fd;
 	char	*name_error;
 	int		tmp_in;
+	int		fd_in;
 
 	t_echo	*echo;
 
@@ -183,5 +185,6 @@ void			ft_inc_values(size_t *i, size_t *j);
 void			ft_init(size_t *i, size_t *j);
 char			*ft_strndupl(const char *s, int len);
 char			*ft_get_var_free(char **argenv, char *tofind);
+void 			clean_shell(t_shell *shell);
 
 #endif

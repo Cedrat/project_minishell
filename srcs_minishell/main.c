@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:27:03 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/17 19:20:34 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 00:20:03 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_init_main(t_shell *shell, char **argenv)
 	shell->function[4] = &ft_unset;
 	shell->function[5] = &ft_env;
 	shell->function[6] = &ft_exit;
+	shell->is_command = 1;
 	g_pid = 1;
 	g_prompt = 1;
 	shell->argenv = ft_dup_arg(argenv);
@@ -82,6 +83,7 @@ void	ft_launch(t_shell *shell)
 	i = 0;
 	while (shell->args_line[i])
 	{
+		shell->is_command = 1;
 		shell->args = ft_parser(shell->args_line[i], shell);
 		if (ft_str_is_present(shell->args, "|"))
 			ft_give_to_pipe(shell);
@@ -93,12 +95,12 @@ void	ft_launch(t_shell *shell)
 				break ;
 			}
 			ft_get_command(shell);
-			if (shell->fd != 1)
-				close(shell->fd);
 			dup2(shell->tmp_in, 0);
 			free(shell->echo);
 			free_shell_commands(shell);
 			ft_free_tab(shell->args);
+			if (shell->fd != 1)
+				close(shell->fd);
 		}
 		i++;
 	}
