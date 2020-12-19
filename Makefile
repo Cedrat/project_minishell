@@ -6,7 +6,7 @@
 #    By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:19:38 by lnoaille          #+#    #+#              #
-#    Updated: 2020/12/19 00:45:34 by lnoaille         ###   ########.fr        #
+#    Updated: 2020/12/19 17:09:22 by lnoaille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ ${SRCS_MS}ft_strcmp.c				${SRCS_MS}ft_get_var.c			${SRCS_MS}ft_echo_utils.c \
 ${SRCS_MS}ft_tri_tab_str.c			${SRCS_MS}ft_parser.c			${SRCS_MS}ft_utils.c \
 ${SRCS_MS}get_command.c				${SRCS_MS}get_next_line.c		${SRCS_MS}get_next_line_utils.c \
 ${SRCS_MS}main.c 					${SRCS_MS}pipes_utils.c 		${SRCS_MS}ft_parser_utils_2.c \
+${SRCS_MS}parser_extract_vars.c
+
 
 DEP = minishell.h
 
