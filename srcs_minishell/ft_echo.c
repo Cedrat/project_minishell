@@ -106,7 +106,7 @@ int		ft_echo(t_shell *shell)
 	int		i;
 
 	if (!shell->args[1])
-		return (-1);
+		return (shell->signal = 0);
 	ft_echo_config(shell->echo, shell->args);
 	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0
 		|| shell->echo->backslash == -1)

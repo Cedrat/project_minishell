@@ -19,7 +19,8 @@ void	ft_init_echo(t_echo *config, int *i, char **args)
 	config->db_qt = 0;
 	config->backslash = 0;
 	config->option_n = 0;
-	if (ft_strcmp(args[1], "-n") == 0)
+	if (ft_strcmp(args[1], "-n") == 0 || ft_strcmp(args[1], "'-n'") == 0
+		|| ft_strcmp(args[1], "\"-n\"") == 0)
 	{
 		*i = 2;
 		config->option_n = 1;

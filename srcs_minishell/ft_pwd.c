@@ -34,8 +34,6 @@ int		ft_pwd(t_shell *shell)
 		}
 	}
 	ft_putstr_fd(path, shell->fd);
-	if (shell->newline == 0)
-		ft_putstr_fd("\n", shell->fd);
 	free(path);
 	return (shell->signal = 0);
 }
