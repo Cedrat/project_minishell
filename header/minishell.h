@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/19 00:28:33 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 00:52:17 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,6 @@ void			ft_inc_values(size_t *i, size_t *j);
 void			ft_init(size_t *i, size_t *j);
 char			*ft_strndupl(const char *s, int len);
 char			*ft_get_var_free(char **argenv, char *tofind);
-void 			clean_shell(t_shell *shell);
+void			clean_shell(t_shell *shell);
 
 #endif

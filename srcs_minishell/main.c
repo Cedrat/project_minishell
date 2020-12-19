@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:27:03 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/19 00:20:03 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 00:41:09 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,7 @@ void	ft_launch(t_shell *shell)
 				break ;
 			}
 			ft_get_command(shell);
-			dup2(shell->tmp_in, 0);
-			free(shell->echo);
-			free_shell_commands(shell);
-			ft_free_tab(shell->args);
-			if (shell->fd != 1)
-				close(shell->fd);
+			clean_shell(shell);
 		}
 		i++;
 	}

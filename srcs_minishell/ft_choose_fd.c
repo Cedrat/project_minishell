@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 16:51:28 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/19 00:17:19 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 00:40:46 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static	int	redirect_right_right(t_shell *shell, size_t i)
 
 static	int	redirect_left(t_shell *shell, size_t i)
 {
-
 	errno = 0;
 	shell->tmp_in = dup(0);
 	if (shell->fd_in != 1)
