@@ -48,3 +48,20 @@ int		ft_check_bs(char *arg, int *i, t_echo *config)
 	}
 	return (config->backslash = count);
 }
+
+int		check_errors(t_shell *shell)
+{
+	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0
+		|| shell->echo->backslash == -1)
+		return (0);
+	else
+		return (1);
+}
+
+void	echo_set_i(t_shell *shell, int *i)
+{
+	if (shell->echo->option_n == 1)
+		*i = 2;
+	else
+		*i = 1;
+}

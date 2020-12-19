@@ -106,15 +106,14 @@ int		ft_echo(t_shell *shell)
 	int		i;
 
 	if (!shell->args[1])
+	{
+		ft_putstr_fd("\n", shell->fd);
 		return (shell->signal = 0);
+	}
 	ft_echo_config(shell->echo, shell->args);
-	if (shell->echo->sg_qt % 2 != 0 || shell->echo->db_qt % 2 != 0
-		|| shell->echo->backslash == -1)
+	if (!check_errors(shell))
 		return (shell->signal = -3);
-	if (shell->echo->option_n == 1)
-		i = 2;
-	else
-		i = 1;
+	echo_set_i(shell, &i);
 	while (shell->args[i])
 	{
 		if (shell->echo->token == 1 && shell->args[i][0] == '\'')

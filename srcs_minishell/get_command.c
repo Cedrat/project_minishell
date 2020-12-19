@@ -57,7 +57,7 @@ void		ft_init_commands(t_shell *shell)
 	shell->commands[5] = ft_strdup("env");
 	shell->commands[6] = ft_strdup("exit");
 	shell->newline = 0;
-	shell->echo->option_n = 0;
+	shell->echo->option_n = 1;
 }
 
 void		ft_get_command(t_shell *shell)

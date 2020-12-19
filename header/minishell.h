@@ -145,6 +145,8 @@ int				ft_dollar_sign(char *args, t_shell *shell,
 void			ft_echo_config(t_echo *config, char **args);
 int				ft_count_bs(char *arg);
 int				ft_check_bs(char *arg, int *i, t_echo *config);
+int				check_errors(t_shell *shell);
+void			echo_set_i(t_shell *shell, int *i);
 
 /*
 **----------Pipes---------**
