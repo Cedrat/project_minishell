@@ -6,7 +6,7 @@
 /*   By: dchampda <dchampda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 16:17:57 by dchampda          #+#    #+#             */
-/*   Updated: 2020/12/19 00:52:17 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 16:07:05 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ char			**ft_dollar(char **tab, t_shell *shell);
 int				ft_count_doll(char *arg);
 int				found_doll_var(char *str);
 int				found_doll_signal(char *str);
+char			**check_arg_value(char **tab, t_shell *shell, size_t *i);
 
 /*
 **----------Divers---------**

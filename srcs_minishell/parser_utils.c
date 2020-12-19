@@ -6,7 +6,7 @@
 /*   By: lnoaille <lnoaille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 17:01:14 by lnoaille          #+#    #+#             */
-/*   Updated: 2020/12/19 00:58:10 by lnoaille         ###   ########.fr       */
+/*   Updated: 2020/12/19 16:08:13 by lnoaille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,7 @@ char			**ft_dollar(char **tab, t_shell *shell)
 		else if (found_doll_var(tab[i]))
 		{
 			tab[i] = ft_replace_var(shell, tab[i], (int)j);
-			if (ft_strcmp("", tab[i]) != 0)
-				tab = add_split_arg(tab, (int *)&i);
+			tab = check_arg_value(tab, shell, &i);
 		}
 		i++;
 	}
