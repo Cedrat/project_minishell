@@ -37,8 +37,8 @@ char			*ft_replace_var(t_shell *shell, char *arg, int i)
 	j = 0;
 	while (count > 0)
 	{
-		var_path[j] = ft_extract_var_name(arg, &i);
-		if (var_path[j][1])
+		var_path[j] = ft_extract_vars(arg, &i);
+		if (var_path[j][0])
 			var_path[j] = ft_get_var_free(shell->argenv, var_path[j]);
 		j++;
 		count--;

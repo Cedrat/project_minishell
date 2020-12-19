@@ -12,6 +12,30 @@
 
 #include "../header/minishell.h"
 
+int		ft_count_quotes(char *arg)
+{
+	int	i;
+	int	sg_qt;
+	int	db_qt;
+
+	i = 0;
+	sg_qt = 0;
+	db_qt = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '\'' && db_qt % 2 == 0)
+			sg_qt++;
+		else if (arg[i] == '\"' && sg_qt % 2 == 0)
+			db_qt++;
+		i++;
+	}
+	if (sg_qt % 2 != 0)
+		sg_qt--;
+	if (db_qt % 2 != 0)
+		db_qt--;
+	return (sg_qt + db_qt);
+}
+
 int		ft_count_doll(char *arg)
 {
 	int	count;
@@ -25,6 +49,7 @@ int		ft_count_doll(char *arg)
 			count++;
 		i++;
 	}
+	count += ft_count_quotes(arg);
 	return (count);
 }
 

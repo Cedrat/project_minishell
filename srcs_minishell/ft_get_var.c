@@ -82,6 +82,8 @@ char	*ft_get_var_free(char **argenv, char *tofind)
 
 	i = 0;
 	j = 0;
+	if (!ft_strchr(tofind, '='))
+		return (tofind);
 	while (argenv[i])
 	{
 		if (ft_strncmp(argenv[i], tofind, ft_strlen(tofind)) == 0)

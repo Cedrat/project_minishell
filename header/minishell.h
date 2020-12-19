@@ -170,6 +170,10 @@ int				ft_count_doll(char *arg);
 int				found_doll_var(char *str);
 int				found_doll_signal(char *str);
 char			**check_arg_value(char **tab, t_shell *shell, size_t *i);
+char			*treat_db_qt(char *arg, int *j);
+char			*treat_sg_qt(char *arg, int *j);
+char			*treat_var(char *arg, int *j);
+char			*ft_extract_vars(char *arg, int *j);
 
 /*
 **----------Divers---------**
